@@ -12,7 +12,7 @@
 #include "repository/TransfertRepository.h"
 #include "repository/CategorieRepository.h"
 #include "repository/BudgetRepository.h"
-
+#include "repository/OperationRepository.h"
 
 
 #include <QUuid>
@@ -24,28 +24,38 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
     ui(new Ui::MainWindow),
     utilisateur("1", "Utilisateur principal")
-
 {
     ui->setupUi(this);
 
+    // Connexions
     connect(ui->btnAjouterCompte, &QPushButton::clicked,
             this, &MainWindow::ajouterCompte);
-
     connect(ui->btnTransfert, &QPushButton::clicked,
             this, &MainWindow::effectuerTransfert);
     connect(ui->btnAjouterCategorie, &QPushButton::clicked,
             this, &MainWindow::ajouterCategorie);
-
     connect(ui->btnModifierCategorie, &QPushButton::clicked,
             this, &MainWindow::modifierCategorie);
-
     connect(ui->btnSupprimerCategorie, &QPushButton::clicked,
             this, &MainWindow::supprimerCategorie);
+    connect(ui->btnAjouterOperation, &QPushButton::clicked,
+            this, &MainWindow::ajouterOperation);
 
+    // ✅ 1) Charger comptes depuis DB
+    QList<Compte*> comptes = CompteRepository::chargerComptes("1");
+    for (Compte* c : comptes) {
+        utilisateur.ajouterCompte(c);
+    }
+    rafraichirUI();
+
+    // ✅ 2) Charger catégories depuis DB
     categories = CategorieRepository::chargerCategories("1");
     chargerCategoriesUI();
 
+    // ✅ 3) Remplir combos opérations
+    remplirCombosOperation();
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -292,5 +302,56 @@ void MainWindow::chargerCategoriesUI()
     ui->treeCategories->expandAll();
 }
 
+
+void MainWindow::ajouterOperation()
+{
+    QString type = ui->comboTypeOperation->currentText();
+    QString nom = ui->editNomOperation->text();
+    double montant = ui->spinMontantOperation->value();
+    QDate date = ui->dateOperation->date();
+
+    QString compteId = ui->comboCompteOperation->currentData().toString();
+    QString categorieId = ui->comboCategorieOperation->currentData().toString();
+
+    if (nom.isEmpty() || montant <= 0)
+        return;
+
+    if (type == "Revenu") {
+        OperationRepository::ajouterRevenu(
+            nom, date, montant,
+            compteId, categorieId,
+            "Non spécifiée"
+            );
+    } else {
+        bool recurrente = ui->checkRecurrente->isChecked();
+        QString frequence = ui->comboFrequence->currentText();
+
+        OperationRepository::ajouterDepense(
+            nom, date, montant,
+            compteId, categorieId,
+            recurrente, frequence
+            );
+    }
+
+    // Mise à jour solde
+    Compte* compte = utilisateur.getCompteById(compteId);
+    compte->mettreAJourSolde();
+    CompteRepository::mettreAJourSolde(compte);
+
+    rafraichirUI();
+}
+void MainWindow::remplirCombosOperation()
+{
+    ui->comboCompteOperation->clear();
+    ui->comboCategorieOperation->clear();
+
+    for (Compte* c : utilisateur.getComptes()) {
+        ui->comboCompteOperation->addItem(c->getNom(), c->getId());
+    }
+
+    for (Categorie* cat : categories) {
+        ui->comboCategorieOperation->addItem(cat->getNom(), cat->getId());
+    }
+}
 
 

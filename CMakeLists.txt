@@ -34,7 +34,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         model/compte.h model/compte.cpp
         model/comptecourant.h model/comptecourant.cpp
         model/compteepargne.h model/compteepargne.cpp
-        model/operation.h model/operation.cpp
+        model/operation.h
         model/transfert.h model/transfert.cpp
         repository/compterepository.h repository/compterepository.cpp
         repository/transfertrepository.h repository/transfertrepository.cpp
@@ -46,6 +46,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         repository/budgetrepository.h repository/budgetrepository.cpp
         model/budget.h
+        model/operation.h
+        model/Revenu.h
+        model/Depense.h
+        repository/operationrepository.h repository/operationrepository.cpp
+        model/Operation.cpp
 
 
 

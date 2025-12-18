@@ -640,6 +640,9 @@ QFinance2_autogen/timestamp: \
 	D:/Projects/QFinance2/main.cpp \
 	D:/Projects/QFinance2/mainwindow.cpp \
 	D:/Projects/QFinance2/mainwindow.h \
+	D:/Projects/QFinance2/model/Depense.h \
+	D:/Projects/QFinance2/model/Operation.cpp \
+	D:/Projects/QFinance2/model/Revenu.h \
 	D:/Projects/QFinance2/model/budget.h \
 	D:/Projects/QFinance2/model/categorie.cpp \
 	D:/Projects/QFinance2/model/categorie.h \
@@ -649,7 +652,6 @@ QFinance2_autogen/timestamp: \
 	D:/Projects/QFinance2/model/comptecourant.h \
 	D:/Projects/QFinance2/model/compteepargne.cpp \
 	D:/Projects/QFinance2/model/compteepargne.h \
-	D:/Projects/QFinance2/model/operation.cpp \
 	D:/Projects/QFinance2/model/operation.h \
 	D:/Projects/QFinance2/model/transfert.cpp \
 	D:/Projects/QFinance2/model/transfert.h \
@@ -661,6 +663,8 @@ QFinance2_autogen/timestamp: \
 	D:/Projects/QFinance2/repository/categorierepository.h \
 	D:/Projects/QFinance2/repository/compterepository.cpp \
 	D:/Projects/QFinance2/repository/compterepository.h \
+	D:/Projects/QFinance2/repository/operationrepository.cpp \
+	D:/Projects/QFinance2/repository/operationrepository.h \
 	D:/Projects/QFinance2/repository/transfertrepository.cpp \
 	D:/Projects/QFinance2/repository/transfertrepository.h \
 	D:/Projects/QFinance2/dialogAjouterCategorie.ui \

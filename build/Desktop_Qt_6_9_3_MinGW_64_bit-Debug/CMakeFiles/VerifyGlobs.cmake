@@ -47,16 +47,17 @@ set(OLD_GLOB
   "D:/Projects/QFinance2/database/databasemanager.cpp"
   "D:/Projects/QFinance2/main.cpp"
   "D:/Projects/QFinance2/mainwindow.cpp"
+  "D:/Projects/QFinance2/model/Operation.cpp"
   "D:/Projects/QFinance2/model/categorie.cpp"
   "D:/Projects/QFinance2/model/compte.cpp"
   "D:/Projects/QFinance2/model/comptecourant.cpp"
   "D:/Projects/QFinance2/model/compteepargne.cpp"
-  "D:/Projects/QFinance2/model/operation.cpp"
   "D:/Projects/QFinance2/model/transfert.cpp"
   "D:/Projects/QFinance2/model/utilisateur.cpp"
   "D:/Projects/QFinance2/repository/budgetrepository.cpp"
   "D:/Projects/QFinance2/repository/categorierepository.cpp"
   "D:/Projects/QFinance2/repository/compterepository.cpp"
+  "D:/Projects/QFinance2/repository/operationrepository.cpp"
   "D:/Projects/QFinance2/repository/transfertrepository.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
@@ -83,6 +84,8 @@ set(OLD_GLOB
   "D:/Projects/QFinance2/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/QFinance2_autogen/moc_predefs.h"
   "D:/Projects/QFinance2/database/databasemanager.h"
   "D:/Projects/QFinance2/mainwindow.h"
+  "D:/Projects/QFinance2/model/Depense.h"
+  "D:/Projects/QFinance2/model/Revenu.h"
   "D:/Projects/QFinance2/model/budget.h"
   "D:/Projects/QFinance2/model/categorie.h"
   "D:/Projects/QFinance2/model/compte.h"
@@ -94,6 +97,7 @@ set(OLD_GLOB
   "D:/Projects/QFinance2/repository/budgetrepository.h"
   "D:/Projects/QFinance2/repository/categorierepository.h"
   "D:/Projects/QFinance2/repository/compterepository.h"
+  "D:/Projects/QFinance2/repository/operationrepository.h"
   "D:/Projects/QFinance2/repository/transfertrepository.h"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

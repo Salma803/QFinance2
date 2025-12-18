@@ -27,6 +27,7 @@ private slots:
     void modifierCategorie();
     void supprimerCategorie();
     void chargerCategoriesUI();
+    void ajouterOperation();
 
 private:
     void rafraichirUI();
@@ -35,6 +36,7 @@ private:
 
     Utilisateur utilisateur;
     QList<Categorie*> categories;
+    void remplirCombosOperation();
 
 };
 

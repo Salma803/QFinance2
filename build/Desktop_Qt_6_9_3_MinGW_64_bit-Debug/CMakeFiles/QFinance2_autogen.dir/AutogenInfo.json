@@ -503,6 +503,18 @@
 			null
 		],
 		[
+			"D:/Projects/QFinance2/model/Depense.h",
+			"MU",
+			"NLOY5YBGEN/moc_Depense.cpp",
+			null
+		],
+		[
+			"D:/Projects/QFinance2/model/Revenu.h",
+			"MU",
+			"NLOY5YBGEN/moc_Revenu.cpp",
+			null
+		],
+		[
 			"D:/Projects/QFinance2/model/budget.h",
 			"MU",
 			"NLOY5YBGEN/moc_budget.cpp",
@@ -566,6 +578,12 @@
 			"D:/Projects/QFinance2/repository/compterepository.h",
 			"MU",
 			"V6MOHEPR4H/moc_compterepository.cpp",
+			null
+		],
+		[
+			"D:/Projects/QFinance2/repository/operationrepository.h",
+			"MU",
+			"V6MOHEPR4H/moc_operationrepository.cpp",
 			null
 		],
 		[
@@ -651,11 +669,11 @@
 		[ "D:/Projects/QFinance2/database/databasemanager.cpp", "MU", null ],
 		[ "D:/Projects/QFinance2/main.cpp", "MU", null ],
 		[ "D:/Projects/QFinance2/mainwindow.cpp", "MU", null ],
+		[ "D:/Projects/QFinance2/model/Operation.cpp", "MU", null ],
 		[ "D:/Projects/QFinance2/model/categorie.cpp", "MU", null ],
 		[ "D:/Projects/QFinance2/model/compte.cpp", "MU", null ],
 		[ "D:/Projects/QFinance2/model/comptecourant.cpp", "MU", null ],
 		[ "D:/Projects/QFinance2/model/compteepargne.cpp", "MU", null ],
-		[ "D:/Projects/QFinance2/model/operation.cpp", "MU", null ],
 		[ "D:/Projects/QFinance2/model/transfert.cpp", "MU", null ],
 		[ "D:/Projects/QFinance2/model/utilisateur.cpp", "MU", null ],
 		[ "D:/Projects/QFinance2/repository/budgetrepository.cpp", "MU", null ],
@@ -665,6 +683,11 @@
 			null
 		],
 		[ "D:/Projects/QFinance2/repository/compterepository.cpp", "MU", null ],
+		[
+			"D:/Projects/QFinance2/repository/operationrepository.cpp",
+			"MU",
+			null
+		],
 		[
 			"D:/Projects/QFinance2/repository/transfertrepository.cpp",
 			"MU",

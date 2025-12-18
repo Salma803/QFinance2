@@ -9,9 +9,12 @@
 #ifndef UI_MAINWINDOW_H
 #define UI_MAINWINDOW_H
 
+#include <QtCore/QDate>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QDateEdit>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -54,6 +57,17 @@ public:
     QPushButton *btnAjouterCategorie;
     QPushButton *btnModifierCategorie;
     QPushButton *btnSupprimerCategorie;
+    QWidget *tabOperations;
+    QVBoxLayout *vboxLayout2;
+    QComboBox *comboTypeOperation;
+    QLineEdit *editNomOperation;
+    QDoubleSpinBox *spinMontantOperation;
+    QDateEdit *dateOperation;
+    QComboBox *comboCompteOperation;
+    QComboBox *comboCategorieOperation;
+    QCheckBox *checkRecurrente;
+    QComboBox *comboFrequence;
+    QPushButton *btnAjouterOperation;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -158,6 +172,64 @@ public:
         vboxLayout1->addLayout(hboxLayout2);
 
         tabWidget->addTab(tabCategories, QString());
+        tabOperations = new QWidget();
+        tabOperations->setObjectName("tabOperations");
+        vboxLayout2 = new QVBoxLayout(tabOperations);
+        vboxLayout2->setObjectName("vboxLayout2");
+        comboTypeOperation = new QComboBox(tabOperations);
+        comboTypeOperation->addItem(QString());
+        comboTypeOperation->addItem(QString());
+        comboTypeOperation->setObjectName("comboTypeOperation");
+
+        vboxLayout2->addWidget(comboTypeOperation);
+
+        editNomOperation = new QLineEdit(tabOperations);
+        editNomOperation->setObjectName("editNomOperation");
+
+        vboxLayout2->addWidget(editNomOperation);
+
+        spinMontantOperation = new QDoubleSpinBox(tabOperations);
+        spinMontantOperation->setObjectName("spinMontantOperation");
+        spinMontantOperation->setMaximum(1000000.000000000000000);
+
+        vboxLayout2->addWidget(spinMontantOperation);
+
+        dateOperation = new QDateEdit(tabOperations);
+        dateOperation->setObjectName("dateOperation");
+        dateOperation->setCalendarPopup(true);
+        dateOperation->setDate(QDate(0, 0, 0));
+
+        vboxLayout2->addWidget(dateOperation);
+
+        comboCompteOperation = new QComboBox(tabOperations);
+        comboCompteOperation->setObjectName("comboCompteOperation");
+
+        vboxLayout2->addWidget(comboCompteOperation);
+
+        comboCategorieOperation = new QComboBox(tabOperations);
+        comboCategorieOperation->setObjectName("comboCategorieOperation");
+
+        vboxLayout2->addWidget(comboCategorieOperation);
+
+        checkRecurrente = new QCheckBox(tabOperations);
+        checkRecurrente->setObjectName("checkRecurrente");
+
+        vboxLayout2->addWidget(checkRecurrente);
+
+        comboFrequence = new QComboBox(tabOperations);
+        comboFrequence->addItem(QString());
+        comboFrequence->addItem(QString());
+        comboFrequence->addItem(QString());
+        comboFrequence->setObjectName("comboFrequence");
+
+        vboxLayout2->addWidget(comboFrequence);
+
+        btnAjouterOperation = new QPushButton(tabOperations);
+        btnAjouterOperation->setObjectName("btnAjouterOperation");
+
+        vboxLayout2->addWidget(btnAjouterOperation);
+
+        tabWidget->addTab(tabOperations, QString());
 
         verticalLayout->addWidget(tabWidget);
 
@@ -189,6 +261,17 @@ public:
         btnModifierCategorie->setText(QCoreApplication::translate("MainWindow", "Modifier", nullptr));
         btnSupprimerCategorie->setText(QCoreApplication::translate("MainWindow", "Supprimer", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tabCategories), QCoreApplication::translate("MainWindow", "Cat\303\251gories", nullptr));
+        comboTypeOperation->setItemText(0, QCoreApplication::translate("MainWindow", "Revenu", nullptr));
+        comboTypeOperation->setItemText(1, QCoreApplication::translate("MainWindow", "D\303\251pense", nullptr));
+
+        editNomOperation->setPlaceholderText(QCoreApplication::translate("MainWindow", "Nom de l\342\200\231op\303\251ration", nullptr));
+        checkRecurrente->setText(QCoreApplication::translate("MainWindow", "D\303\251pense r\303\251currente", nullptr));
+        comboFrequence->setItemText(0, QCoreApplication::translate("MainWindow", "Mensuelle", nullptr));
+        comboFrequence->setItemText(1, QCoreApplication::translate("MainWindow", "Trimestrielle", nullptr));
+        comboFrequence->setItemText(2, QCoreApplication::translate("MainWindow", "Annuelle", nullptr));
+
+        btnAjouterOperation->setText(QCoreApplication::translate("MainWindow", "Ajouter l\342\200\231op\303\251ration", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tabOperations), QCoreApplication::translate("MainWindow", "Op\303\251rations", nullptr));
     } // retranslateUi
 
 };

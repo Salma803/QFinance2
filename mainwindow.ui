@@ -137,6 +137,98 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tabOperations">
+       <attribute name="title">
+        <string>Opérations</string>
+       </attribute>
+
+       <layout class="QVBoxLayout">
+
+        <!-- Type opération -->
+        <item>
+         <widget class="QComboBox" name="comboTypeOperation">
+          <item>
+           <property name="text">
+            <string>Revenu</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Dépense</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+
+        <!-- Nom -->
+        <item>
+         <widget class="QLineEdit" name="editNomOperation">
+          <property name="placeholderText">
+           <string>Nom de l’opération</string>
+          </property>
+         </widget>
+        </item>
+
+        <!-- Montant -->
+        <item>
+         <widget class="QDoubleSpinBox" name="spinMontantOperation">
+          <property name="maximum">
+           <double>1000000</double>
+          </property>
+         </widget>
+        </item>
+
+        <!-- Date -->
+        <item>
+         <widget class="QDateEdit" name="dateOperation">
+          <property name="calendarPopup">
+           <bool>true</bool>
+          </property>
+          <property name="date">
+           <date>2025-01-01</date>
+          </property>
+         </widget>
+        </item>
+
+        <!-- Compte -->
+        <item>
+         <widget class="QComboBox" name="comboCompteOperation"/>
+        </item>
+
+        <!-- Catégorie -->
+        <item>
+         <widget class="QComboBox" name="comboCategorieOperation"/>
+        </item>
+
+        <!-- Spécifique Dépense -->
+        <item>
+         <widget class="QCheckBox" name="checkRecurrente">
+          <property name="text">
+           <string>Dépense récurrente</string>
+          </property>
+         </widget>
+        </item>
+
+        <item>
+         <widget class="QComboBox" name="comboFrequence">
+          <item><property name="text"><string>Mensuelle</string></property></item>
+          <item><property name="text"><string>Trimestrielle</string></property></item>
+          <item><property name="text"><string>Annuelle</string></property></item>
+         </widget>
+        </item>
+
+        <!-- Bouton -->
+        <item>
+         <widget class="QPushButton" name="btnAjouterOperation">
+          <property name="text">
+           <string>Ajouter l’opération</string>
+          </property>
+         </widget>
+        </item>
+
+       </layout>
+      </widget>
+
      </widget>
     </item>
    </layout>

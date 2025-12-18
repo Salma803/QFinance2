@@ -53,3 +53,11 @@ void Utilisateur::supprimerCompte(Compte* compte)
 {
     comptes.removeAll(compte);
 }
+Compte* Utilisateur::getCompteById(const QString& id) const
+{
+    for (Compte* compte : comptes) {
+        if (compte->getId() == id)
+            return compte;
+    }
+    return nullptr;
+}

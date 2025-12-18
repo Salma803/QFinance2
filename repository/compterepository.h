@@ -14,6 +14,7 @@ public:
     static QList<Compte*> chargerComptes(const QString& utilisateurId);
     static bool mettreAJourSolde(const Compte* compte);
 
+
 };
 
 #endif // COMPTEREPOSITORY_H

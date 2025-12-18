@@ -17,6 +17,8 @@ public:
     QString getId() const;
     QString getNom() const;
     QList<Compte*> getComptes() const;
+    Compte* getCompteById(const QString& id) const;
+
 
     // Setters
     void setNom(const QString& nom);

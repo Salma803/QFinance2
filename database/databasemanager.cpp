@@ -89,12 +89,20 @@ bool DatabaseManager::createSchema()
     if (!query.exec(
             "CREATE TABLE IF NOT EXISTS Operation ("
             "id TEXT PRIMARY KEY,"
-            "compte_id TEXT NOT NULL,"
-            "categorie_id TEXT NOT NULL,"
             "nom TEXT NOT NULL,"
             "date TEXT NOT NULL,"
             "montant REAL NOT NULL,"
+
             "type TEXT NOT NULL,"
+
+            "compte_id TEXT NOT NULL,"
+            "categorie_id TEXT NOT NULL,"
+
+
+            "provenance TEXT,"
+            "est_recurrente INTEGER,"
+            "frequence TEXT,"
+
             "FOREIGN KEY (compte_id) REFERENCES Compte(id),"
             "FOREIGN KEY (categorie_id) REFERENCES Categorie(id)"
             ");")) {
