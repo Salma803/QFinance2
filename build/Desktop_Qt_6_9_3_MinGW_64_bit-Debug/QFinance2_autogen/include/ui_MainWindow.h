@@ -65,7 +65,8 @@ public:
     QDoubleSpinBox *spinMontantOperation;
     QDateEdit *dateOperation;
     QComboBox *comboCompteOperation;
-    QComboBox *comboCategorieOperation;
+    QComboBox *comboCategoriePrincipale;
+    QComboBox *comboSousCategorie;
     QCheckBox *checkRecurrente;
     QComboBox *comboFrequence;
     QPushButton *btnAjouterOperation;
@@ -211,10 +212,15 @@ public:
 
         vboxLayout2->addWidget(comboCompteOperation);
 
-        comboCategorieOperation = new QComboBox(tabOperations);
-        comboCategorieOperation->setObjectName("comboCategorieOperation");
+        comboCategoriePrincipale = new QComboBox(tabOperations);
+        comboCategoriePrincipale->setObjectName("comboCategoriePrincipale");
 
-        vboxLayout2->addWidget(comboCategorieOperation);
+        vboxLayout2->addWidget(comboCategoriePrincipale);
+
+        comboSousCategorie = new QComboBox(tabOperations);
+        comboSousCategorie->setObjectName("comboSousCategorie");
+
+        vboxLayout2->addWidget(comboSousCategorie);
 
         checkRecurrente = new QCheckBox(tabOperations);
         checkRecurrente->setObjectName("checkRecurrente");
@@ -295,6 +301,8 @@ public:
         comboTypeOperation->setItemText(1, QCoreApplication::translate("MainWindow", "D\303\251pense", nullptr));
 
         editNomOperation->setPlaceholderText(QCoreApplication::translate("MainWindow", "Nom de l\342\200\231op\303\251ration", nullptr));
+        comboCategoriePrincipale->setPlaceholderText(QCoreApplication::translate("MainWindow", "Cat\303\251gorie principale", nullptr));
+        comboSousCategorie->setPlaceholderText(QCoreApplication::translate("MainWindow", "Sous-cat\303\251gorie", nullptr));
         checkRecurrente->setText(QCoreApplication::translate("MainWindow", "D\303\251pense r\303\251currente", nullptr));
         comboFrequence->setItemText(0, QCoreApplication::translate("MainWindow", "Mensuelle", nullptr));
         comboFrequence->setItemText(1, QCoreApplication::translate("MainWindow", "Trimestrielle", nullptr));

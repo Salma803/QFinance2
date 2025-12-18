@@ -39,6 +39,8 @@ private:
     void remplirCombosOperation();
     void remplirHistoriqueComptes();
     void chargerHistoriqueCompte();
+    void remplirCategoriesPrincipales();
+    void chargerSousCategories();
 
 };
 

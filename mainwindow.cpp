@@ -44,6 +44,11 @@ MainWindow::MainWindow(QWidget *parent)
             &QComboBox::currentIndexChanged,
             this,
             &MainWindow::chargerHistoriqueCompte);
+    connect(ui->comboCategoriePrincipale,
+            &QComboBox::currentIndexChanged,
+            this,
+            &MainWindow::chargerSousCategories);
+
 
 
     // ✅ 1) Charger comptes depuis DB
@@ -319,24 +324,30 @@ void MainWindow::chargerCategoriesUI()
 
 void MainWindow::ajouterOperation()
 {
-    QString type = ui->comboTypeOperation->currentText();
+    int typeIndex = ui->comboTypeOperation->currentIndex(); // 🔑
     QString nom = ui->editNomOperation->text();
     double montant = ui->spinMontantOperation->value();
     QDate date = ui->dateOperation->date();
 
     QString compteId = ui->comboCompteOperation->currentData().toString();
-    QString categorieId = ui->comboCategorieOperation->currentData().toString();
+    QString categorieId =
+        ui->comboSousCategorie->currentData().toString();
+
+    if (categorieId.isEmpty()) {
+        categorieId =
+            ui->comboCategoriePrincipale->currentData().toString();
+    }
 
     if (nom.isEmpty() || montant <= 0)
         return;
 
-    if (type == "Revenu") {
+    if (typeIndex == 0) { // 0 = Revenu
         OperationRepository::ajouterRevenu(
             nom, date, montant,
             compteId, categorieId,
             "Non spécifiée"
             );
-    } else {
+    } else { // 1 = Dépense
         bool recurrente = ui->checkRecurrente->isChecked();
         QString frequence = ui->comboFrequence->currentText();
 
@@ -354,24 +365,29 @@ void MainWindow::ajouterOperation()
 
     rafraichirUI();
 }
+
 void MainWindow::remplirCombosOperation()
 {
+    // Comptes (courant uniquement)
     ui->comboCompteOperation->clear();
-    ui->comboCategorieOperation->clear();
-
-    ui->comboCompteOperation->clear();
-
     for (Compte* c : utilisateur.getComptes()) {
         if (c->estCourant()) {
             ui->comboCompteOperation->addItem(c->getNom(), c->getId());
         }
     }
 
-
-    for (Categorie* cat : categories) {
-        ui->comboCategorieOperation->addItem(cat->getNom(), cat->getId());
+    // Catégories principales
+    ui->comboCategoriePrincipale->clear();
+    for (Categorie* c : categories) {
+        if (!c->getParent()) {
+            ui->comboCategoriePrincipale->addItem(c->getNom(), c->getId());
+        }
     }
+
+    // Charger les sous-catégories du parent sélectionné
+    chargerSousCategories();
 }
+
 void MainWindow::remplirHistoriqueComptes()
 {
     ui->comboCompteHistorique->clear();
@@ -391,22 +407,97 @@ void MainWindow::chargerHistoriqueCompte()
     if (compteId.isEmpty())
         return;
 
+    // 1️⃣ Charger opérations
     QList<QVariantMap> ops =
         OperationRepository::chargerOperationsParCompte(compteId);
 
-    ui->tableOperations->setRowCount(ops.size());
+    // 2️⃣ Charger transferts
+    QList<QVariantMap> transferts =
+        TransfertRepository::chargerTransfertsParCompte(compteId);
 
-    for (int i = 0; i < ops.size(); ++i) {
-        ui->tableOperations->setItem(i, 0,
-                                     new QTableWidgetItem(ops[i]["date"].toString()));
-        ui->tableOperations->setItem(i, 1,
-                                     new QTableWidgetItem(ops[i]["nom"].toString()));
-        ui->tableOperations->setItem(i, 2,
-                                     new QTableWidgetItem(ops[i]["categorie"].toString()));
-        ui->tableOperations->setItem(i, 3,
-                                     new QTableWidgetItem(
-                                         QString::number(ops[i]["montant"].toDouble())
-                                         ));
+    // 3️⃣ Fusionner
+    QList<QVariantMap> all = ops;
+    all.append(transferts);
+
+    // 4️⃣ Trier par date décroissante
+    std::sort(all.begin(), all.end(),
+              [](const QVariantMap& a, const QVariantMap& b) {
+                  return a["date"].toDate() > b["date"].toDate();
+              });
+
+    // 5️⃣ Afficher
+    ui->tableOperations->setRowCount(all.size());
+
+    for (int i = 0; i < all.size(); ++i) {
+
+        // Date
+        ui->tableOperations->setItem(
+            i, 0,
+            new QTableWidgetItem(
+                all[i]["date"].toDate().toString("dd/MM/yyyy")
+                )
+            );
+
+        // Nom
+        ui->tableOperations->setItem(
+            i, 1,
+            new QTableWidgetItem(all[i]["nom"].toString())
+            );
+
+        // Catégorie
+        ui->tableOperations->setItem(
+            i, 2,
+            new QTableWidgetItem(all[i]["categorie"].toString())
+            );
+
+        // Montant avec signe métier
+        double montant = all[i]["montant"].toDouble();
+        QString type = all[i].value("type").toString();
+
+        if (type == "DEPENSE") {
+            montant = -montant;
+        }
+
+        QTableWidgetItem* montantItem =
+            new QTableWidgetItem(QString::number(montant));
+
+        if (montant < 0)
+            montantItem->setForeground(Qt::red);
+        else
+            montantItem->setForeground(Qt::darkGreen);
+
+        ui->tableOperations->setItem(i, 3, montantItem);
     }
 }
+void MainWindow::remplirCategoriesPrincipales()
+{
+    ui->comboCategoriePrincipale->clear();
 
+    for (Categorie* c : categories) {
+        if (!c->getParent()) {
+            ui->comboCategoriePrincipale->addItem(c->getNom(), c->getId());
+        }
+    }
+}
+void MainWindow::chargerSousCategories()
+{
+    ui->comboSousCategorie->clear();
+
+    QString parentId =
+        ui->comboCategoriePrincipale->currentData().toString();
+
+    bool hasChildren = false;
+
+    for (Categorie* c : categories) {
+        if (c->getParent() && c->getParent()->getId() == parentId) {
+            ui->comboSousCategorie->addItem(c->getNom(), c->getId());
+            hasChildren = true;
+        }
+    }
+
+    ui->comboSousCategorie->setEnabled(hasChildren);
+
+    if (!hasChildren) {
+        ui->comboSousCategorie->addItem("Aucune", "");
+    }
+}

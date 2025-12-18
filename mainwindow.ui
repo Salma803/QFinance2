@@ -188,7 +188,19 @@
          <widget class="QComboBox" name="comboCompteOperation"/>
         </item>
         <item>
-         <widget class="QComboBox" name="comboCategorieOperation"/>
+         <widget class="QComboBox" name="comboCategoriePrincipale">
+          <property name="placeholderText">
+           <string>Catégorie principale</string>
+          </property>
+         </widget>
+        </item>
+
+        <item>
+         <widget class="QComboBox" name="comboSousCategorie">
+          <property name="placeholderText">
+           <string>Sous-catégorie</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QCheckBox" name="checkRecurrente">
