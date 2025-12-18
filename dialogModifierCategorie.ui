@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogModifierCategorie</class>
+
+ <widget class="QDialog" name="DialogModifierCategorie">
+  <property name="windowTitle">
+   <string>Modifier la catégorie</string>
+  </property>
+
+  <layout class="QVBoxLayout">
+
+   <item>
+    <widget class="QLineEdit" name="editNomCategorie"/>
+   </item>
+   <item>
+    <widget class="QDoubleSpinBox" name="spinBudget">
+     <property name="minimum">
+      <double>0</double>
+     </property>
+     <property name="maximum">
+      <double>1000000</double>
+     </property>
+     <property name="suffix">
+      <string> €</string>
+     </property>
+     <property name="specialValueText">
+      <string>Aucun</string>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="btnOk">
+       <property name="text">
+        <string>Enregistrer</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnCancel">
+       <property name="text">
+        <string>Annuler</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+  </layout>
+ </widget>
+
+ <connections/>
+</ui>

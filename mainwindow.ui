@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>449</width>
+    <height>449</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Finance App</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="tabComptes">
+       <attribute name="title">
+        <string>Comptes</string>
+       </attribute>
+       <layout class="QVBoxLayout">
+        <item>
+         <widget class="QGroupBox" name="groupCompte">
+          <property name="title">
+           <string>Ajouter un compte</string>
+          </property>
+          <layout class="QHBoxLayout">
+           <item>
+            <widget class="QLineEdit" name="editNomCompte">
+             <property name="placeholderText">
+              <string>Nom du compte</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboTypeCompte">
+             <item>
+              <property name="text">
+               <string>Courant</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Épargne</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnAjouterCompte">
+             <property name="text">
+              <string>Ajouter</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="listComptes"/>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupTransfert">
+          <property name="title">
+           <string>Transfert</string>
+          </property>
+          <layout class="QHBoxLayout">
+           <item>
+            <widget class="QComboBox" name="comboSource"/>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboDestination"/>
+           </item>
+           <item>
+            <widget class="QDoubleSpinBox" name="spinMontant">
+             <property name="maximum">
+              <double>1000000.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnTransfert">
+             <property name="text">
+              <string>Transférer</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabCategories">
+       <attribute name="title">
+        <string>Catégories</string>
+       </attribute>
+       <layout class="QVBoxLayout">
+        <item>
+         <widget class="QTreeWidget" name="treeCategories">
+          <column>
+           <property name="text">
+            <string>Nom de la catégorie</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout">
+          <item>
+           <widget class="QPushButton" name="btnAjouterCategorie">
+            <property name="text">
+             <string>Ajouter</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnModifierCategorie">
+            <property name="text">
+             <string>Modifier</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnSupprimerCategorie">
+            <property name="text">
+             <string>Supprimer</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

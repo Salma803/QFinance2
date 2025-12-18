@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogSupprimerCategorie</class>
+
+ <widget class="QDialog" name="DialogSupprimerCategorie">
+  <property name="windowTitle">
+   <string>Supprimer la catégorie</string>
+  </property>
+
+  <layout class="QVBoxLayout">
+
+   <item>
+    <widget class="QLabel">
+     <property name="text">
+      <string>Voulez-vous vraiment supprimer cette catégorie et ses sous-catégories ?</string>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="btnOui">
+       <property name="text">
+        <string>Oui</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnNon">
+       <property name="text">
+        <string>Non</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+  </layout>
+ </widget>
+
+ <connections/>
+</ui>
