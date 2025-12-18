@@ -52,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent)
         utilisateur.ajouterCompte(c);
     }
     rafraichirUI();
+    remplirCombosOperation();
+    remplirHistoriqueComptes();
 
     // ✅ 2) Charger catégories depuis DB
     categories = CategorieRepository::chargerCategories("1");
@@ -89,11 +91,16 @@ void MainWindow::ajouterCompte()
     // 🔑 Persistance en base (utilisateur = "1")
     if (CompteRepository::ajouterCompte(compte, "1")) {
         utilisateur.ajouterCompte(compte);
+
         rafraichirUI();
+        remplirCombosOperation();
+        remplirHistoriqueComptes();
+
         ui->editNomCompte->clear();
     } else {
-        delete compte; // évite fuite mémoire
+        delete compte;
     }
+
 }
 
 
@@ -352,9 +359,14 @@ void MainWindow::remplirCombosOperation()
     ui->comboCompteOperation->clear();
     ui->comboCategorieOperation->clear();
 
+    ui->comboCompteOperation->clear();
+
     for (Compte* c : utilisateur.getComptes()) {
-        ui->comboCompteOperation->addItem(c->getNom(), c->getId());
+        if (c->estCourant()) {
+            ui->comboCompteOperation->addItem(c->getNom(), c->getId());
+        }
     }
+
 
     for (Categorie* cat : categories) {
         ui->comboCategorieOperation->addItem(cat->getNom(), cat->getId());

@@ -12,6 +12,9 @@ class Compte
 public:
     virtual ~Compte() = default;
 
+    virtual bool estCourant() const = 0;
+
+
     // Getters
     QString getId() const;
     QString getNom() const;

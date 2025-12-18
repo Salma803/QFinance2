@@ -9,6 +9,9 @@ public:
     CompteEpargne(const QString& id, const QString& nom, double solde);
 
     void mettreAJourSolde() override;
+
+    bool estCourant() const override { return false; }
+
 };
 
 #endif // COMPTEEPARGNE_H
