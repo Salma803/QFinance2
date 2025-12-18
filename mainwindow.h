@@ -37,6 +37,8 @@ private:
     Utilisateur utilisateur;
     QList<Categorie*> categories;
     void remplirCombosOperation();
+    void remplirHistoriqueComptes();
+    void chargerHistoriqueCompte();
 
 };
 

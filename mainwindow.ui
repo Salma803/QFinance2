@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tabComptes">
        <attribute name="title">
@@ -141,10 +141,7 @@
        <attribute name="title">
         <string>Opérations</string>
        </attribute>
-
        <layout class="QVBoxLayout">
-
-        <!-- Type opération -->
         <item>
          <widget class="QComboBox" name="comboTypeOperation">
           <item>
@@ -159,8 +156,6 @@
           </item>
          </widget>
         </item>
-
-        <!-- Nom -->
         <item>
          <widget class="QLineEdit" name="editNomOperation">
           <property name="placeholderText">
@@ -168,39 +163,33 @@
           </property>
          </widget>
         </item>
-
-        <!-- Montant -->
         <item>
          <widget class="QDoubleSpinBox" name="spinMontantOperation">
           <property name="maximum">
-           <double>1000000</double>
+           <double>1000000.000000000000000</double>
           </property>
          </widget>
         </item>
-
-        <!-- Date -->
         <item>
          <widget class="QDateEdit" name="dateOperation">
           <property name="calendarPopup">
            <bool>true</bool>
           </property>
           <property name="date">
-           <date>2025-01-01</date>
+           <date>
+            <year>2000</year>
+            <month>1</month>
+            <day>1</day>
+           </date>
           </property>
          </widget>
         </item>
-
-        <!-- Compte -->
         <item>
          <widget class="QComboBox" name="comboCompteOperation"/>
         </item>
-
-        <!-- Catégorie -->
         <item>
          <widget class="QComboBox" name="comboCategorieOperation"/>
         </item>
-
-        <!-- Spécifique Dépense -->
         <item>
          <widget class="QCheckBox" name="checkRecurrente">
           <property name="text">
@@ -208,16 +197,25 @@
           </property>
          </widget>
         </item>
-
         <item>
          <widget class="QComboBox" name="comboFrequence">
-          <item><property name="text"><string>Mensuelle</string></property></item>
-          <item><property name="text"><string>Trimestrielle</string></property></item>
-          <item><property name="text"><string>Annuelle</string></property></item>
+          <item>
+           <property name="text">
+            <string>Mensuelle</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Trimestrielle</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Annuelle</string>
+           </property>
+          </item>
          </widget>
         </item>
-
-        <!-- Bouton -->
         <item>
          <widget class="QPushButton" name="btnAjouterOperation">
           <property name="text">
@@ -225,10 +223,42 @@
           </property>
          </widget>
         </item>
-
        </layout>
       </widget>
-
+      <widget class="QWidget" name="tabHistorique">
+       <attribute name="title">
+        <string>Historique</string>
+       </attribute>
+       <layout class="QVBoxLayout">
+        <item>
+         <widget class="QComboBox" name="comboCompteHistorique"/>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableOperations">
+          <column>
+           <property name="text">
+            <string>Date</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Nom</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Catégorie</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Montant</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>

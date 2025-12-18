@@ -40,6 +40,11 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::supprimerCategorie);
     connect(ui->btnAjouterOperation, &QPushButton::clicked,
             this, &MainWindow::ajouterOperation);
+    connect(ui->comboCompteHistorique,
+            &QComboBox::currentIndexChanged,
+            this,
+            &MainWindow::chargerHistoriqueCompte);
+
 
     // ✅ 1) Charger comptes depuis DB
     QList<Compte*> comptes = CompteRepository::chargerComptes("1");
@@ -54,6 +59,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // ✅ 3) Remplir combos opérations
     remplirCombosOperation();
+    remplirHistoriqueComptes();
+
 }
 
 
@@ -353,5 +360,41 @@ void MainWindow::remplirCombosOperation()
         ui->comboCategorieOperation->addItem(cat->getNom(), cat->getId());
     }
 }
+void MainWindow::remplirHistoriqueComptes()
+{
+    ui->comboCompteHistorique->clear();
 
+    for (Compte* c : utilisateur.getComptes()) {
+        ui->comboCompteHistorique->addItem(c->getNom(), c->getId());
+    }
+}
+
+void MainWindow::chargerHistoriqueCompte()
+{
+    ui->tableOperations->setRowCount(0);
+
+    QString compteId =
+        ui->comboCompteHistorique->currentData().toString();
+
+    if (compteId.isEmpty())
+        return;
+
+    QList<QVariantMap> ops =
+        OperationRepository::chargerOperationsParCompte(compteId);
+
+    ui->tableOperations->setRowCount(ops.size());
+
+    for (int i = 0; i < ops.size(); ++i) {
+        ui->tableOperations->setItem(i, 0,
+                                     new QTableWidgetItem(ops[i]["date"].toString()));
+        ui->tableOperations->setItem(i, 1,
+                                     new QTableWidgetItem(ops[i]["nom"].toString()));
+        ui->tableOperations->setItem(i, 2,
+                                     new QTableWidgetItem(ops[i]["categorie"].toString()));
+        ui->tableOperations->setItem(i, 3,
+                                     new QTableWidgetItem(
+                                         QString::number(ops[i]["montant"].toDouble())
+                                         ));
+    }
+}
 

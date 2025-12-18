@@ -24,6 +24,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -68,6 +69,10 @@ public:
     QCheckBox *checkRecurrente;
     QComboBox *comboFrequence;
     QPushButton *btnAjouterOperation;
+    QWidget *tabHistorique;
+    QVBoxLayout *vboxLayout3;
+    QComboBox *comboCompteHistorique;
+    QTableWidget *tableOperations;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -197,7 +202,7 @@ public:
         dateOperation = new QDateEdit(tabOperations);
         dateOperation->setObjectName("dateOperation");
         dateOperation->setCalendarPopup(true);
-        dateOperation->setDate(QDate(0, 0, 0));
+        dateOperation->setDate(QDate(2000, 1, 1));
 
         vboxLayout2->addWidget(dateOperation);
 
@@ -230,6 +235,31 @@ public:
         vboxLayout2->addWidget(btnAjouterOperation);
 
         tabWidget->addTab(tabOperations, QString());
+        tabHistorique = new QWidget();
+        tabHistorique->setObjectName("tabHistorique");
+        vboxLayout3 = new QVBoxLayout(tabHistorique);
+        vboxLayout3->setObjectName("vboxLayout3");
+        comboCompteHistorique = new QComboBox(tabHistorique);
+        comboCompteHistorique->setObjectName("comboCompteHistorique");
+
+        vboxLayout3->addWidget(comboCompteHistorique);
+
+        tableOperations = new QTableWidget(tabHistorique);
+        if (tableOperations->columnCount() < 4)
+            tableOperations->setColumnCount(4);
+        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
+        tableOperations->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
+        tableOperations->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
+        tableOperations->setHorizontalHeaderItem(2, __qtablewidgetitem2);
+        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
+        tableOperations->setHorizontalHeaderItem(3, __qtablewidgetitem3);
+        tableOperations->setObjectName("tableOperations");
+
+        vboxLayout3->addWidget(tableOperations);
+
+        tabWidget->addTab(tabHistorique, QString());
 
         verticalLayout->addWidget(tabWidget);
 
@@ -237,7 +267,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -272,6 +302,15 @@ public:
 
         btnAjouterOperation->setText(QCoreApplication::translate("MainWindow", "Ajouter l\342\200\231op\303\251ration", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tabOperations), QCoreApplication::translate("MainWindow", "Op\303\251rations", nullptr));
+        QTableWidgetItem *___qtablewidgetitem = tableOperations->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
+        QTableWidgetItem *___qtablewidgetitem1 = tableOperations->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Nom", nullptr));
+        QTableWidgetItem *___qtablewidgetitem2 = tableOperations->horizontalHeaderItem(2);
+        ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "Cat\303\251gorie", nullptr));
+        QTableWidgetItem *___qtablewidgetitem3 = tableOperations->horizontalHeaderItem(3);
+        ___qtablewidgetitem3->setText(QCoreApplication::translate("MainWindow", "Montant", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tabHistorique), QCoreApplication::translate("MainWindow", "Historique", nullptr));
     } // retranslateUi
 
 };

@@ -65,3 +65,36 @@ bool OperationRepository::ajouterDepense(const QString& nom,
 
     return true;
 }
+QList<QVariantMap> OperationRepository::chargerOperationsParCompte(
+    const QString& compteId)
+{
+    QList<QVariantMap> ops;
+    QSqlQuery query;
+
+    query.prepare(
+        "SELECT o.date, o.nom, c.nom AS categorie, o.montant, o.type "
+        "FROM Operation o "
+        "JOIN Categorie c ON o.categorie_id = c.id "
+        "WHERE o.compte_id = :cid "
+        "ORDER BY o.date DESC"
+        );
+    query.bindValue(":cid", compteId);
+
+    if (!query.exec()) {
+        qDebug() << query.lastError();
+        return ops;
+    }
+
+    while (query.next()) {
+        QVariantMap row;
+        row["date"] = query.value("date");
+        row["nom"] = query.value("nom");
+        row["categorie"] = query.value("categorie");
+        row["montant"] = query.value("montant");
+        row["type"] = query.value("type");
+        ops.append(row);
+    }
+
+    return ops;
+}
+

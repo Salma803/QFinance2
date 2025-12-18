@@ -21,6 +21,8 @@ public:
                                const QString& categorieId,
                                bool estRecurrente,
                                const QString& frequence);
+    static QList<QVariantMap> chargerOperationsParCompte(const QString& compteId);
+
 };
 
 #endif // OPERATIONREPOSITORY_H

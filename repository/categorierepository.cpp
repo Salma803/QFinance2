@@ -28,13 +28,33 @@ void CategorieRepository::creerCategoriesParDefaut()
         "VALUES (:id, :nom, :parent, NULL)");
 
     struct Cat { QString id, nom, parent; };
+
     QList<Cat> cats = {
-        {"c1","Revenus",""},
-        {"c2","Dépenses",""},
-        {"c3","Salaire","c1"},
-        {"c4","Alimentation","c2"},
-        {"c5","Logement","c2"}
+        {"c1","Salaire & Revenus",""},
+        {"c2","Logement",""},
+        {"c3","Alimentation",""},
+        {"c4","Transport",""},
+        {"c5","Santé",""},
+        {"c6","Loisirs",""},
+        {"c7","Abonnements",""},
+        {"c8","Épargne",""},
+        {"c9","Autres",""},
+
+        {"c10","Salaire","c1"},
+        {"c11","Prime","c1"},
+        {"c12","Aides / Bourses","c1"},
+        {"c13","Revenus divers","c1"},
+
+        {"c20","Loyer","c2"},
+        {"c21","Charges","c2"},
+        {"c22","Électricité","c2"},
+        {"c23","Internet","c2"},
+
+        {"c30","Courses","c3"},
+        {"c31","Restaurants","c3"}
+        // etc.
     };
+
 
     for (const auto& c : cats) {
         query.bindValue(":id", c.id);
