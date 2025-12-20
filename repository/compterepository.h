@@ -12,8 +12,8 @@ class CompteRepository
 public:
     static bool ajouterCompte(const Compte* compte, const QString& utilisateurId);
     static QList<Compte*> chargerComptes(const QString& utilisateurId);
-    static bool mettreAJourSolde(const Compte* compte);
-
+    static void mettreAJourSolde(const QString& compteId);
+    static double calculerSolde(const QString& compteId);
 
 };
 

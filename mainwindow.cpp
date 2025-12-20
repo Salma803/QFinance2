@@ -76,13 +76,17 @@ MainWindow::MainWindow(QWidget *parent)
     // ✅ 2) Créer catégories par défaut et charger depuis DB
     categorieRepository.creerCategoriesParDefaut();
     categories = categorieRepository.chargerCategories("1");
+
+    // ✅ IMPORTANT: initialiser dashboard AVANT d'utiliser comboMois/spinAnnee
+    initialiserDashboard();
+
+    // ✅ Maintenant seulement afficher
     chargerCategoriesUI();
 
     // ✅ 3) Remplir combos opérations
     remplirCombosOperation();
     remplirHistoriqueComptes();
 
-    initialiserDashboard();
 }
 
 MainWindow::~MainWindow()
@@ -156,11 +160,11 @@ void MainWindow::ajouterCompte()
     }
 
     if (CompteRepository::ajouterCompte(compte, "1")) {
+        CompteRepository::mettreAJourSolde(compte->getId());
         utilisateur.ajouterCompte(compte);
         rafraichirUI();
         remplirCombosOperation();
         remplirHistoriqueComptes();
-        ui->editNomCompte->clear();
     } else {
         delete compte;
     }
@@ -193,10 +197,12 @@ void MainWindow::effectuerTransfert()
         return;
     }
 
-    CompteRepository::mettreAJourSolde(source);
-    CompteRepository::mettreAJourSolde(destination);
+    CompteRepository::mettreAJourSolde(source->getId());
+    CompteRepository::mettreAJourSolde(destination->getId());
 
     rafraichirUI();
+    chargerHistoriqueCompte();
+    actualiserDashboard();
 }
 
 void MainWindow::rafraichirUI()
@@ -206,12 +212,20 @@ void MainWindow::rafraichirUI()
     ui->comboDestination->clear();
 
     for (Compte* c : utilisateur.getComptes()) {
-        QString text = c->getNom() + " | Solde : " + QString::number(c->getSolde());
+
+        // 🔑 Solde recalculé depuis la DB
+        double solde = CompteRepository::calculerSolde(c->getId());
+
+        QString text = c->getNom()
+                       + " | Solde : "
+                       + QString::number(solde, 'f', 2);
+
         ui->listComptes->addItem(text);
-        ui->comboSource->addItem(c->getNom());
-        ui->comboDestination->addItem(c->getNom());
+        ui->comboSource->addItem(c->getNom(), c->getId());
+        ui->comboDestination->addItem(c->getNom(), c->getId());
     }
 }
+
 
 void MainWindow::ajouterCategorie()
 {
@@ -332,26 +346,48 @@ void MainWindow::chargerCategoriesUI()
 {
     ui->treeCategories->clear();
 
+    int mois = ui->comboMois->currentData().toInt();
+    if (mois <= 0)
+        mois = QDate::currentDate().month();
+
+    int annee = ui->spinAnnee->value();
+    if (annee <= 0)
+        annee = QDate::currentDate().year();
+
     QMap<QString, QTreeWidgetItem*> map;
 
-    int mois = QDate::currentDate().month();
-    int annee = QDate::currentDate().year();
-
-    // Création des items avec ID stocké
     for (Categorie* c : categories) {
-        QString label = c->getNom();
 
-        double budget = BudgetRepository::obtenirBudget(c->getId(), mois, annee);
+        double budget = BudgetRepository::obtenirBudget(
+            c->getId(), mois, annee
+            );
+
+
+        double depenses = BudgetRepository::calculerDepensesCategorie(
+            c->getId(), mois, annee
+            );
+
+        double restant = budget - depenses;
+
+        QTreeWidgetItem* item = new QTreeWidgetItem();
+        item->setText(0, c->getNom());
+
         if (budget >= 0) {
-            label += "  [Budget: " + QString::number(budget) + " €]";
+            item->setText(1, QString::number(budget, 'f', 2));
+            item->setText(2, QString::number(depenses, 'f', 2));
+            item->setText(3, QString::number(restant, 'f', 2));
+
+            item->setForeground(3, restant < 0 ? Qt::red : Qt::darkGreen);
+        } else {
+            item->setText(1, "-");
+            item->setText(2, "-");
+            item->setText(3, "-");
         }
 
-        QTreeWidgetItem* item = new QTreeWidgetItem(QStringList() << label);
-        item->setData(0, Qt::UserRole, c->getId());  // Stocke l'ID
+        item->setData(0, Qt::UserRole, c->getId());
         map[c->getId()] = item;
     }
 
-    // Hiérarchie parent / enfant
     for (Categorie* c : categories) {
         QTreeWidgetItem* item = map[c->getId()];
         if (c->getParent()) {
@@ -363,6 +399,7 @@ void MainWindow::chargerCategoriesUI()
 
     ui->treeCategories->expandAll();
 }
+
 
 void MainWindow::supprimerCategorie()
 {
@@ -459,9 +496,12 @@ void MainWindow::ajouterOperation()
     // Mise à jour solde
     Compte* compte = utilisateur.getCompteById(compteId);
     if (compte) {
-        compte->mettreAJourSolde();
-        CompteRepository::mettreAJourSolde(compte);
+        CompteRepository::mettreAJourSolde(compteId);
+
+        // ✅ Rafraîchissements
         rafraichirUI();
+        chargerHistoriqueCompte();
+        chargerCategoriesUI();
         actualiserDashboard();
     }
 }

@@ -102,13 +102,28 @@
        </attribute>
        <layout class="QVBoxLayout">
         <item>
-         <widget class="QTreeWidget" name="treeCategories">
-          <column>
-           <property name="text">
-            <string>Nom de la catégorie</string>
-           </property>
-          </column>
-         </widget>
+        <widget class="QTreeWidget" name="treeCategories">
+         <column>
+          <property name="text">
+           <string>Catégorie</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Budget (€)</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Dépensé (€)</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Restant (€)</string>
+          </property>
+         </column>
+        </widget>
         </item>
         <item>
          <layout class="QHBoxLayout">

@@ -70,10 +70,12 @@ void CategorieRepository::creerCategoriesParDefaut()
 }
 
 
+
 QList<Categorie*> CategorieRepository::chargerCategories(const QString& utilisateurId)
 {
     QList<Categorie*> categories;
     QMap<QString, Categorie*> map;
+    QMap<QString, QString> parentMap;
 
     QSqlQuery query;
     query.prepare(
@@ -82,30 +84,38 @@ QList<Categorie*> CategorieRepository::chargerCategories(const QString& utilisat
         "WHERE utilisateur_id IS NULL OR utilisateur_id = :uid"
         );
     query.bindValue(":uid", utilisateurId);
-    query.exec();
 
-    // 1ère passe : créer objets
+    if (!query.exec()) {
+        qDebug() << "Erreur chargerCategories:" << query.lastError();
+        return categories;
+    }
+
+    // 1) Créer tous les objets + mémoriser leur parent_id
     while (query.next()) {
         QString id = query.value("id").toString();
         QString nom = query.value("nom").toString();
-        map[id] = new Categorie(id, nom);
-    }
-
-    query.first();
-    query.previous();
-
-    // 2ème passe : relier parents / enfants
-    while (query.next()) {
-        QString id = query.value("id").toString();
         QString parentId = query.value("parent_id").toString();
 
-        if (!parentId.isEmpty()) {
-            map[id]->~Categorie();
-            new (map[id]) Categorie(id, map[id]->getNom(), map[parentId]);
-        }
-        categories.append(map[id]);
+        map[id] = new Categorie(id, nom, nullptr);
+        parentMap[id] = parentId;
     }
 
+    // 2) Relier parent/enfants
+    for (auto it = map.begin(); it != map.end(); ++it) {
+        QString id = it.key();
+        Categorie* cat = it.value();
+
+        QString parentId = parentMap.value(id);
+        if (!parentId.isEmpty() && map.contains(parentId)) {
+            Categorie* parent = map[parentId];
+            // on ne "reconstruit" pas l'objet : on relie proprement
+            // (donc il faut que Categorie ait un setter OU qu'on passe par ajouterEnfant)
+            cat->setParent(parent);        // <- à ajouter si pas présent
+            parent->ajouterEnfant(cat);
+        }
+    }
+
+    categories = map.values();
     return categories;
 }
 
@@ -215,4 +225,27 @@ bool CategorieRepository::supprimerCategorieAvecEnfants(const QString& categorie
 
     qDebug() << "Suppression" << (succes ? "réussie" : "échouée");
     return succes;
+}
+
+QList<QString> CategorieRepository::chargerIdsSousCategories(
+    const QString& parentId)
+{
+    QList<QString> enfants;
+    QSqlQuery query;
+
+    query.prepare(
+        "SELECT id FROM Categorie WHERE parent_id = :pid"
+        );
+    query.bindValue(":pid", parentId);
+
+    if (!query.exec()) {
+        qDebug() << "Erreur chargement sous-categories:" << query.lastError();
+        return enfants;
+    }
+
+    while (query.next()) {
+        enfants.append(query.value(0).toString());
+    }
+
+    return enfants;
 }

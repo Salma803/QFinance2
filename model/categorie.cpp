@@ -49,3 +49,6 @@ QString Categorie::getCategorieBudgetSource() const
     }
     return parent->getCategorieBudgetSource();
 }
+
+void Categorie::setParent(Categorie* p) { parent = p; }
+

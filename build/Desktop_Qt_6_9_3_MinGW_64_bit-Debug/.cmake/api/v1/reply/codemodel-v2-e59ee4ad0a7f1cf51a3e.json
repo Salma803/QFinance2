@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-19824cb76e8c48a9ef62.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "QFinance2",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "QFinance2::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QFinance2-Debug-6edc37d348c71fef0cf6.json",
+					"name" : "QFinance2",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "QFinance2_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QFinance2_autogen-Debug-f31c34d891489c36df17.json",
+					"name" : "QFinance2_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "QFinance2_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QFinance2_autogen_timestamp_deps-Debug-0d745726304e38f96985.json",
+					"name" : "QFinance2_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/Projects/QFinance2/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug",
+		"source" : "D:/Projects/QFinance2"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

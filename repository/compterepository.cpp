@@ -67,18 +67,67 @@ QList<Compte*> CompteRepository::chargerComptes(const QString& utilisateurId)
 
     return comptes;
 }
-bool CompteRepository::mettreAJourSolde(const Compte* compte)
+double CompteRepository::calculerSolde(const QString& compteId)
 {
+    double solde = 0.0;
+    QSqlQuery query;
+
+    // 1️⃣ Revenus
+    query.prepare(
+        "SELECT IFNULL(SUM(montant), 0) "
+        "FROM Operation "
+        "WHERE compte_id = :id AND type = 'REVENU'"
+        );
+    query.bindValue(":id", compteId);
+    query.exec();
+    query.next();
+    solde += query.value(0).toDouble();
+
+    // 2️⃣ Dépenses
+    query.prepare(
+        "SELECT IFNULL(SUM(montant), 0) "
+        "FROM Operation "
+        "WHERE compte_id = :id AND type = 'DEPENSE'"
+        );
+    query.bindValue(":id", compteId);
+    query.exec();
+    query.next();
+    solde -= query.value(0).toDouble();
+
+    // 3️⃣ Transferts entrants
+    query.prepare(
+        "SELECT IFNULL(SUM(montant), 0) "
+        "FROM Transfert "
+        "WHERE destination_id = :id"
+        );
+    query.bindValue(":id", compteId);
+    query.exec();
+    query.next();
+    solde += query.value(0).toDouble();
+
+    // 4️⃣ Transferts sortants
+    query.prepare(
+        "SELECT IFNULL(SUM(montant), 0) "
+        "FROM Transfert "
+        "WHERE source_id = :id"
+        );
+    query.bindValue(":id", compteId);
+    query.exec();
+    query.next();
+    solde -= query.value(0).toDouble();
+
+    return solde;
+}
+void CompteRepository::mettreAJourSolde(const QString& compteId)
+{
+    double solde = calculerSolde(compteId);
+
     QSqlQuery query;
     query.prepare(
-        "UPDATE Compte SET solde = :solde WHERE id = :id"
+        "UPDATE Compte SET solde = :s WHERE id = :id"
         );
-    query.bindValue(":solde", compte->getSolde());
-    query.bindValue(":id", compte->getId());
-
-    if (!query.exec()) {
-        qDebug() << "Erreur mise à jour solde:" << query.lastError();
-        return false;
-    }
-    return true;
+    query.bindValue(":s", solde);
+    query.bindValue(":id", compteId);
+    query.exec();
 }
+

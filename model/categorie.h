@@ -19,6 +19,8 @@ public:
 
     // Hiérarchie
     void ajouterEnfant(Categorie* enfant);
+    void setParent(Categorie* p);
+
 
     // Règle métier : héritage de budget
     QString getCategorieBudgetSource() const;

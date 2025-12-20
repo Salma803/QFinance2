@@ -16,6 +16,12 @@ public:
     static double obtenirBudget(const QString& categorieId,
                                 int mois,
                                 int annee);
+    static double calculerDepensesCategorie(const QString& categorieId,
+                                            int mois,
+                                            int annee);
+    static double calculerBudgetRestant(const QString& categorieId,
+                                        int mois,
+                                        int annee);
 };
 
 #endif
