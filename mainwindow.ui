@@ -159,7 +159,7 @@
         <item>
          <widget class="QLineEdit" name="editNomOperation">
           <property name="placeholderText">
-           <string>Nom de l’opération</string>
+           <string>Nom de l'opération</string>
           </property>
          </widget>
         </item>
@@ -194,7 +194,6 @@
           </property>
          </widget>
         </item>
-
         <item>
          <widget class="QComboBox" name="comboSousCategorie">
           <property name="placeholderText">
@@ -231,7 +230,7 @@
         <item>
          <widget class="QPushButton" name="btnAjouterOperation">
           <property name="text">
-           <string>Ajouter l’opération</string>
+           <string>Ajouter l'opération</string>
           </property>
          </widget>
         </item>
@@ -247,6 +246,15 @@
         </item>
         <item>
          <widget class="QTableWidget" name="tableOperations">
+          <property name="editTriggers">
+           <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
           <column>
            <property name="text">
             <string>Date</string>
@@ -269,6 +277,88 @@
           </column>
          </widget>
         </item>
+        <item>
+         <layout class="QHBoxLayout">
+          <item>
+           <widget class="QPushButton" name="btnSupprimerOperation">
+            <property name="text">
+             <string>Supprimer l'opération</string>
+            </property>
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabDashboard">
+       <attribute name="title">
+        <string>Dashboard</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayoutDashboard">
+        <item>
+         <widget class="QGroupBox" name="groupFiltres">
+          <property name="title">
+           <string>Filtres</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayoutFiltres">
+           <item>
+            <widget class="QComboBox" name="comboMois"/>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="spinAnnee">
+             <property name="minimum">
+              <number>2000</number>
+             </property>
+             <property name="maximum">
+              <number>2100</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnActualiser">
+             <property name="text">
+              <string>Actualiser</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacerFiltres">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QChartView" name="chartDepensesParCategorie" native="true"/>
+        </item>
+        <item>
+         <widget class="QChartView" name="chartRevenusVsDepenses" native="true"/>
+        </item>
        </layout>
       </widget>
      </widget>
@@ -276,6 +366,13 @@
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QChartView</class>
+   <extends>QWidget</extends>
+   <header>qchartview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -156,3 +156,63 @@ bool CategorieRepository::modifierCategorie(const QString& categorieId,
 
     return true;
 }
+
+bool CategorieRepository::supprimerCategorieAvecEnfants(const QString& categorieId)
+{
+    qDebug() << "Suppression de la catégorie:" << categorieId;
+
+    QSqlQuery query;
+
+    // Vérifier si la catégorie existe
+    query.prepare("SELECT COUNT(*) FROM Categorie WHERE id = :id");
+    query.bindValue(":id", categorieId);
+
+    if (!query.exec() || !query.next()) {
+        qDebug() << "Erreur vérification existence:" << query.lastError().text();
+        return false;
+    }
+
+    if (query.value(0).toInt() == 0) {
+        qDebug() << "Catégorie non trouvée";
+        return false;
+    }
+
+    // Récupérer tous les IDs à supprimer (parent + enfants)
+    QList<QString> idsASupprimer;
+    idsASupprimer.append(categorieId);
+
+    // Trouver les enfants récursivement
+    std::function<void(const QString&)> trouverEnfants = [&](const QString& parentId) {
+        query.prepare("SELECT id FROM Categorie WHERE parent_id = :parentId");
+        query.bindValue(":parentId", parentId);
+
+        if (query.exec()) {
+            while (query.next()) {
+                QString enfantId = query.value("id").toString();
+                idsASupprimer.append(enfantId);
+                trouverEnfants(enfantId);
+            }
+        }
+    };
+
+    trouverEnfants(categorieId);
+
+    qDebug() << "Catégories à supprimer:" << idsASupprimer.size();
+
+    // Supprimer (en commençant par les enfants)
+    bool succes = true;
+    std::reverse(idsASupprimer.begin(), idsASupprimer.end());
+
+    for (const QString& id : idsASupprimer) {
+        query.prepare("DELETE FROM Categorie WHERE id = :id");
+        query.bindValue(":id", id);
+
+        if (!query.exec()) {
+            qDebug() << "Erreur suppression" << id << ":" << query.lastError().text();
+            succes = false;
+        }
+    }
+
+    qDebug() << "Suppression" << (succes ? "réussie" : "échouée");
+    return succes;
+}

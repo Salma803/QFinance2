@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include "model/Utilisateur.h"
 #include "model/Categorie.h"
+#include "dashboardmanager.h"
+#include "repository/categorierepository.h"
+
 
 
 QT_BEGIN_NAMESPACE
@@ -28,11 +31,22 @@ private slots:
     void supprimerCategorie();
     void chargerCategoriesUI();
     void ajouterOperation();
+    void actualiserDashboard();
+    void initialiserDashboard();
+
+    void supprimerOperation();
+    void onTableOperationsCellChanged(int row, int column);
+
 
 private:
     void rafraichirUI();
+    void initialiserComboMois();
 
     Ui::MainWindow *ui;   // pointeur vers type incomplet (OK)
+    CategorieRepository categorieRepository;
+    QString currentOperationId;
+    bool isModifyingTable = false;
+
 
     Utilisateur utilisateur;
     QList<Categorie*> categories;
@@ -41,6 +55,16 @@ private:
     void chargerHistoriqueCompte();
     void remplirCategoriesPrincipales();
     void chargerSousCategories();
+    void onOperationSelectionChanged();
+
+    // Méthodes
+    QString findCategorieIdByName(const QString &categorieName);
+    void restoreOriginalValue(int row, int column, const QVariantMap &originalData);
+
+
+
+
+    DashboardManager *dashboardManager;
 
 };
 

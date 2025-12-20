@@ -18,6 +18,11 @@ public:
     static bool modifierCategorie(const QString& categorieId,
                                   const QString& nouveauNom);
 
+    bool supprimerCategorie(const QString& categorieId);
+
+    // Suppression d'une catégorie et de ses sous-catégories
+    bool supprimerCategorieAvecEnfants(const QString& categorieId);
+
 };
 
 #endif // CATEGORIEREPOSITORY_H

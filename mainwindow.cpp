@@ -14,16 +14,21 @@
 #include "repository/BudgetRepository.h"
 #include "repository/OperationRepository.h"
 
-
+#include <QDialog>
+#include <QMessageBox>
+#include <QTreeWidgetItem>
 #include <QUuid>
 #include <QPushButton>
-#include <QDialog>
-
+#include <QDate>
+#include <QDebug>
+#include <QSqlQuery>
+#include <functional>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
     ui(new Ui::MainWindow),
-    utilisateur("1", "Utilisateur principal")
+    utilisateur("1", "Utilisateur principal"),
+    dashboardManager(new DashboardManager(this))
 {
     ui->setupUi(this);
 
@@ -49,7 +54,17 @@ MainWindow::MainWindow(QWidget *parent)
             this,
             &MainWindow::chargerSousCategories);
 
+    connect(ui->btnSupprimerOperation, &QPushButton::clicked,
+            this, &MainWindow::supprimerOperation);
 
+    connect(ui->tableOperations, &QTableWidget::itemSelectionChanged,
+            this, &MainWindow::onOperationSelectionChanged);
+
+    // Connexions pour le dashboard
+    connect(ui->btnActualiser, &QPushButton::clicked,
+            this, &MainWindow::actualiserDashboard);
+
+    // IMPORTANT: Ne pas connecter cellChanged ici - nous le ferons dans chargerHistoriqueCompte
 
     // ✅ 1) Charger comptes depuis DB
     QList<Compte*> comptes = CompteRepository::chargerComptes("1");
@@ -57,25 +72,72 @@ MainWindow::MainWindow(QWidget *parent)
         utilisateur.ajouterCompte(c);
     }
     rafraichirUI();
-    remplirCombosOperation();
-    remplirHistoriqueComptes();
 
-    // ✅ 2) Charger catégories depuis DB
-    categories = CategorieRepository::chargerCategories("1");
+    // ✅ 2) Créer catégories par défaut et charger depuis DB
+    categorieRepository.creerCategoriesParDefaut();
+    categories = categorieRepository.chargerCategories("1");
     chargerCategoriesUI();
 
     // ✅ 3) Remplir combos opérations
     remplirCombosOperation();
     remplirHistoriqueComptes();
 
+    initialiserDashboard();
 }
-
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
+void MainWindow::initialiserDashboard()
+{
+    // Initialiser le combo des mois
+    initialiserComboMois();
+
+    // Définir l'année courante
+    int anneeCourante = QDate::currentDate().year();
+    ui->spinAnnee->setValue(anneeCourante);
+
+    // Initialiser les charts
+    dashboardManager->initialiserCharts(
+        ui->chartDepensesParCategorie,
+        ui->chartRevenusVsDepenses
+        );
+
+    dashboardManager->setCategories(categories);
+
+    // Actualiser le dashboard avec les valeurs par défaut
+    actualiserDashboard();
+}
+
+void MainWindow::initialiserComboMois()
+{
+    ui->comboMois->clear();
+
+    QStringList moisNoms = {
+        "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    };
+
+    for (int i = 0; i < 12; i++) {
+        ui->comboMois->addItem(moisNoms[i], i + 1);
+    }
+
+    // Sélectionner le mois courant
+    int moisCourant = QDate::currentDate().month();
+    ui->comboMois->setCurrentIndex(moisCourant - 1);
+}
+
+void MainWindow::actualiserDashboard()
+{
+    int mois = ui->comboMois->currentData().toInt();
+    int annee = ui->spinAnnee->value();
+
+    qDebug() << "Actualisation du dashboard - Mois:" << mois << "Année:" << annee;
+
+    dashboardManager->actualiserDashboard(mois, annee, categories);
+}
 
 void MainWindow::ajouterCompte()
 {
@@ -93,21 +155,16 @@ void MainWindow::ajouterCompte()
         compte = new CompteEpargne(id, nom, 0);
     }
 
-    // 🔑 Persistance en base (utilisateur = "1")
     if (CompteRepository::ajouterCompte(compte, "1")) {
         utilisateur.ajouterCompte(compte);
-
         rafraichirUI();
         remplirCombosOperation();
         remplirHistoriqueComptes();
-
         ui->editNomCompte->clear();
     } else {
         delete compte;
     }
-
 }
-
 
 void MainWindow::effectuerTransfert()
 {
@@ -124,7 +181,6 @@ void MainWindow::effectuerTransfert()
     Compte* source = utilisateur.getComptes().at(srcIndex);
     Compte* destination = utilisateur.getComptes().at(dstIndex);
 
-    // 1️⃣ Création du transfert (met à jour les soldes en mémoire)
     Transfert* transfert = new Transfert(
         montant,
         QDate::currentDate(),
@@ -132,19 +188,16 @@ void MainWindow::effectuerTransfert()
         destination
         );
 
-    // 2️⃣ Persistance du transfert
     if (!TransfertRepository::ajouterTransfert(transfert)) {
         delete transfert;
         return;
     }
 
-    // 3️⃣ Mise à jour des soldes en base
     CompteRepository::mettreAJourSolde(source);
     CompteRepository::mettreAJourSolde(destination);
 
     rafraichirUI();
 }
-
 
 void MainWindow::rafraichirUI()
 {
@@ -159,6 +212,7 @@ void MainWindow::rafraichirUI()
         ui->comboDestination->addItem(c->getNom());
     }
 }
+
 void MainWindow::ajouterCategorie()
 {
     QDialog dialog(this);
@@ -184,11 +238,9 @@ void MainWindow::ajouterCategorie()
         if (nom.isEmpty())
             return;
 
-        // 1️⃣ Ajouter la catégorie
-        QString categorieId =
-            CategorieRepository::ajouterCategorie(nom, "1", parentId);
+        // Utilise l'instance categorieRepository
+        QString categorieId = categorieRepository.ajouterCategorie(nom, "1", parentId);
 
-        // 2️⃣ Si un budget est défini, l’enregistrer
         if (budget > 0) {
             BudgetRepository::definirBudget(
                 categorieId,
@@ -198,9 +250,12 @@ void MainWindow::ajouterCategorie()
                 );
         }
 
-        // 3️⃣ Recharger et rafraîchir
-        categories = CategorieRepository::chargerCategories("1");
+        // Recharger les catégories
+        categories = categorieRepository.chargerCategories("1");
         chargerCategoriesUI();
+
+        dashboardManager->setCategories(categories);
+        actualiserDashboard();
     }
 }
 
@@ -210,10 +265,15 @@ void MainWindow::modifierCategorie()
     if (!item)
         return;
 
-    // Retrouver la catégorie associée
+    // Récupérer l'ID depuis l'item
+    QString categorieId = item->data(0, Qt::UserRole).toString();
+    if (categorieId.isEmpty())
+        return;
+
+    // Trouver la catégorie
     Categorie* categorie = nullptr;
     for (Categorie* c : categories) {
-        if (item->text(0).startsWith(c->getNom())) {
+        if (c->getId() == categorieId) {
             categorie = c;
             break;
         }
@@ -226,14 +286,13 @@ void MainWindow::modifierCategorie()
     Ui::DialogModifierCategorie uiDialog;
     uiDialog.setupUi(&dialog);
 
-    // Pré-remplir
     uiDialog.editNomCategorie->setText(categorie->getNom());
 
     int mois = QDate::currentDate().month();
     int annee = QDate::currentDate().year();
 
     double budgetActuel = BudgetRepository::obtenirBudget(
-        categorie->getId(), mois, annee
+        categorieId, mois, annee
         );
 
     if (budgetActuel >= 0)
@@ -251,35 +310,24 @@ void MainWindow::modifierCategorie()
         if (nouveauNom.isEmpty())
             return;
 
-        // 1️⃣ Modifier le nom
-        CategorieRepository::modifierCategorie(
-            categorie->getId(), nouveauNom
-            );
+        // Utilise l'instance categorieRepository
+        categorieRepository.modifierCategorie(categorieId, nouveauNom);
 
-        // 2️⃣ Modifier / définir le budget
         if (nouveauBudget > 0) {
             BudgetRepository::definirBudget(
-                categorie->getId(), mois, annee, nouveauBudget
+                categorieId, mois, annee, nouveauBudget
                 );
         }
 
-        // 3️⃣ Recharger
-        categories = CategorieRepository::chargerCategories("1");
+        // Recharger les catégories
+        categories = categorieRepository.chargerCategories("1");
         chargerCategoriesUI();
+
+        dashboardManager->setCategories(categories);
+        actualiserDashboard();
     }
 }
 
-void MainWindow::supprimerCategorie()
-{
-    if (!ui->treeCategories->currentItem())
-        return;
-
-    QDialog dialog(this);
-    Ui::DialogSupprimerCategorie uiDialog;
-    uiDialog.setupUi(&dialog);
-
-    dialog.exec();
-}
 void MainWindow::chargerCategoriesUI()
 {
     ui->treeCategories->clear();
@@ -289,26 +337,21 @@ void MainWindow::chargerCategoriesUI()
     int mois = QDate::currentDate().month();
     int annee = QDate::currentDate().year();
 
-    // 1️⃣ Création des items
+    // Création des items avec ID stocké
     for (Categorie* c : categories) {
-
         QString label = c->getNom();
 
-        // 🔑 Récupérer le budget (hérité si besoin)
-        QString budgetSource = c->getCategorieBudgetSource();
-        double budget = BudgetRepository::obtenirBudget(
-            budgetSource, mois, annee
-            );
-
+        double budget = BudgetRepository::obtenirBudget(c->getId(), mois, annee);
         if (budget >= 0) {
             label += "  [Budget: " + QString::number(budget) + " €]";
         }
 
         QTreeWidgetItem* item = new QTreeWidgetItem(QStringList() << label);
+        item->setData(0, Qt::UserRole, c->getId());  // Stocke l'ID
         map[c->getId()] = item;
     }
 
-    // 2️⃣ Hiérarchie parent / enfant
+    // Hiérarchie parent / enfant
     for (Categorie* c : categories) {
         QTreeWidgetItem* item = map[c->getId()];
         if (c->getParent()) {
@@ -321,33 +364,88 @@ void MainWindow::chargerCategoriesUI()
     ui->treeCategories->expandAll();
 }
 
+void MainWindow::supprimerCategorie()
+{
+    QTreeWidgetItem* item = ui->treeCategories->currentItem();
+    if (!item)
+        return;
+
+    QString categorieId = item->data(0, Qt::UserRole).toString();
+    QString nomCategorie = item->text(0);
+
+    if (categorieId.isEmpty()) {
+        QMessageBox::warning(this, "Erreur", "Impossible de récupérer l'ID de la catégorie.");
+        return;
+    }
+
+    // Vérifier si la catégorie existe dans la base
+    QSqlQuery checkQuery;
+    checkQuery.prepare("SELECT COUNT(*) FROM Categorie WHERE id = :id");
+    checkQuery.bindValue(":id", categorieId);
+
+    if (!checkQuery.exec() || !checkQuery.next() || checkQuery.value(0).toInt() == 0) {
+        QMessageBox::warning(this, "Erreur",
+                             QString("Catégorie \"%1\" non trouvée dans la base de données.").arg(nomCategorie));
+        return;
+    }
+
+    // Dialogue de confirmation
+    QDialog dialog(this);
+    Ui::DialogSupprimerCategorie uiDialog;
+    uiDialog.setupUi(&dialog);
+
+    uiDialog.label->setText(QString("Supprimer \"%1\" et ses sous-catégories ?").arg(nomCategorie));
+
+    connect(uiDialog.btnOui, &QPushButton::clicked, &dialog, &QDialog::accept);
+    connect(uiDialog.btnNon, &QPushButton::clicked, &dialog, &QDialog::reject);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        qDebug() << "Tentative de suppression de la catégorie:" << nomCategorie << "ID:" << categorieId;
+
+        bool succes = categorieRepository.supprimerCategorieAvecEnfants(categorieId);
+
+        if (succes) {
+            QMessageBox::information(this, "Succès", "Catégorie supprimée avec succès");
+
+            // Recharger les catégories
+            categories = categorieRepository.chargerCategories("1");
+            chargerCategoriesUI();
+            remplirCombosOperation();
+
+            // Actualiser le dashboard
+            dashboardManager->setCategories(categories);
+            actualiserDashboard();
+        } else {
+            QMessageBox::warning(this, "Erreur",
+                                 "Impossible de supprimer la catégorie.");
+        }
+    }
+}
 
 void MainWindow::ajouterOperation()
 {
-    int typeIndex = ui->comboTypeOperation->currentIndex(); // 🔑
+    int typeIndex = ui->comboTypeOperation->currentIndex();
     QString nom = ui->editNomOperation->text();
     double montant = ui->spinMontantOperation->value();
     QDate date = ui->dateOperation->date();
 
     QString compteId = ui->comboCompteOperation->currentData().toString();
-    QString categorieId =
-        ui->comboSousCategorie->currentData().toString();
+    QString categorieId = ui->comboSousCategorie->currentData().toString();
 
     if (categorieId.isEmpty()) {
-        categorieId =
-            ui->comboCategoriePrincipale->currentData().toString();
+        categorieId = ui->comboCategoriePrincipale->currentData().toString();
     }
 
-    if (nom.isEmpty() || montant <= 0)
+    if (nom.isEmpty() || montant <= 0 || compteId.isEmpty() || categorieId.isEmpty())
         return;
 
-    if (typeIndex == 0) { // 0 = Revenu
+    if (typeIndex == 0) { // Revenu
         OperationRepository::ajouterRevenu(
             nom, date, montant,
             compteId, categorieId,
             "Non spécifiée"
             );
-    } else { // 1 = Dépense
+    } else { // Dépense
         bool recurrente = ui->checkRecurrente->isChecked();
         QString frequence = ui->comboFrequence->currentText();
 
@@ -360,15 +458,17 @@ void MainWindow::ajouterOperation()
 
     // Mise à jour solde
     Compte* compte = utilisateur.getCompteById(compteId);
-    compte->mettreAJourSolde();
-    CompteRepository::mettreAJourSolde(compte);
-
-    rafraichirUI();
+    if (compte) {
+        compte->mettreAJourSolde();
+        CompteRepository::mettreAJourSolde(compte);
+        rafraichirUI();
+        actualiserDashboard();
+    }
 }
 
 void MainWindow::remplirCombosOperation()
 {
-    // Comptes (courant uniquement)
+    // Comptes
     ui->comboCompteOperation->clear();
     for (Compte* c : utilisateur.getComptes()) {
         if (c->estCourant()) {
@@ -378,13 +478,14 @@ void MainWindow::remplirCombosOperation()
 
     // Catégories principales
     ui->comboCategoriePrincipale->clear();
+    ui->comboCategoriePrincipale->addItem("Sélectionnez une catégorie", "");
     for (Categorie* c : categories) {
         if (!c->getParent()) {
             ui->comboCategoriePrincipale->addItem(c->getNom(), c->getId());
         }
     }
 
-    // Charger les sous-catégories du parent sélectionné
+    // Sous-catégories
     chargerSousCategories();
 }
 
@@ -399,92 +500,121 @@ void MainWindow::remplirHistoriqueComptes()
 
 void MainWindow::chargerHistoriqueCompte()
 {
+    // Déconnecter d'abord pour éviter les signaux pendant le chargement
+    disconnect(ui->tableOperations, &QTableWidget::cellChanged,
+               this, &MainWindow::onTableOperationsCellChanged);
+
     ui->tableOperations->setRowCount(0);
+    ui->tableOperations->clearContents();
 
-    QString compteId =
-        ui->comboCompteHistorique->currentData().toString();
+    QString compteId = ui->comboCompteHistorique->currentData().toString();
 
-    if (compteId.isEmpty())
+    if (compteId.isEmpty()) {
+        // Reconnecter
+        connect(ui->tableOperations, &QTableWidget::cellChanged,
+                this, &MainWindow::onTableOperationsCellChanged);
         return;
+    }
 
-    // 1️⃣ Charger opérations
-    QList<QVariantMap> ops =
-        OperationRepository::chargerOperationsParCompte(compteId);
+    // Charger opérations
+    QList<QVariantMap> ops = OperationRepository::chargerOperationsParCompte(compteId);
 
-    // 2️⃣ Charger transferts
-    QList<QVariantMap> transferts =
-        TransfertRepository::chargerTransfertsParCompte(compteId);
+    // Charger transferts
+    QList<QVariantMap> transferts = TransfertRepository::chargerTransfertsParCompte(compteId);
 
-    // 3️⃣ Fusionner
+    // Fusionner
     QList<QVariantMap> all = ops;
     all.append(transferts);
 
-    // 4️⃣ Trier par date décroissante
+    // Trier par date décroissante
     std::sort(all.begin(), all.end(),
               [](const QVariantMap& a, const QVariantMap& b) {
                   return a["date"].toDate() > b["date"].toDate();
               });
 
-    // 5️⃣ Afficher
+    // Afficher
     ui->tableOperations->setRowCount(all.size());
 
     for (int i = 0; i < all.size(); ++i) {
+        // Stocker toutes les données dans un QVariantMap
+        QVariantMap operationData;
+
+        // Copier toutes les données originales
+        operationData = all[i];
+
+        // Ajouter l'ID si présent
+        if (all[i].contains("id")) {
+            operationData["id"] = all[i]["id"];
+        }
 
         // Date
-        ui->tableOperations->setItem(
-            i, 0,
-            new QTableWidgetItem(
-                all[i]["date"].toDate().toString("dd/MM/yyyy")
-                )
-            );
+        QDate date = all[i]["date"].toDate();
+        QTableWidgetItem *dateItem = new QTableWidgetItem(date.toString("dd/MM/yyyy"));
+        dateItem->setData(Qt::UserRole, operationData);
+        dateItem->setFlags(dateItem->flags() | Qt::ItemIsEditable);
+        ui->tableOperations->setItem(i, 0, dateItem);
 
         // Nom
-        ui->tableOperations->setItem(
-            i, 1,
-            new QTableWidgetItem(all[i]["nom"].toString())
-            );
+        QString nom = all[i]["nom"].toString();
+        QTableWidgetItem *nomItem = new QTableWidgetItem(nom);
+        nomItem->setData(Qt::UserRole, operationData);
+        nomItem->setFlags(nomItem->flags() | Qt::ItemIsEditable);
+        ui->tableOperations->setItem(i, 1, nomItem);
 
         // Catégorie
-        ui->tableOperations->setItem(
-            i, 2,
-            new QTableWidgetItem(all[i]["categorie"].toString())
-            );
+        QString categorie = all[i]["categorie"].toString();
+        QString categorieId = all[i].value("categorie_id").toString();
+        QTableWidgetItem *categorieItem = new QTableWidgetItem(categorie);
+        categorieItem->setData(Qt::UserRole, operationData);
+        categorieItem->setFlags(categorieItem->flags() | Qt::ItemIsEditable);
+
+        // Stocker l'ID de catégorie dans UserRole+1
+        if (!categorieId.isEmpty()) {
+            categorieItem->setData(Qt::UserRole + 1, categorieId);
+        }
+
+        ui->tableOperations->setItem(i, 2, categorieItem);
 
         // Montant avec signe métier
         double montant = all[i]["montant"].toDouble();
         QString type = all[i].value("type").toString();
 
-        if (type == "DEPENSE") {
+        if (type == "DEPENSE" || type == "TRANSFERT_SORTANT") {
             montant = -montant;
         }
 
-        QTableWidgetItem* montantItem =
-            new QTableWidgetItem(QString::number(montant));
+        QTableWidgetItem *montantItem = new QTableWidgetItem(QString::number(montant, 'f', 2));
+        montantItem->setData(Qt::UserRole, operationData);
+        montantItem->setFlags(montantItem->flags() | Qt::ItemIsEditable);
 
-        if (montant < 0)
+        if (montant < 0) {
             montantItem->setForeground(Qt::red);
-        else
+        } else {
             montantItem->setForeground(Qt::darkGreen);
+        }
 
         ui->tableOperations->setItem(i, 3, montantItem);
     }
-}
-void MainWindow::remplirCategoriesPrincipales()
-{
-    ui->comboCategoriePrincipale->clear();
 
-    for (Categorie* c : categories) {
-        if (!c->getParent()) {
-            ui->comboCategoriePrincipale->addItem(c->getNom(), c->getId());
-        }
-    }
+    // Reconnecter après le chargement
+    connect(ui->tableOperations, &QTableWidget::cellChanged,
+            this, &MainWindow::onTableOperationsCellChanged);
+
+    // Désactiver le bouton de suppression par défaut
+    ui->btnSupprimerOperation->setEnabled(false);
 }
+
 void MainWindow::chargerSousCategories()
 {
     ui->comboSousCategorie->clear();
 
-    QString parentId =
-        ui->comboCategoriePrincipale->currentData().toString();
+    QString parentId = ui->comboCategoriePrincipale->currentData().toString();
+
+    if (parentId.isEmpty()) {
+        ui->comboSousCategorie->addItem("Sélectionnez d'abord une catégorie", "");
+        ui->comboSousCategorie->setEnabled(false);
+        return;
+    }
 
     bool hasChildren = false;
 
@@ -498,6 +628,322 @@ void MainWindow::chargerSousCategories()
     ui->comboSousCategorie->setEnabled(hasChildren);
 
     if (!hasChildren) {
-        ui->comboSousCategorie->addItem("Aucune", "");
+        ui->comboSousCategorie->addItem("Aucune sous-catégorie", "");
     }
+}
+
+// Méthode appelée quand une opération est sélectionnée dans le tableau
+void MainWindow::onOperationSelectionChanged()
+{
+    QList<QTableWidgetItem*> selectedItems = ui->tableOperations->selectedItems();
+    if (selectedItems.isEmpty()) {
+        currentOperationId = "";
+        ui->btnSupprimerOperation->setEnabled(false);
+        return;
+    }
+
+    int row = selectedItems.first()->row();
+
+    // Récupérer les données de la ligne sélectionnée
+    QString nom = ui->tableOperations->item(row, 1)->text();
+    QString dateStr = ui->tableOperations->item(row, 0)->text();
+    QString montantStr = ui->tableOperations->item(row, 3)->text();
+
+    // Convertir la date
+    QDate date = QDate::fromString(dateStr, "dd/MM/yyyy");
+
+    // Nettoyer le montant (enlever le signe négatif si présent)
+    double montant = qAbs(montantStr.toDouble());
+
+    // Récupérer l'ID du compte courant
+    QString compteId = ui->comboCompteHistorique->currentData().toString();
+
+    // Récupérer l'ID de l'opération
+    currentOperationId = OperationRepository::getOperationId(compteId, nom, date, montant);
+
+    if (currentOperationId.isEmpty()) {
+        qDebug() << "Impossible de trouver l'ID de l'opération";
+        ui->btnSupprimerOperation->setEnabled(false);
+    } else {
+        qDebug() << "Opération sélectionnée - ID:" << currentOperationId;
+        ui->btnSupprimerOperation->setEnabled(true);
+    }
+}
+
+// Méthode pour supprimer l'opération sélectionnée
+void MainWindow::supprimerOperation()
+{
+    if (currentOperationId.isEmpty()) {
+        QMessageBox::warning(this, "Erreur", "Aucune opération sélectionnée.");
+        return;
+    }
+
+    QString compteId = ui->comboCompteHistorique->currentData().toString();
+    if (compteId.isEmpty()) {
+        QMessageBox::warning(this, "Erreur", "Aucun compte sélectionné.");
+        return;
+    }
+
+    // Demander confirmation
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Confirmation",
+                                  "Êtes-vous sûr de vouloir supprimer cette opération ?",
+                                  QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::No) {
+        return;
+    }
+
+    // Supprimer l'opération
+    if (OperationRepository::supprimerOperation(currentOperationId, compteId)) {
+        QMessageBox::information(this, "Succès", "Opération supprimée avec succès.");
+
+        // Recharger l'historique
+        chargerHistoriqueCompte();
+
+        // Rafraîchir l'interface
+        rafraichirUI();
+
+        // Actualiser le dashboard
+        actualiserDashboard();
+
+        // Réinitialiser l'ID
+        currentOperationId = "";
+        ui->btnSupprimerOperation->setEnabled(false);
+    } else {
+        QMessageBox::warning(this, "Erreur", "Impossible de supprimer l'opération.");
+    }
+}
+
+// Méthode appelée quand une cellule du tableau est modifiée
+void MainWindow::onTableOperationsCellChanged(int row, int column)
+{
+    // Éviter les boucles infinies
+    if (isModifyingTable) return;
+
+    isModifyingTable = true;
+
+    // Récupérer l'item modifié
+    QTableWidgetItem *item = ui->tableOperations->item(row, column);
+    if (!item) {
+        isModifyingTable = false;
+        return;
+    }
+
+    // Récupérer les données originales
+    QVariantMap originalData = item->data(Qt::UserRole).toMap();
+    if (originalData.isEmpty()) {
+        isModifyingTable = false;
+        return;
+    }
+
+    // Ignorer les transferts (pas d'ID d'opération)
+    if (!originalData.contains("id") || originalData["id"].toString().isEmpty()) {
+        isModifyingTable = false;
+        return;
+    }
+
+    QString operationId = originalData["id"].toString();
+    QString compteId = ui->comboCompteHistorique->currentData().toString();
+
+    // Si pas d'ID de compte, annuler
+    if (compteId.isEmpty()) {
+        restoreOriginalValue(row, column, originalData);
+        isModifyingTable = false;
+        return;
+    }
+
+    // Récupérer les nouvelles valeurs de TOUTE la ligne
+    QString newNom = ui->tableOperations->item(row, 1)->text();
+    QString newDateStr = ui->tableOperations->item(row, 0)->text();
+    QString newCategorie = ui->tableOperations->item(row, 2)->text();
+    QString newMontantStr = ui->tableOperations->item(row, 3)->text();
+
+    // Valider les nouvelles valeurs
+    if (newNom.isEmpty()) {
+        QMessageBox::warning(this, "Erreur", "Le nom ne peut pas être vide.");
+        restoreOriginalValue(row, column, originalData);
+        isModifyingTable = false;
+        return;
+    }
+
+    QDate newDate = QDate::fromString(newDateStr, "dd/MM/yyyy");
+    if (!newDate.isValid()) {
+        QMessageBox::warning(this, "Erreur", "Date invalide. Format: JJ/MM/AAAA");
+        restoreOriginalValue(row, column, originalData);
+        isModifyingTable = false;
+        return;
+    }
+
+    // Valider le montant
+    bool ok;
+    double newMontant = newMontantStr.toDouble(&ok);
+    if (!ok || newMontant == 0) {
+        QMessageBox::warning(this, "Erreur", "Montant invalide.");
+        restoreOriginalValue(row, column, originalData);
+        isModifyingTable = false;
+        return;
+    }
+
+    // Déterminer si c'est une dépense ou un revenu basé sur le signe
+    bool isDepense = newMontant < 0;
+    double montantPourBD = qAbs(newMontant);
+
+    // Trouver l'ID de catégorie
+    QString newCategorieId = findCategorieIdByName(newCategorie);
+    if (newCategorieId.isEmpty()) {
+        // Essayer de récupérer l'ID stocké depuis l'item catégorie
+        QTableWidgetItem *categorieItem = ui->tableOperations->item(row, 2);
+        if (categorieItem) {
+            newCategorieId = categorieItem->data(Qt::UserRole + 1).toString();
+        }
+
+        if (newCategorieId.isEmpty()) {
+            QMessageBox::warning(this, "Erreur",
+                                 QString("Catégorie \"%1\" non trouvée.").arg(newCategorie));
+            restoreOriginalValue(row, column, originalData);
+            isModifyingTable = false;
+            return;
+        }
+    }
+
+    // Vérifier les changements
+    QString originalNom = originalData["nom"].toString();
+    QDate originalDate = originalData["date"].toDate();
+    double originalMontant = originalData["montant"].toDouble();
+    QString originalCategorie = originalData["categorie"].toString();
+
+    bool hasChanges = (originalNom != newNom) ||
+                      (originalDate != newDate) ||
+                      (originalMontant != montantPourBD) ||
+                      (originalCategorie != newCategorie);
+
+    if (!hasChanges) {
+        // Pas de changement réel, sortir
+        isModifyingTable = false;
+        return;
+    }
+
+    // Demander confirmation
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Confirmation",
+                                  QString("Voulez-vous vraiment modifier cette opération ?\n\n"
+                                          "Nom: %1 → %2\n"
+                                          "Date: %3 → %4\n"
+                                          "Montant: %5 € → %6 €\n"
+                                          "Catégorie: %7 → %8")
+                                      .arg(originalNom)
+                                      .arg(newNom)
+                                      .arg(originalDate.toString("dd/MM/yyyy"))
+                                      .arg(newDate.toString("dd/MM/yyyy"))
+                                      .arg(originalMontant)
+                                      .arg(montantPourBD)
+                                      .arg(originalCategorie)
+                                      .arg(newCategorie),
+                                  QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes) {
+        // Mettre à jour la base de données
+        bool success = OperationRepository::modifierOperation(operationId,
+                                                              newNom,
+                                                              newDate,
+                                                              montantPourBD,
+                                                              newCategorieId);
+
+        if (success) {
+            QMessageBox::information(this, "Succès", "Opération modifiée avec succès.");
+
+            // Mettre à jour les données stockées dans l'item
+            QVariantMap updatedData = originalData;
+            updatedData["nom"] = newNom;
+            updatedData["date"] = newDate;
+            updatedData["montant"] = montantPourBD;
+            updatedData["categorie"] = newCategorie;
+            updatedData["categorie_id"] = newCategorieId;
+
+            // Mettre à jour toutes les cellules de la ligne
+            for (int col = 0; col < 4; col++) {
+                QTableWidgetItem *rowItem = ui->tableOperations->item(row, col);
+                if (rowItem) {
+                    rowItem->setData(Qt::UserRole, updatedData);
+                }
+            }
+
+            // Mettre à jour aussi la catégorie dans UserRole+1
+            QTableWidgetItem *categorieItem = ui->tableOperations->item(row, 2);
+            if (categorieItem) {
+                categorieItem->setData(Qt::UserRole + 1, newCategorieId);
+            }
+
+            // Rafraîchir l'interface
+            rafraichirUI();
+            actualiserDashboard();
+        } else {
+            QMessageBox::warning(this, "Erreur", "Échec de la modification.");
+            restoreOriginalValue(row, column, originalData);
+        }
+    } else {
+        // Annuler : restaurer la valeur originale
+        restoreOriginalValue(row, column, originalData);
+    }
+
+    isModifyingTable = false;
+}
+
+// Méthode utilitaire pour restaurer la valeur originale
+void MainWindow::restoreOriginalValue(int row, int column, const QVariantMap &originalData)
+{
+    QString originalValue;
+
+    switch (column) {
+    case 0: // Date
+        originalValue = originalData["date"].toDate().toString("dd/MM/yyyy");
+        break;
+    case 1: // Nom
+        originalValue = originalData["nom"].toString();
+        break;
+    case 2: // Catégorie
+        originalValue = originalData["categorie"].toString();
+        break;
+    case 3: // Montant
+        double montant = originalData["montant"].toDouble();
+        QString type = originalData.value("type").toString();
+        if (type == "DEPENSE") {
+            originalValue = QString::number(-montant, 'f', 2);
+        } else {
+            originalValue = QString::number(montant, 'f', 2);
+        }
+        break;
+    }
+
+    // Restaurer la valeur sans déclencher à nouveau cellChanged
+    QTableWidgetItem *item = ui->tableOperations->item(row, column);
+    if (item) {
+        disconnect(ui->tableOperations, &QTableWidget::cellChanged,
+                   this, &MainWindow::onTableOperationsCellChanged);
+
+        item->setText(originalValue);
+
+        connect(ui->tableOperations, &QTableWidget::cellChanged,
+                this, &MainWindow::onTableOperationsCellChanged);
+    }
+}
+
+// Méthode pour trouver l'ID d'une catégorie par son nom
+QString MainWindow::findCategorieIdByName(const QString &categorieName)
+{
+    for (Categorie* cat : categories) {
+        if (cat->getNom() == categorieName) {
+            return cat->getId();
+        }
+
+        // Vérifier aussi les sous-catégories
+        for (Categorie* enfant : cat->getEnfants()) {
+            if (enfant->getNom() == categorieName) {
+                return enfant->getId();
+            }
+        }
+    }
+
+    return "";
 }
