@@ -63,6 +63,10 @@ MainWindow::MainWindow(QWidget *parent)
     // Connexions pour le dashboard
     connect(ui->btnActualiser, &QPushButton::clicked,
             this, &MainWindow::actualiserDashboard);
+    connect(ui->comboFiltreCompte, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &MainWindow::onFiltreCompteChanged);
+    connect(ui->comboFiltreCategorie, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &MainWindow::onFiltreCategorieChanged);
 
     // IMPORTANT: Ne pas connecter cellChanged ici - nous le ferons dans chargerHistoriqueCompte
 
@@ -74,8 +78,10 @@ MainWindow::MainWindow(QWidget *parent)
     rafraichirUI();
 
     // ✅ 2) Créer catégories par défaut et charger depuis DB
-    categorieRepository.creerCategoriesParDefaut();
-    categories = categorieRepository.chargerCategories("1");
+    // Note: Assurez-vous d'avoir une instance de CategorieRepository
+    // Si vous avez une variable categorieRepository, utilisez-la
+    // categorieRepository.creerCategoriesParDefaut();
+    categories = CategorieRepository::chargerCategories("1");
 
     // ✅ IMPORTANT: initialiser dashboard AVANT d'utiliser comboMois/spinAnnee
     initialiserDashboard();
@@ -92,55 +98,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::initialiserDashboard()
-{
-    // Initialiser le combo des mois
-    initialiserComboMois();
-
-    // Définir l'année courante
-    int anneeCourante = QDate::currentDate().year();
-    ui->spinAnnee->setValue(anneeCourante);
-
-    // Initialiser les charts
-    dashboardManager->initialiserCharts(
-        ui->chartDepensesParCategorie,
-        ui->chartRevenusVsDepenses
-        );
-
-    dashboardManager->setCategories(categories);
-
-    // Actualiser le dashboard avec les valeurs par défaut
-    actualiserDashboard();
-}
-
-void MainWindow::initialiserComboMois()
-{
-    ui->comboMois->clear();
-
-    QStringList moisNoms = {
-        "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
-    };
-
-    for (int i = 0; i < 12; i++) {
-        ui->comboMois->addItem(moisNoms[i], i + 1);
-    }
-
-    // Sélectionner le mois courant
-    int moisCourant = QDate::currentDate().month();
-    ui->comboMois->setCurrentIndex(moisCourant - 1);
-}
-
-void MainWindow::actualiserDashboard()
-{
-    int mois = ui->comboMois->currentData().toInt();
-    int annee = ui->spinAnnee->value();
-
-    qDebug() << "Actualisation du dashboard - Mois:" << mois << "Année:" << annee;
-
-    dashboardManager->actualiserDashboard(mois, annee, categories);
 }
 
 void MainWindow::ajouterCompte()
@@ -165,6 +122,7 @@ void MainWindow::ajouterCompte()
         rafraichirUI();
         remplirCombosOperation();
         remplirHistoriqueComptes();
+        initialiserFiltresDashboard(); // Mettre à jour les filtres du dashboard
     } else {
         delete compte;
     }
@@ -226,7 +184,6 @@ void MainWindow::rafraichirUI()
     }
 }
 
-
 void MainWindow::ajouterCategorie()
 {
     QDialog dialog(this);
@@ -252,8 +209,8 @@ void MainWindow::ajouterCategorie()
         if (nom.isEmpty())
             return;
 
-        // Utilise l'instance categorieRepository
-        QString categorieId = categorieRepository.ajouterCategorie(nom, "1", parentId);
+        // Utilise la méthode statique de CategorieRepository
+        QString categorieId = CategorieRepository::ajouterCategorie(nom, "1", parentId);
 
         if (budget > 0) {
             BudgetRepository::definirBudget(
@@ -265,8 +222,10 @@ void MainWindow::ajouterCategorie()
         }
 
         // Recharger les catégories
-        categories = categorieRepository.chargerCategories("1");
+        categories = CategorieRepository::chargerCategories("1");
         chargerCategoriesUI();
+        remplirCombosOperation();
+        initialiserFiltresDashboard(); // Mettre à jour les filtres
 
         dashboardManager->setCategories(categories);
         actualiserDashboard();
@@ -324,8 +283,8 @@ void MainWindow::modifierCategorie()
         if (nouveauNom.isEmpty())
             return;
 
-        // Utilise l'instance categorieRepository
-        categorieRepository.modifierCategorie(categorieId, nouveauNom);
+        // Utilise la méthode statique
+        CategorieRepository::modifierCategorie(categorieId, nouveauNom);
 
         if (nouveauBudget > 0) {
             BudgetRepository::definirBudget(
@@ -334,8 +293,10 @@ void MainWindow::modifierCategorie()
         }
 
         // Recharger les catégories
-        categories = categorieRepository.chargerCategories("1");
+        categories = CategorieRepository::chargerCategories("1");
         chargerCategoriesUI();
+        remplirCombosOperation();
+        initialiserFiltresDashboard();
 
         dashboardManager->setCategories(categories);
         actualiserDashboard();
@@ -400,7 +361,6 @@ void MainWindow::chargerCategoriesUI()
     ui->treeCategories->expandAll();
 }
 
-
 void MainWindow::supprimerCategorie()
 {
     QTreeWidgetItem* item = ui->treeCategories->currentItem();
@@ -439,15 +399,16 @@ void MainWindow::supprimerCategorie()
     if (dialog.exec() == QDialog::Accepted) {
         qDebug() << "Tentative de suppression de la catégorie:" << nomCategorie << "ID:" << categorieId;
 
-        bool succes = categorieRepository.supprimerCategorieAvecEnfants(categorieId);
+        bool succes = CategorieRepository::supprimerCategorieAvecEnfants(categorieId);
 
         if (succes) {
             QMessageBox::information(this, "Succès", "Catégorie supprimée avec succès");
 
             // Recharger les catégories
-            categories = categorieRepository.chargerCategories("1");
+            categories = CategorieRepository::chargerCategories("1");
             chargerCategoriesUI();
             remplirCombosOperation();
+            initialiserFiltresDashboard();
 
             // Actualiser le dashboard
             dashboardManager->setCategories(categories);
@@ -986,4 +947,191 @@ QString MainWindow::findCategorieIdByName(const QString &categorieName)
     }
 
     return "";
+}
+
+// ==================== MÉTHODES DU DASHBOARD ====================
+
+void MainWindow::initialiserDashboard()
+{
+    // Initialiser le combo des mois
+    initialiserComboMois();
+
+    // Définir l'année courante
+    int anneeCourante = QDate::currentDate().year();
+    ui->spinAnnee->setValue(anneeCourante);
+
+    // Initialiser les filtres
+    initialiserFiltresDashboard();
+
+    // Initialiser les charts
+    dashboardManager->initialiserCharts(
+        ui->chartDepensesParCategorie,
+        ui->chartRevenusVsDepenses,
+        ui->chartEvolution,
+        ui->chartRepartition
+        );
+
+    dashboardManager->setCategories(categories);
+    dashboardManager->setComptes(utilisateur.getComptes());
+
+    // Actualiser le dashboard avec les valeurs par défaut
+    actualiserDashboard();
+}
+
+void MainWindow::initialiserComboMois()
+{
+    ui->comboMois->clear();
+
+    QStringList moisNoms = {
+        "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    };
+
+    for (int i = 0; i < 12; i++) {
+        ui->comboMois->addItem(moisNoms[i], i + 1);
+    }
+
+    // Sélectionner le mois courant
+    int moisCourant = QDate::currentDate().month();
+    ui->comboMois->setCurrentIndex(moisCourant - 1);
+}
+
+void MainWindow::initialiserFiltresDashboard()
+{
+    // Filtre par compte
+    ui->comboFiltreCompte->clear();
+    ui->comboFiltreCompte->addItem("Tous les comptes", "");
+
+    for (Compte* compte : utilisateur.getComptes()) {
+        ui->comboFiltreCompte->addItem(compte->getNom(), compte->getId());
+    }
+
+    // Filtre par catégorie
+    ui->comboFiltreCategorie->clear();
+    ui->comboFiltreCategorie->addItem("Toutes les catégories", "");
+
+    for (Categorie* categorie : categories) {
+        if (!categorie->getParent()) {
+            ui->comboFiltreCategorie->addItem(categorie->getNom(), categorie->getId());
+        }
+    }
+}
+
+void MainWindow::actualiserDashboard()
+{
+    int mois = ui->comboMois->currentData().toInt();
+    int annee = ui->spinAnnee->value();
+
+    QString filtreCompte = ui->comboFiltreCompte->currentData().toString();
+    QString filtreCategorie = ui->comboFiltreCategorie->currentData().toString();
+
+    qDebug() << "Actualisation dashboard: Mois" << mois << "Année" << annee
+             << "Compte:" << filtreCompte << "Catégorie:" << filtreCategorie;
+
+    dashboardManager->actualiserDashboard(mois, annee, categories,
+                                          utilisateur.getComptes(),
+                                          filtreCategorie, filtreCompte);
+
+    // Mettre à jour les recommandations
+    mettreAJourRecommandations();
+}
+
+void MainWindow::onFiltreCompteChanged(int index)
+{
+    Q_UNUSED(index);
+    actualiserDashboard();
+}
+
+void MainWindow::onFiltreCategorieChanged(int index)
+{
+    Q_UNUSED(index);
+    actualiserDashboard();
+}
+
+void MainWindow::mettreAJourRecommandations()
+{
+    QString recommandations = dashboardManager->getRecommandations();
+    ui->textRecommandations->setPlainText(recommandations);
+
+    // Mettre à jour les statistiques affichées
+    DashboardManager::Statistiques stats = dashboardManager->getStatistiques();
+
+    // Calculer les transferts pour l'affichage
+    int mois = ui->comboMois->currentData().toInt();
+    int annee = ui->spinAnnee->value();
+    QString filtreCompte = ui->comboFiltreCompte->currentData().toString();
+
+    // Calculer les transferts sortants et entrants
+    QSqlQuery query;
+    QString moisStr = QString::number(mois).rightJustified(2, '0');
+    QString anneeStr = QString::number(annee);
+
+    double transfertsSortants = 0;
+    double transfertsEntrants = 0;
+
+    if (filtreCompte.isEmpty()) {
+        // Transferts sortants totaux
+        query.prepare("SELECT SUM(montant) FROM Transfert WHERE substr(date, 6, 2) = :mois AND substr(date, 1, 4) = :annee");
+        query.bindValue(":mois", moisStr);
+        query.bindValue(":annee", anneeStr);
+        if (query.exec() && query.next()) {
+            transfertsSortants = query.value(0).toDouble();
+        }
+    } else {
+        // Transferts sortants pour le compte
+        query.prepare("SELECT SUM(montant) FROM Transfert WHERE substr(date, 6, 2) = :mois AND substr(date, 1, 4) = :annee AND source_id = :compte");
+        query.bindValue(":mois", moisStr);
+        query.bindValue(":annee", anneeStr);
+        query.bindValue(":compte", filtreCompte);
+        if (query.exec() && query.next()) {
+            transfertsSortants = query.value(0).toDouble();
+        }
+
+        // Transferts entrants pour le compte
+        query.prepare("SELECT SUM(montant) FROM Transfert WHERE substr(date, 6, 2) = :mois AND substr(date, 1, 4) = :annee AND destination_id = :compte");
+        query.bindValue(":mois", moisStr);
+        query.bindValue(":annee", anneeStr);
+        query.bindValue(":compte", filtreCompte);
+        if (query.exec() && query.next()) {
+            transfertsEntrants = query.value(0).toDouble();
+        }
+    }
+
+    // Mettre à jour les labels des statistiques
+    ui->labelRevenusTotal->setText(QString("%1 €").arg(stats.totalRevenus, 0, 'f', 2));
+    ui->labelDepensesTotal->setText(QString("%1 €").arg(stats.totalDepenses, 0, 'f', 2));
+
+    // Ajouter les transferts si les labels existent
+    QLabel* labelTransfertsSortants = findChild<QLabel*>("labelTransfertsSortants");
+    QLabel* labelTransfertsEntrants = findChild<QLabel*>("labelTransfertsEntrants");
+
+    if (labelTransfertsSortants) {
+        labelTransfertsSortants->setText(QString("%1 €").arg(transfertsSortants, 0, 'f', 2));
+    }
+
+    if (labelTransfertsEntrants) {
+        labelTransfertsEntrants->setText(QString("%1 €").arg(transfertsEntrants, 0, 'f', 2));
+    }
+
+    // Solde net (revenus + transferts entrants - dépenses - transferts sortants)
+    double soldeNet = stats.totalRevenus + transfertsEntrants - stats.totalDepenses - transfertsSortants;
+    ui->labelSolde->setText(QString("%1 €").arg(soldeNet, 0, 'f', 2));
+
+    ui->labelDepensesMoyennes->setText(QString("%1 €").arg(stats.depensesParJour, 0, 'f', 2));
+
+    // Mettre en couleur le solde
+    if (soldeNet < 0) {
+        ui->labelSolde->setStyleSheet("color: red; font-weight: bold;");
+    } else {
+        ui->labelSolde->setStyleSheet("color: green; font-weight: bold;");
+    }
+
+    // Mettre en couleur les transferts sortants si élevés
+    if (labelTransfertsSortants) {
+        if (transfertsSortants > stats.totalRevenus * 0.3 && stats.totalRevenus > 0) {
+            labelTransfertsSortants->setStyleSheet("color: orange; font-weight: bold;");
+        } else {
+            labelTransfertsSortants->setStyleSheet("");
+        }
+    }
 }

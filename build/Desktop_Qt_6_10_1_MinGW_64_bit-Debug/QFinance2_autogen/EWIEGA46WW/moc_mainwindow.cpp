@@ -47,12 +47,21 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "supprimerCategorie",
         "chargerCategoriesUI",
         "ajouterOperation",
-        "actualiserDashboard",
-        "initialiserDashboard",
+        "remplirCombosOperation",
+        "remplirHistoriqueComptes",
+        "chargerHistoriqueCompte",
+        "chargerSousCategories",
+        "onOperationSelectionChanged",
         "supprimerOperation",
         "onTableOperationsCellChanged",
         "row",
-        "column"
+        "column",
+        "initialiserDashboard",
+        "actualiserDashboard",
+        "onFiltreCompteChanged",
+        "index",
+        "onFiltreCategorieChanged",
+        "mettreAJourRecommandations"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -70,16 +79,36 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         QtMocHelpers::SlotData<void()>(7, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'ajouterOperation'
         QtMocHelpers::SlotData<void()>(8, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'actualiserDashboard'
+        // Slot 'remplirCombosOperation'
         QtMocHelpers::SlotData<void()>(9, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'initialiserDashboard'
+        // Slot 'remplirHistoriqueComptes'
         QtMocHelpers::SlotData<void()>(10, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'supprimerOperation'
+        // Slot 'chargerHistoriqueCompte'
         QtMocHelpers::SlotData<void()>(11, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'chargerSousCategories'
+        QtMocHelpers::SlotData<void()>(12, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onOperationSelectionChanged'
+        QtMocHelpers::SlotData<void()>(13, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'supprimerOperation'
+        QtMocHelpers::SlotData<void()>(14, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onTableOperationsCellChanged'
-        QtMocHelpers::SlotData<void(int, int)>(12, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 13 }, { QMetaType::Int, 14 },
+        QtMocHelpers::SlotData<void(int, int)>(15, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 16 }, { QMetaType::Int, 17 },
         }}),
+        // Slot 'initialiserDashboard'
+        QtMocHelpers::SlotData<void()>(18, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'actualiserDashboard'
+        QtMocHelpers::SlotData<void()>(19, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onFiltreCompteChanged'
+        QtMocHelpers::SlotData<void(int)>(20, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 21 },
+        }}),
+        // Slot 'onFiltreCategorieChanged'
+        QtMocHelpers::SlotData<void(int)>(22, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 21 },
+        }}),
+        // Slot 'mettreAJourRecommandations'
+        QtMocHelpers::SlotData<void()>(23, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -110,10 +139,18 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 4: _t->supprimerCategorie(); break;
         case 5: _t->chargerCategoriesUI(); break;
         case 6: _t->ajouterOperation(); break;
-        case 7: _t->actualiserDashboard(); break;
-        case 8: _t->initialiserDashboard(); break;
-        case 9: _t->supprimerOperation(); break;
-        case 10: _t->onTableOperationsCellChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[2]))); break;
+        case 7: _t->remplirCombosOperation(); break;
+        case 8: _t->remplirHistoriqueComptes(); break;
+        case 9: _t->chargerHistoriqueCompte(); break;
+        case 10: _t->chargerSousCategories(); break;
+        case 11: _t->onOperationSelectionChanged(); break;
+        case 12: _t->supprimerOperation(); break;
+        case 13: _t->onTableOperationsCellChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[2]))); break;
+        case 14: _t->initialiserDashboard(); break;
+        case 15: _t->actualiserDashboard(); break;
+        case 16: _t->onFiltreCompteChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 17: _t->onFiltreCategorieChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 18: _t->mettreAJourRecommandations(); break;
         default: ;
         }
     }
@@ -138,14 +175,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 19)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 19;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 19)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 11;
+        _id -= 19;
     }
     return _id;
 }

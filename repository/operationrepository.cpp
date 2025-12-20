@@ -107,45 +107,24 @@ double OperationRepository::getTotalRevenus(int mois, int annee)
     QString moisStr = QString::number(mois).rightJustified(2, '0');
     QString anneeStr = QString::number(annee);
 
-    qDebug() << "=== DEBUG getTotalRevenus ===";
-    qDebug() << "Mois:" << moisStr << "Année:" << anneeStr;
-
-    // Version 1 : Utiliser SUBSTR
+    // CORRECTION : Chercher 'REVENU' en majuscules
     query.prepare(
         "SELECT SUM(montant) FROM Operation "
         "WHERE substr(date, 6, 2) = :mois "
         "AND substr(date, 1, 4) = :annee "
-        "AND type = 'revenu'"
+        "AND type = 'REVENU'"  // MAJUSCULES
         );
     query.bindValue(":mois", moisStr);
     query.bindValue(":annee", anneeStr);
 
-    if (!query.exec()) {
-        qDebug() << "Erreur SQL (SUBSTR):" << query.lastError().text();
-
-        // Version 2 : Alternative avec strftime
-        query.prepare(
-            "SELECT SUM(montant) FROM Operation "
-            "WHERE strftime('%m', date) = :mois "
-            "AND strftime('%Y', date) = :annee "
-            "AND type = 'revenu'"
-            );
-        query.bindValue(":mois", moisStr);
-        query.bindValue(":annee", anneeStr);
-
-        if (!query.exec()) {
-            qDebug() << "Erreur SQL (strftime):" << query.lastError().text();
-            return 0.0;
-        }
+    if (query.exec() && query.next()) {
+        double result = query.value(0).toDouble();
+        qDebug() << "Total revenus pour" << moisStr << "/" << anneeStr << ":" << result;
+        return result;
+    } else {
+        qDebug() << "Erreur getTotalRevenus:" << query.lastError().text();
     }
 
-    if (query.next()) {
-        double total = query.value(0).toDouble();
-        qDebug() << "Total revenus trouvé:" << total;
-        return total;
-    }
-
-    qDebug() << "Aucun revenu pour cette période";
     return 0.0;
 }
 
@@ -155,45 +134,24 @@ double OperationRepository::getTotalDepenses(int mois, int annee)
     QString moisStr = QString::number(mois).rightJustified(2, '0');
     QString anneeStr = QString::number(annee);
 
-    qDebug() << "=== DEBUG getTotalDepenses ===";
-    qDebug() << "Mois:" << moisStr << "Année:" << anneeStr;
-
-    // Version SUBSTR (plus fiable)
+    // CORRECTION : Chercher 'DEPENSE' en majuscules
     query.prepare(
         "SELECT SUM(montant) FROM Operation "
         "WHERE substr(date, 6, 2) = :mois "
         "AND substr(date, 1, 4) = :annee "
-        "AND type = 'depense'"
+        "AND type = 'DEPENSE'"  // MAJUSCULES
         );
     query.bindValue(":mois", moisStr);
     query.bindValue(":annee", anneeStr);
 
-    if (!query.exec()) {
-        qDebug() << "Erreur SQL (SUBSTR):" << query.lastError().text();
-
-        // Version strftime
-        query.prepare(
-            "SELECT SUM(montant) FROM Operation "
-            "WHERE strftime('%m', date) = :mois "
-            "AND strftime('%Y', date) = :annee "
-            "AND type = 'depense'"
-            );
-        query.bindValue(":mois", moisStr);
-        query.bindValue(":annee", anneeStr);
-
-        if (!query.exec()) {
-            qDebug() << "Erreur SQL (strftime):" << query.lastError().text();
-            return 0.0;
-        }
+    if (query.exec() && query.next()) {
+        double result = query.value(0).toDouble();
+        qDebug() << "Total dépenses pour" << moisStr << "/" << anneeStr << ":" << result;
+        return result;
+    } else {
+        qDebug() << "Erreur getTotalDepenses:" << query.lastError().text();
     }
 
-    if (query.next()) {
-        double total = query.value(0).toDouble();
-        qDebug() << "Total dépenses trouvé:" << total;
-        return total;
-    }
-
-    qDebug() << "Aucune dépense pour cette période";
     return 0.0;
 }
 
@@ -203,49 +161,22 @@ double OperationRepository::getTotalDepensesCategorie(const QString &categorieId
     QString moisStr = QString::number(mois).rightJustified(2, '0');
     QString anneeStr = QString::number(annee);
 
-    qDebug() << "=== DEBUG getTotalDepensesCategorie ===";
-    qDebug() << "Catégorie:" << categorieId << "Mois:" << moisStr << "Année:" << anneeStr;
-
-    // Version SUBSTR
+    // CORRECTION : Chercher 'DEPENSE' en majuscules
     query.prepare(
         "SELECT SUM(montant) FROM Operation "
         "WHERE substr(date, 6, 2) = :mois "
         "AND substr(date, 1, 4) = :annee "
-        "AND type = 'depense' "
+        "AND type = 'DEPENSE' "  // MAJUSCULES
         "AND categorie_id = :categorie_id"
         );
     query.bindValue(":mois", moisStr);
     query.bindValue(":annee", anneeStr);
     query.bindValue(":categorie_id", categorieId);
 
-    if (!query.exec()) {
-        qDebug() << "Erreur SQL (SUBSTR):" << query.lastError().text();
-
-        // Version strftime
-        query.prepare(
-            "SELECT SUM(montant) FROM Operation "
-            "WHERE strftime('%m', date) = :mois "
-            "AND strftime('%Y', date) = :annee "
-            "AND type = 'depense' "
-            "AND categorie_id = :categorie_id"
-            );
-        query.bindValue(":mois", moisStr);
-        query.bindValue(":annee", anneeStr);
-        query.bindValue(":categorie_id", categorieId);
-
-        if (!query.exec()) {
-            qDebug() << "Erreur SQL (strftime):" << query.lastError().text();
-            return 0.0;
-        }
+    if (query.exec() && query.next()) {
+        return query.value(0).toDouble();
     }
 
-    if (query.next()) {
-        double total = query.value(0).toDouble();
-        qDebug() << "Total pour catégorie" << categorieId << ":" << total;
-        return total;
-    }
-
-    qDebug() << "Aucune dépense pour cette catégorie et période";
     return 0.0;
 }
 
@@ -486,4 +417,94 @@ bool OperationRepository::modifierOperation(const QString& operationId,
         qDebug() << "Échec de la modification";
         return false;
     }
+}
+
+// Ajoutez ces méthodes dans OperationRepository.cpp
+
+double OperationRepository::getTotalRevenusCompte(int mois, int annee, const QString &compteId)
+{
+    QSqlQuery query;
+    QString moisStr = QString::number(mois).rightJustified(2, '0');
+    QString anneeStr = QString::number(annee);
+
+    query.prepare(
+        "SELECT SUM(montant) FROM Operation "
+        "WHERE substr(date, 6, 2) = :mois "
+        "AND substr(date, 1, 4) = :annee "
+        "AND type = 'REVENU' "
+        "AND compte_id = :compte_id"
+        );
+    query.bindValue(":mois", moisStr);
+    query.bindValue(":annee", anneeStr);
+    query.bindValue(":compte_id", compteId);
+
+    if (query.exec() && query.next()) {
+        double result = query.value(0).toDouble();
+        qDebug() << "Total revenus compte" << compteId << "pour" << moisStr << "/" << anneeStr << ":" << result;
+        return result;
+    } else {
+        qDebug() << "Erreur getTotalRevenusCompte:" << query.lastError().text();
+    }
+
+    return 0.0;
+}
+
+double OperationRepository::getTotalDepensesCompte(int mois, int annee, const QString &compteId)
+{
+    QSqlQuery query;
+    QString moisStr = QString::number(mois).rightJustified(2, '0');
+    QString anneeStr = QString::number(annee);
+
+    query.prepare(
+        "SELECT SUM(montant) FROM Operation "
+        "WHERE substr(date, 6, 2) = :mois "
+        "AND substr(date, 1, 4) = :annee "
+        "AND type = 'DEPENSE' "
+        "AND compte_id = :compte_id"
+        );
+    query.bindValue(":mois", moisStr);
+    query.bindValue(":annee", anneeStr);
+    query.bindValue(":compte_id", compteId);
+
+    if (query.exec() && query.next()) {
+        double result = query.value(0).toDouble();
+        qDebug() << "Total dépenses compte" << compteId << "pour" << moisStr << "/" << anneeStr << ":" << result;
+        return result;
+    } else {
+        qDebug() << "Erreur getTotalDepensesCompte:" << query.lastError().text();
+    }
+
+    return 0.0;
+}
+
+double OperationRepository::getTotalDepensesCategorieCompte(const QString &categorieId,
+                                                            int mois, int annee,
+                                                            const QString &compteId)
+{
+    QSqlQuery query;
+    QString moisStr = QString::number(mois).rightJustified(2, '0');
+    QString anneeStr = QString::number(annee);
+
+    query.prepare(
+        "SELECT SUM(montant) FROM Operation "
+        "WHERE substr(date, 6, 2) = :mois "
+        "AND substr(date, 1, 4) = :annee "
+        "AND type = 'DEPENSE' "
+        "AND categorie_id = :categorie_id "
+        "AND compte_id = :compte_id"
+        );
+    query.bindValue(":mois", moisStr);
+    query.bindValue(":annee", anneeStr);
+    query.bindValue(":categorie_id", categorieId);
+    query.bindValue(":compte_id", compteId);
+
+    if (query.exec() && query.next()) {
+        double result = query.value(0).toDouble();
+        qDebug() << "Dépenses catégorie" << categorieId << "compte" << compteId << ":" << result;
+        return result;
+    } else {
+        qDebug() << "Erreur getTotalDepensesCategorieCompte:" << query.lastError().text();
+    }
+
+    return 0.0;
 }

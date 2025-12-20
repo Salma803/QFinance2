@@ -21,7 +21,7 @@ public:
     bool supprimerCategorie(const QString& categorieId);
 
     // Suppression d'une catégorie et de ses sous-catégories
-    bool supprimerCategorieAvecEnfants(const QString& categorieId);
+    static bool supprimerCategorieAvecEnfants(const QString& categorieId);
     static QList<QString> chargerIdsSousCategories(const QString& parentId);
 
 };

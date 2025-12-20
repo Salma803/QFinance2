@@ -41,6 +41,12 @@ public:
                                   const QDate& nouvelleDate,
                                   double nouveauMontant,
                                   const QString& nouvelleCategorieId);
+
+    static double getTotalRevenusCompte(int mois, int annee, const QString &compteId);
+    static double getTotalDepensesCompte(int mois, int annee, const QString &compteId);
+    static double getTotalDepensesCategorieCompte(const QString &categorieId,
+                                                  int mois, int annee,
+                                                  const QString &compteId);
 };
 
 #endif // OPERATIONREPOSITORY_H

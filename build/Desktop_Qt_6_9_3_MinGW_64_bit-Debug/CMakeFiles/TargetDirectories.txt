@@ -1,9 +1,0 @@
-D:/Projects/QFinance2/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/CMakeFiles/QFinance2.dir
-D:/Projects/QFinance2/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-D:/Projects/QFinance2/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-D:/Projects/QFinance2/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
-D:/Projects/QFinance2/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/CMakeFiles/install.dir
-D:/Projects/QFinance2/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
-D:/Projects/QFinance2/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
-D:/Projects/QFinance2/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/CMakeFiles/QFinance2_autogen_timestamp_deps.dir
-D:/Projects/QFinance2/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/CMakeFiles/QFinance2_autogen.dir

@@ -2,17 +2,22 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "model/Utilisateur.h"
-#include "model/Categorie.h"
-#include "dashboardmanager.h"
-#include "repository/categorierepository.h"
+#include <QList>
+#include <QString>
 
-
-
-QT_BEGIN_NAMESPACE
+// Forward declarations
 namespace Ui {
 class MainWindow;
 }
+
+// Model includes
+#include "model/Utilisateur.h"
+#include "model/Categorie.h"
+#include "DashboardManager.h"
+
+QT_BEGIN_NAMESPACE
+class QTreeWidgetItem;
+class QTableWidgetItem;
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -20,52 +25,57 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    // Constructeur/Destructeur
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
+    // === SLOTS POUR LA GESTION DES COMPTES ===
     void ajouterCompte();
     void effectuerTransfert();
+
+    // === SLOTS POUR LA GESTION DES CATÉGORIES ===
     void ajouterCategorie();
     void modifierCategorie();
     void supprimerCategorie();
     void chargerCategoriesUI();
+
+    // === SLOTS POUR LA GESTION DES OPÉRATIONS ===
     void ajouterOperation();
-    void actualiserDashboard();
-    void initialiserDashboard();
-
-    void supprimerOperation();
-    void onTableOperationsCellChanged(int row, int column);
-
-
-private:
-    void rafraichirUI();
-    void initialiserComboMois();
-
-    Ui::MainWindow *ui;   // pointeur vers type incomplet (OK)
-    CategorieRepository categorieRepository;
-    QString currentOperationId;
-    bool isModifyingTable = false;
-
-
-    Utilisateur utilisateur;
-    QList<Categorie*> categories;
     void remplirCombosOperation();
     void remplirHistoriqueComptes();
     void chargerHistoriqueCompte();
-    void remplirCategoriesPrincipales();
     void chargerSousCategories();
     void onOperationSelectionChanged();
+    void supprimerOperation();
+    void onTableOperationsCellChanged(int row, int column);
 
-    // Méthodes
-    QString findCategorieIdByName(const QString &categorieName);
+    // === SLOTS POUR LE DASHBOARD ===
+    void initialiserDashboard();
+    void actualiserDashboard();
+    void onFiltreCompteChanged(int index);
+    void onFiltreCategorieChanged(int index);
+    void mettreAJourRecommandations();
+
+private:
+    // === MÉTHODES PRIVÉES D'INITIALISATION ===
+    void rafraichirUI();
+    void initialiserComboMois();
+    void initialiserFiltresDashboard();
+
+    // === MÉTHODES PRIVÉES UTILITAIRES ===
     void restoreOriginalValue(int row, int column, const QVariantMap &originalData);
+    QString findCategorieIdByName(const QString &categorieName);
 
+    // === VARIABLES MEMBRES ===
+    Ui::MainWindow *ui;                   // Interface utilisateur
+    Utilisateur utilisateur;              // Utilisateur courant
+    QList<Categorie*> categories;         // Liste des catégories
+    DashboardManager *dashboardManager;   // Gestionnaire du dashboard
 
-
-
-    DashboardManager *dashboardManager;
-
+    // Variables pour la gestion des opérations
+    bool isModifyingTable;                // Flag pour éviter les boucles infinies
+    QString currentOperationId;           // ID de l'opération sélectionnée
 };
 
 #endif // MAINWINDOW_H

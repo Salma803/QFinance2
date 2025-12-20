@@ -17,17 +17,21 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateEdit>
 #include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableWidget>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -84,18 +88,44 @@ public:
     QVBoxLayout *verticalLayoutDashboard;
     QGroupBox *groupFiltres;
     QHBoxLayout *horizontalLayoutFiltres;
+    QLabel *labelMois;
     QComboBox *comboMois;
+    QLabel *labelAnnee;
     QSpinBox *spinAnnee;
+    QLabel *labelCompte;
+    QComboBox *comboFiltreCompte;
+    QLabel *labelCategorie;
+    QComboBox *comboFiltreCategorie;
     QPushButton *btnActualiser;
-    QSpacerItem *horizontalSpacerFiltres;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
+    QVBoxLayout *verticalLayout_2;
+    QHBoxLayout *horizontalLayout_2;
     QChartView *chartDepensesParCategorie;
     QChartView *chartRevenusVsDepenses;
+    QHBoxLayout *horizontalLayout_3;
+    QChartView *chartEvolution;
+    QChartView *chartRepartition;
+    QGroupBox *groupBox;
+    QGridLayout *gridLayout;
+    QLabel *label;
+    QLabel *labelRevenusTotal;
+    QLabel *label_2;
+    QLabel *labelDepensesTotal;
+    QLabel *label_3;
+    QLabel *labelSolde;
+    QLabel *label_4;
+    QLabel *labelDepensesMoyennes;
+    QGroupBox *groupRecommandations;
+    QVBoxLayout *verticalLayout_3;
+    QTextEdit *textRecommandations;
+    QSpacerItem *verticalSpacer;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(449, 449);
+        MainWindow->resize(1200, 800);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         verticalLayout = new QVBoxLayout(centralwidget);
@@ -278,9 +308,9 @@ public:
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
         tableOperations->setHorizontalHeaderItem(3, __qtablewidgetitem3);
         tableOperations->setObjectName("tableOperations");
-        tableOperations->setEditTriggers(QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed);
-        tableOperations->setSelectionBehavior(QAbstractItemView::SelectRows);
-        tableOperations->setSelectionMode(QAbstractItemView::SingleSelection);
+        tableOperations->setEditTriggers(QAbstractItemView::EditTrigger::DoubleClicked|QAbstractItemView::EditTrigger::EditKeyPressed);
+        tableOperations->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+        tableOperations->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 
         vboxLayout3->addWidget(tableOperations);
 
@@ -308,10 +338,20 @@ public:
         groupFiltres->setObjectName("groupFiltres");
         horizontalLayoutFiltres = new QHBoxLayout(groupFiltres);
         horizontalLayoutFiltres->setObjectName("horizontalLayoutFiltres");
+        labelMois = new QLabel(groupFiltres);
+        labelMois->setObjectName("labelMois");
+
+        horizontalLayoutFiltres->addWidget(labelMois);
+
         comboMois = new QComboBox(groupFiltres);
         comboMois->setObjectName("comboMois");
 
         horizontalLayoutFiltres->addWidget(comboMois);
+
+        labelAnnee = new QLabel(groupFiltres);
+        labelAnnee->setObjectName("labelAnnee");
+
+        horizontalLayoutFiltres->addWidget(labelAnnee);
 
         spinAnnee = new QSpinBox(groupFiltres);
         spinAnnee->setObjectName("spinAnnee");
@@ -320,27 +360,147 @@ public:
 
         horizontalLayoutFiltres->addWidget(spinAnnee);
 
+        labelCompte = new QLabel(groupFiltres);
+        labelCompte->setObjectName("labelCompte");
+
+        horizontalLayoutFiltres->addWidget(labelCompte);
+
+        comboFiltreCompte = new QComboBox(groupFiltres);
+        comboFiltreCompte->setObjectName("comboFiltreCompte");
+
+        horizontalLayoutFiltres->addWidget(comboFiltreCompte);
+
+        labelCategorie = new QLabel(groupFiltres);
+        labelCategorie->setObjectName("labelCategorie");
+
+        horizontalLayoutFiltres->addWidget(labelCategorie);
+
+        comboFiltreCategorie = new QComboBox(groupFiltres);
+        comboFiltreCategorie->setObjectName("comboFiltreCategorie");
+
+        horizontalLayoutFiltres->addWidget(comboFiltreCategorie);
+
         btnActualiser = new QPushButton(groupFiltres);
         btnActualiser->setObjectName("btnActualiser");
 
         horizontalLayoutFiltres->addWidget(btnActualiser);
 
-        horizontalSpacerFiltres = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
-
-        horizontalLayoutFiltres->addItem(horizontalSpacerFiltres);
-
 
         verticalLayoutDashboard->addWidget(groupFiltres);
 
-        chartDepensesParCategorie = new QChartView(tabDashboard);
+        scrollArea = new QScrollArea(tabDashboard);
+        scrollArea->setObjectName("scrollArea");
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1162, 662));
+        verticalLayout_2 = new QVBoxLayout(scrollAreaWidgetContents);
+        verticalLayout_2->setObjectName("verticalLayout_2");
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
+        chartDepensesParCategorie = new QChartView(scrollAreaWidgetContents);
         chartDepensesParCategorie->setObjectName("chartDepensesParCategorie");
+        chartDepensesParCategorie->setMinimumSize(QSize(550, 350));
 
-        verticalLayoutDashboard->addWidget(chartDepensesParCategorie);
+        horizontalLayout_2->addWidget(chartDepensesParCategorie);
 
-        chartRevenusVsDepenses = new QChartView(tabDashboard);
+        chartRevenusVsDepenses = new QChartView(scrollAreaWidgetContents);
         chartRevenusVsDepenses->setObjectName("chartRevenusVsDepenses");
+        chartRevenusVsDepenses->setMinimumSize(QSize(550, 350));
 
-        verticalLayoutDashboard->addWidget(chartRevenusVsDepenses);
+        horizontalLayout_2->addWidget(chartRevenusVsDepenses);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_2);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
+        chartEvolution = new QChartView(scrollAreaWidgetContents);
+        chartEvolution->setObjectName("chartEvolution");
+        chartEvolution->setMinimumSize(QSize(550, 350));
+
+        horizontalLayout_3->addWidget(chartEvolution);
+
+        chartRepartition = new QChartView(scrollAreaWidgetContents);
+        chartRepartition->setObjectName("chartRepartition");
+        chartRepartition->setMinimumSize(QSize(550, 350));
+
+        horizontalLayout_3->addWidget(chartRepartition);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_3);
+
+        groupBox = new QGroupBox(scrollAreaWidgetContents);
+        groupBox->setObjectName("groupBox");
+        gridLayout = new QGridLayout(groupBox);
+        gridLayout->setObjectName("gridLayout");
+        label = new QLabel(groupBox);
+        label->setObjectName("label");
+
+        gridLayout->addWidget(label, 0, 0, 1, 1);
+
+        labelRevenusTotal = new QLabel(groupBox);
+        labelRevenusTotal->setObjectName("labelRevenusTotal");
+        labelRevenusTotal->setAlignment(Qt::AlignRight);
+
+        gridLayout->addWidget(labelRevenusTotal, 0, 1, 1, 1);
+
+        label_2 = new QLabel(groupBox);
+        label_2->setObjectName("label_2");
+
+        gridLayout->addWidget(label_2, 1, 0, 1, 1);
+
+        labelDepensesTotal = new QLabel(groupBox);
+        labelDepensesTotal->setObjectName("labelDepensesTotal");
+        labelDepensesTotal->setAlignment(Qt::AlignRight);
+
+        gridLayout->addWidget(labelDepensesTotal, 1, 1, 1, 1);
+
+        label_3 = new QLabel(groupBox);
+        label_3->setObjectName("label_3");
+
+        gridLayout->addWidget(label_3, 2, 0, 1, 1);
+
+        labelSolde = new QLabel(groupBox);
+        labelSolde->setObjectName("labelSolde");
+        labelSolde->setAlignment(Qt::AlignRight);
+
+        gridLayout->addWidget(labelSolde, 2, 1, 1, 1);
+
+        label_4 = new QLabel(groupBox);
+        label_4->setObjectName("label_4");
+
+        gridLayout->addWidget(label_4, 3, 0, 1, 1);
+
+        labelDepensesMoyennes = new QLabel(groupBox);
+        labelDepensesMoyennes->setObjectName("labelDepensesMoyennes");
+        labelDepensesMoyennes->setAlignment(Qt::AlignRight);
+
+        gridLayout->addWidget(labelDepensesMoyennes, 3, 1, 1, 1);
+
+
+        verticalLayout_2->addWidget(groupBox);
+
+        groupRecommandations = new QGroupBox(scrollAreaWidgetContents);
+        groupRecommandations->setObjectName("groupRecommandations");
+        verticalLayout_3 = new QVBoxLayout(groupRecommandations);
+        verticalLayout_3->setObjectName("verticalLayout_3");
+        textRecommandations = new QTextEdit(groupRecommandations);
+        textRecommandations->setObjectName("textRecommandations");
+        textRecommandations->setReadOnly(true);
+
+        verticalLayout_3->addWidget(textRecommandations);
+
+
+        verticalLayout_2->addWidget(groupRecommandations);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        verticalLayout_2->addItem(verticalSpacer);
+
+        scrollArea->setWidget(scrollAreaWidgetContents);
+
+        verticalLayoutDashboard->addWidget(scrollArea);
 
         tabWidget->addTab(tabDashboard, QString());
 
@@ -350,7 +510,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -369,7 +529,10 @@ public:
         btnTransfert->setText(QCoreApplication::translate("MainWindow", "Transf\303\251rer", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tabComptes), QCoreApplication::translate("MainWindow", "Comptes", nullptr));
         QTreeWidgetItem *___qtreewidgetitem = treeCategories->headerItem();
-        ___qtreewidgetitem->setText(0, QCoreApplication::translate("MainWindow", "Nom de la cat\303\251gorie", nullptr));
+        ___qtreewidgetitem->setText(3, QCoreApplication::translate("MainWindow", "Restant (\342\202\254)", nullptr));
+        ___qtreewidgetitem->setText(2, QCoreApplication::translate("MainWindow", "D\303\251pens\303\251 (\342\202\254)", nullptr));
+        ___qtreewidgetitem->setText(1, QCoreApplication::translate("MainWindow", "Budget (\342\202\254)", nullptr));
+        ___qtreewidgetitem->setText(0, QCoreApplication::translate("MainWindow", "Cat\303\251gorie", nullptr));
         btnAjouterCategorie->setText(QCoreApplication::translate("MainWindow", "Ajouter", nullptr));
         btnModifierCategorie->setText(QCoreApplication::translate("MainWindow", "Modifier", nullptr));
         btnSupprimerCategorie->setText(QCoreApplication::translate("MainWindow", "Supprimer", nullptr));
@@ -398,7 +561,26 @@ public:
         btnSupprimerOperation->setText(QCoreApplication::translate("MainWindow", "Supprimer l'op\303\251ration", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tabHistorique), QCoreApplication::translate("MainWindow", "Historique", nullptr));
         groupFiltres->setTitle(QCoreApplication::translate("MainWindow", "Filtres", nullptr));
+        labelMois->setText(QCoreApplication::translate("MainWindow", "Mois:", nullptr));
+        labelAnnee->setText(QCoreApplication::translate("MainWindow", "Ann\303\251e:", nullptr));
+        labelCompte->setText(QCoreApplication::translate("MainWindow", "Compte:", nullptr));
+        labelCategorie->setText(QCoreApplication::translate("MainWindow", "Cat\303\251gorie:", nullptr));
         btnActualiser->setText(QCoreApplication::translate("MainWindow", "Actualiser", nullptr));
+        groupBox->setTitle(QCoreApplication::translate("MainWindow", "Statistiques du mois", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Revenus totaux:", nullptr));
+        labelRevenusTotal->setText(QCoreApplication::translate("MainWindow", "0 \342\202\254", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "D\303\251penses totales:", nullptr));
+        labelDepensesTotal->setText(QCoreApplication::translate("MainWindow", "0 \342\202\254", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "Solde net:", nullptr));
+        labelSolde->setText(QCoreApplication::translate("MainWindow", "0 \342\202\254", nullptr));
+        label_4->setText(QCoreApplication::translate("MainWindow", "D\303\251penses moyennes/jour:", nullptr));
+        labelDepensesMoyennes->setText(QCoreApplication::translate("MainWindow", "0 \342\202\254", nullptr));
+        groupRecommandations->setTitle(QCoreApplication::translate("MainWindow", "Analyse & Recommandations", nullptr));
+        textRecommandations->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Cliquez sur \"Actualiser\" pour voir les recommandations.</p></body></html>", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tabDashboard), QCoreApplication::translate("MainWindow", "Dashboard", nullptr));
     } // retranslateUi
 

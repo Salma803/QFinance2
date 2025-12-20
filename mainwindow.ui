@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>449</width>
-    <height>449</height>
+    <width>1200</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,10 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
+
+      <!-- ONGLET COMPTES -->
       <widget class="QWidget" name="tabComptes">
        <attribute name="title">
         <string>Comptes</string>
@@ -96,34 +98,36 @@
         </item>
        </layout>
       </widget>
+
+      <!-- ONGLET CATÉGORIES -->
       <widget class="QWidget" name="tabCategories">
        <attribute name="title">
         <string>Catégories</string>
        </attribute>
        <layout class="QVBoxLayout">
         <item>
-        <widget class="QTreeWidget" name="treeCategories">
-         <column>
-          <property name="text">
-           <string>Catégorie</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Budget (€)</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Dépensé (€)</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Restant (€)</string>
-          </property>
-         </column>
-        </widget>
+         <widget class="QTreeWidget" name="treeCategories">
+          <column>
+           <property name="text">
+            <string>Catégorie</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Budget (€)</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Dépensé (€)</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Restant (€)</string>
+           </property>
+          </column>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout">
@@ -152,6 +156,8 @@
         </item>
        </layout>
       </widget>
+
+      <!-- ONGLET OPÉRATIONS -->
       <widget class="QWidget" name="tabOperations">
        <attribute name="title">
         <string>Opérations</string>
@@ -251,6 +257,8 @@
         </item>
        </layout>
       </widget>
+
+      <!-- ONGLET HISTORIQUE -->
       <widget class="QWidget" name="tabHistorique">
        <attribute name="title">
         <string>Historique</string>
@@ -262,13 +270,13 @@
         <item>
          <widget class="QTableWidget" name="tableOperations">
           <property name="editTriggers">
-           <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
-          </property>
-          <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectRows</enum>
+           <set>QAbstractItemView::EditTrigger::DoubleClicked|QAbstractItemView::EditTrigger::EditKeyPressed</set>
           </property>
           <property name="selectionMode">
-           <enum>QAbstractItemView::SingleSelection</enum>
+           <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
           </property>
           <column>
            <property name="text">
@@ -296,18 +304,18 @@
          <layout class="QHBoxLayout">
           <item>
            <widget class="QPushButton" name="btnSupprimerOperation">
-            <property name="text">
-             <string>Supprimer l'opération</string>
-            </property>
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Supprimer l'opération</string>
             </property>
            </widget>
           </item>
           <item>
            <spacer>
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -321,11 +329,15 @@
         </item>
        </layout>
       </widget>
+
+      <!-- ONGLET DASHBOARD -->
       <widget class="QWidget" name="tabDashboard">
        <attribute name="title">
         <string>Dashboard</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayoutDashboard">
+
+        <!-- FILTRES -->
         <item>
          <widget class="QGroupBox" name="groupFiltres">
           <property name="title">
@@ -333,7 +345,21 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayoutFiltres">
            <item>
+            <widget class="QLabel" name="labelMois">
+             <property name="text">
+              <string>Mois:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QComboBox" name="comboMois"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelAnnee">
+             <property name="text">
+              <string>Année:</string>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QSpinBox" name="spinAnnee">
@@ -346,36 +372,232 @@
             </widget>
            </item>
            <item>
+            <widget class="QLabel" name="labelCompte">
+             <property name="text">
+              <string>Compte:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboFiltreCompte"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelCategorie">
+             <property name="text">
+              <string>Catégorie:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboFiltreCategorie"/>
+           </item>
+           <item>
             <widget class="QPushButton" name="btnActualiser">
              <property name="text">
               <string>Actualiser</string>
              </property>
             </widget>
            </item>
-           <item>
-            <spacer name="horizontalSpacerFiltres">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
           </layout>
          </widget>
         </item>
+
+        <!-- SCROLL AREA POUR TOUT LE CONTENU -->
         <item>
-         <widget class="QChartView" name="chartDepensesParCategorie" native="true"/>
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>1162</width>
+             <height>662</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+
+            <!-- PREMIÈRE LIGNE DE GRAPHIQUES -->
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QChartView" name="chartDepensesParCategorie" native="true">
+                <property name="minimumSize">
+                 <size>
+                  <width>550</width>
+                  <height>350</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QChartView" name="chartRevenusVsDepenses" native="true">
+                <property name="minimumSize">
+                 <size>
+                  <width>550</width>
+                  <height>350</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+
+            <!-- DEUXIÈME LIGNE DE GRAPHIQUES -->
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QChartView" name="chartEvolution" native="true">
+                <property name="minimumSize">
+                 <size>
+                  <width>550</width>
+                  <height>350</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QChartView" name="chartRepartition" native="true">
+                <property name="minimumSize">
+                 <size>
+                  <width>550</width>
+                  <height>350</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+
+            <!-- STATISTIQUES -->
+            <item>
+             <widget class="QGroupBox" name="groupBox">
+              <property name="title">
+               <string>Statistiques du mois</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string>Revenus totaux:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLabel" name="labelRevenusTotal">
+                 <property name="text">
+                  <string>0 €</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>Dépenses totales:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="labelDepensesTotal">
+                 <property name="text">
+                  <string>0 €</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>Solde net:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLabel" name="labelSolde">
+                 <property name="text">
+                  <string>0 €</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>Dépenses moyennes/jour:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLabel" name="labelDepensesMoyennes">
+                 <property name="text">
+                  <string>0 €</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+
+            <!-- RECOMMANDATIONS -->
+            <item>
+             <widget class="QGroupBox" name="groupRecommandations">
+              <property name="title">
+               <string>Analyse &amp; Recommandations</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <widget class="QTextEdit" name="textRecommandations">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                 <property name="html">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Cliquez sur &quot;Actualiser&quot; pour voir les recommandations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+
+            <!-- ESPACE POUR PUSH VERS LE BAS -->
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+
+           </layout>
+          </widget>
+         </widget>
         </item>
-        <item>
-         <widget class="QChartView" name="chartRevenusVsDepenses" native="true"/>
-        </item>
+
        </layout>
       </widget>
+
      </widget>
     </item>
    </layout>
@@ -385,7 +607,8 @@
   <customwidget>
    <class>QChartView</class>
    <extends>QWidget</extends>
-   <header>qchartview.h</header>
+   <header>QtCharts/QChartView</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
