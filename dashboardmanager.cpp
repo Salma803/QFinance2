@@ -892,7 +892,7 @@ QString DashboardManager::getRecommandations() const
     return m_recommandations;
 }
 
-QString DashboardManager::captureDiagrammeEnImage(QChartView* chartView, const QString &nom)
+QString DashboardManager::captureDiagrammeEnImage(QChartView* chartView, const QString &nom, const QSize &taille)
 {
     if (!chartView || !chartView->chart()) {
         return "";
@@ -903,14 +903,17 @@ QString DashboardManager::captureDiagrammeEnImage(QChartView* chartView, const Q
     QString imagePath = tempDir + "/" + nom + "_" +
                         QString::number(QDateTime::currentMSecsSinceEpoch()) + ".png";
 
-    // Capturer le graphique en image haute résolution
+    // Capturer le graphique en image
     QPixmap pixmap = chartView->grab();
 
+    // Utiliser la taille spécifiée ou une taille par défaut
+    QSize tailleFinale = taille.isValid() ? taille : QSize(800, 500);
+
     // Redimensionner pour une meilleure qualité dans le PDF
-    QPixmap scaledPixmap = pixmap.scaled(1200, 700, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QPixmap scaledPixmap = pixmap.scaled(tailleFinale, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     // Sauvegarder l'image
-    scaledPixmap.save(imagePath, "PNG", 100);
+    scaledPixmap.save(imagePath, "PNG", 90);
 
     return imagePath;
 }
@@ -967,16 +970,19 @@ QString DashboardManager::genererHTMLStatistiques(int mois, int annee,
     html += ".section { page-break-inside: avoid; margin-bottom: 30px; }";
     html += ".header { text-align: center; margin-bottom: 40px; background-color: #f8f9fa; padding: 20px; border-radius: 8px; }";
     html += ".date { color: #6c757d; font-size: 11pt; margin-top: 5px; }";
-    html += ".diagram-container { text-align: center; margin: 25px 0; page-break-inside: avoid; }";
-    html += ".diagram-title { font-weight: bold; margin-bottom: 15px; color: #495057; font-size: 14pt; }";
-    html += ".diagram-img { max-width: 100%; height: auto; border: 1px solid #dee2e6; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }";
-    html += ".diagram-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; }";
+    html += ".diagram-container { text-align: center; margin: 40px 0; page-break-inside: avoid; }";
+    html += ".diagram-title { font-weight: bold; margin-bottom: 15px; color: #2c3e50; font-size: 16pt; }";
+    html += ".diagram-img { width: 90%; max-width: 700px; height: auto; display: block; margin: 0 auto; }";
     html += ".footer { margin-top: 50px; padding-top: 20px; border-top: 2px solid #dee2e6; color: #6c757d; font-size: 10pt; text-align: center; }";
     html += ".info-box { background-color: #e8f4fd; border-left: 4px solid #3498db; padding: 15px; margin: 15px 0; border-radius: 4px; }";
+    html += ".page-break { page-break-before: always; }";
     html += "@media print {";
-    html += "  body { font-size: 10pt; }";
-    html += "  .no-print { display: none; }";
-    html += "  .page-break { page-break-before: always; }";
+    html += "  body { font-size: 10pt; padding: 10px; }";
+    html += "  h1 { font-size: 20pt; margin-bottom: 20px; }";
+    html += "  h2 { font-size: 16pt; margin-top: 30px; }";
+    html += "  .diagram-img { max-width: 90%; }";
+    html += "  .stat-box { padding: 15px; }";
+    html += "  .section { margin-bottom: 20px; }";
     html += "}";
     html += "</style>";
     html += "</head>";
@@ -1071,7 +1077,7 @@ QString DashboardManager::genererHTMLStatistiques(int mois, int annee,
     html += "</div>";
     html += "</div>";
 
-    // Diagrammes - seulement si on a des images
+    // Diagrammes - version simplifiée sans grille pour éviter les superpositions
     bool hasImages = (!imageDepensesPath.isEmpty() && QFile::exists(imageDepensesPath)) ||
                      (!imageRevenusPath.isEmpty() && QFile::exists(imageRevenusPath)) ||
                      (!imageEvolutionPath.isEmpty() && QFile::exists(imageEvolutionPath)) ||
@@ -1084,7 +1090,8 @@ QString DashboardManager::genererHTMLStatistiques(int mois, int annee,
         html += "Les graphiques ci-dessous montrent la répartition de vos finances pour la période sélectionnée.";
         html += "</div>";
 
-        html += "<div class='diagram-grid'>";
+        // Compteur pour suivre le nombre de diagrammes
+        int diagramCount = 0;
 
         // Diagramme 1: Dépenses par catégorie
         if (!imageDepensesPath.isEmpty() && QFile::exists(imageDepensesPath)) {
@@ -1094,6 +1101,7 @@ QString DashboardManager::genererHTMLStatistiques(int mois, int annee,
                 html += "<div class='diagram-title'>Dépenses par Catégorie</div>";
                 html += "<img src='file:///" + imageDepensesPath + "' class='diagram-img' />";
                 html += "</div>";
+                diagramCount++;
             }
         }
 
@@ -1105,6 +1113,7 @@ QString DashboardManager::genererHTMLStatistiques(int mois, int annee,
                 html += "<div class='diagram-title'>Revenus vs Dépenses vs Transferts</div>";
                 html += "<img src='file:///" + imageRevenusPath + "' class='diagram-img' />";
                 html += "</div>";
+                diagramCount++;
             }
         }
 
@@ -1112,10 +1121,16 @@ QString DashboardManager::genererHTMLStatistiques(int mois, int annee,
         if (!imageEvolutionPath.isEmpty() && QFile::exists(imageEvolutionPath)) {
             QImage image(imageEvolutionPath);
             if (!image.isNull()) {
+                // Ajouter un saut de page avant le 3ème diagramme si nécessaire
+                if (diagramCount >= 2) {
+                    html += "<div class='page-break'></div>";
+                }
+
                 html += "<div class='diagram-container'>";
                 html += "<div class='diagram-title'>Évolution du Solde Mensuel</div>";
                 html += "<img src='file:///" + imageEvolutionPath + "' class='diagram-img' />";
                 html += "</div>";
+                diagramCount++;
             }
         }
 
@@ -1127,10 +1142,14 @@ QString DashboardManager::genererHTMLStatistiques(int mois, int annee,
                 html += "<div class='diagram-title'>Répartition des Dépenses</div>";
                 html += "<img src='file:///" + imageRepartitionPath + "' class='diagram-img' />";
                 html += "</div>";
+                diagramCount++;
             }
         }
 
-        html += "</div>"; // Fin diagram-grid
+        if (diagramCount == 0) {
+            html += "<p style='text-align: center; color: #6c757d; font-style: italic; margin: 40px 0;'>Aucun diagramme disponible pour cette période.</p>";
+        }
+
         html += "</div>"; // Fin section diagrammes
     }
 
@@ -1467,57 +1486,40 @@ bool DashboardManager::exporterPDF(const QString &cheminFichier,
                                    const QString &filtreCategorie,
                                    bool tousLesComptes)
 {
-    // Calculer les statistiques avant l'export
-    calculerStatistiques(mois, annee, filtreCompte, filtreCategorie);
+    try {
+        // Calculer les statistiques avant l'export
+        calculerStatistiques(mois, annee, filtreCompte, filtreCategorie);
 
-    // Générer les recommandations
-    m_recommandations = genererRecommandations(mois, annee, filtreCompte);
+        // Générer les recommandations
+        m_recommandations = genererRecommandations(mois, annee, filtreCompte);
 
-    // Capturer les diagrammes actuels en images
-    QString imageDepensesPath = captureDiagrammeEnImage(m_chartDepenses, "depenses");
-    QString imageRevenusPath = captureDiagrammeEnImage(m_chartRevenusVsDepenses, "revenus");
-    QString imageEvolutionPath = captureDiagrammeEnImage(m_chartEvolution, "evolution");
-    QString imageRepartitionPath = captureDiagrammeEnImage(m_chartRepartition, "repartition");
+        // Version SANS diagrammes pour éviter les problèmes
+        QString htmlContent = genererHTMLStatistiques(mois, annee, filtreCompte,
+                                                      filtreCategorie, tousLesComptes);
 
-    // Générer le contenu HTML avec les images
-    QString htmlContent = genererHTMLStatistiques(mois, annee, filtreCompte, filtreCategorie,
-                                                  tousLesComptes,
-                                                  imageDepensesPath,
-                                                  imageRevenusPath,
-                                                  imageEvolutionPath,
-                                                  imageRepartitionPath);
+        // Créer un document HTML
+        QTextDocument document;
+        document.setHtml(htmlContent);
 
-    // Créer un document HTML
-    QTextDocument document;
-    document.setHtml(htmlContent);
+        // FORCER une grande taille de police
+        QFont font = document.defaultFont();
+        font.setPointSize(12);
+        document.setDefaultFont(font);
 
-    // Configurer l'imprimante pour PDF
-    QPrinter printer(QPrinter::HighResolution);
-    printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setOutputFileName(cheminFichier);
-    printer.setPageSize(QPageSize(QPageSize::A4));
-    printer.setPageOrientation(QPageLayout::Portrait);
+        // Configurer l'imprimante POUR QT 6
+        QPrinter printer;
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setOutputFileName(cheminFichier);
+        printer.setPageSize(QPageSize(QPageSize::A4));
 
-    // Augmenter la résolution pour une meilleure qualité
-    printer.setResolution(150);
+        // Exporter SIMPLEMENT sans marges complexes
+        document.print(&printer);
 
-    // Configurer les marges
-    printer.setPageMargins(QMarginsF(20, 20, 20, 20), QPageLayout::Millimeter);
+        qDebug() << "PDF exporté (version simple Qt 6) vers:" << cheminFichier;
+        return true;
 
-    // Exporter en PDF avec peinture manuelle pour contrôler la mise en page
-    QPainter painter(&printer);
-
-    // Rendre le document pour le PDF
-    document.drawContents(&painter);
-
-    painter.end();
-
-    // Nettoyer les images temporaires
-    if (!imageDepensesPath.isEmpty()) QFile::remove(imageDepensesPath);
-    if (!imageRevenusPath.isEmpty()) QFile::remove(imageRevenusPath);
-    if (!imageEvolutionPath.isEmpty()) QFile::remove(imageEvolutionPath);
-    if (!imageRepartitionPath.isEmpty()) QFile::remove(imageRepartitionPath);
-
-    qDebug() << "PDF exporté avec succès vers:" << cheminFichier;
-    return true;
+    } catch (...) {
+        qDebug() << "Erreur lors de l'export PDF";
+        return false;
+    }
 }

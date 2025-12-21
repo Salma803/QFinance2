@@ -5,6 +5,7 @@
 #include <QList>
 #include <QString>
 #include <QMap>
+#include <QSize>
 
 #include "model/Categorie.h"
 #include "model/Compte.h"
@@ -23,6 +24,8 @@ public:
         double totalTransferts;
         double solde;
         double depensesParJour;
+        double transfertsEntrants;
+        double transfertsSortants;
         QMap<QString, double> depensesParCategorie;
         QMap<QString, double> evolutionMensuelle;
     };
@@ -54,6 +57,9 @@ public:
     Statistiques getStatistiques() const;
     QString getRecommandations() const;
 
+    // Méthodes publiques pour obtenir les statistiques calculées
+    double getTransfertsEntrants(int mois, int annee, const QString &compteId);
+
 signals:
     void dashboardActualise();
 
@@ -77,8 +83,9 @@ private:
     double getTotalTransferts(int mois, int annee);
     double getTotalTransfertsCompte(int mois, int annee, const QString &compteId);
     double getTransfertsSortants(int mois, int annee, const QString &compteId);
+    double getTransfertsEntrantsPrive(int mois, int annee, const QString &compteId);
 
-    QString captureDiagrammeEnImage(QChartView* chartView, const QString &nom);
+    QString captureDiagrammeEnImage(QChartView* chartView, const QString &nom, const QSize &taille = QSize(800, 500));
 
     QString genererHTMLStatistiques(int mois, int annee,
                                     const QString &filtreCompte,
