@@ -5,6 +5,7 @@
 #include <QSqlError>
 #include <QUuid>
 #include <QDebug>
+#include <QMessageBox>
 
 bool OperationRepository::ajouterRevenu(const QString& nom,
                                         const QDate& date,
@@ -35,7 +36,6 @@ bool OperationRepository::ajouterRevenu(const QString& nom,
 
     return true;
 }
-
 bool OperationRepository::ajouterDepense(const QString& nom,
                                          const QDate& date,
                                          double montant,
@@ -44,11 +44,16 @@ bool OperationRepository::ajouterDepense(const QString& nom,
                                          bool estRecurrente,
                                          const QString& frequence)
 {
-
     qDebug() << ">>> ajouterDepense APPELEE <<<";
 
     // =========================
-    // 1️⃣ Insérer la dépense
+    // 1️⃣ Solde AVANT dépense
+    // =========================
+    double soldeAvant = CompteRepository::calculerSolde(compteId);
+    qDebug() << "Solde AVANT depense =" << soldeAvant;
+
+    // =========================
+    // 2️⃣ Insérer la dépense
     // =========================
     QSqlQuery query;
     query.prepare(
@@ -74,40 +79,37 @@ bool OperationRepository::ajouterDepense(const QString& nom,
     }
 
     // =========================
-    // 2️⃣ Mettre à jour le solde
+    // 3️⃣ Solde APRÈS dépense
     // =========================
+    double soldeApres = soldeAvant - montant;
+    qDebug() << "Solde APRES depense =" << soldeApres;
+
+    // Mettre à jour le solde du compte déficitaire
     CompteRepository::mettreAJourSolde(compteId);
 
-    double solde = CompteRepository::calculerSolde(compteId);
-    qDebug() << "Solde apres depense =" << solde;
-
-
     // =========================
-    // 3️⃣ Si solde négatif → transfert automatique
+    // 4️⃣ Déclencher transfert automatique si négatif
     // =========================
-    if (solde < 0) {
+    if (soldeApres < 0) {
         qDebug() << ">>> SOLDE NEGATIF DETECTE <<<";
 
-        double montantManquant = -solde;
+        double montantManquant = -soldeApres;
 
-        // Trouver un autre compte avec assez d'argent
         QString compteSourceId =
             CompteRepository::trouverCompteCourantAvecSoldeSuffisant(
-                "1",              // utilisateurId (chez toi = "1")
-                compteId,          // compte déficitaire
+                "1",        // utilisateurId
+                compteId,   // compte déficitaire
                 montantManquant
                 );
-        qDebug() << "Compte source trouve =" << compteSourceId;
 
+        qDebug() << "Compte source trouvé =" << compteSourceId;
 
         if (!compteSourceId.isEmpty()) {
-
-            qDebug() << "⚠️ Solde négatif → transfert auto de"
+            qDebug() << "⚠️ Transfert automatique de"
                      << montantManquant
                      << "depuis"
                      << compteSourceId;
 
-            // Créer le transfert automatique
             bool ok = TransfertRepository::ajouterTransfertAuto(
                 compteSourceId,
                 compteId,
@@ -116,12 +118,19 @@ bool OperationRepository::ajouterDepense(const QString& nom,
                 );
 
             if (ok) {
-                // Mettre à jour les soldes après transfert
                 CompteRepository::mettreAJourSolde(compteSourceId);
                 CompteRepository::mettreAJourSolde(compteId);
+
+                QMessageBox::information(
+                    nullptr,
+                    "Transfert automatique",
+                    QString("Le compte était négatif.\n"
+                            "Un transfert automatique de %1 € a été effectué.")
+                        .arg(montantManquant, 0, 'f', 2)
+                    );
             }
         } else {
-            qDebug() << "❗ Aucun compte avec solde suffisant pour transfert auto";
+            qDebug() << "❗ Aucun compte avec solde suffisant";
         }
     }
 
