@@ -258,6 +258,27 @@
         <string>Historique</string>
        </attribute>
        <layout class="QVBoxLayout">
+       <!-- FILTRES HISTORIQUE -->
+       <item>
+        <layout class="QHBoxLayout">
+         <item>
+          <widget class="QComboBox" name="comboFiltreCategorieOp">
+           <property name="minimumWidth">
+            <number>180</number>
+           </property>
+          </widget>
+         </item>
+
+         <item>
+          <widget class="QLineEdit" name="editFiltreTexteOp">
+           <property name="placeholderText">
+            <string>Filtrer par texte…</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+
         <item>
          <widget class="QComboBox" name="comboCompteHistorique"/>
         </item>

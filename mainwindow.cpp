@@ -21,6 +21,7 @@
 #include <QDate>
 #include <QDebug>
 #include <QSqlQuery>
+#include <QRegularExpressionValidator>
 #include <functional>
 
 // AJOUTER CES INCLUSIONS POUR L'EXPORT PDF
@@ -83,6 +84,22 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::exporterPDFStatistiques);
     connect(ui->btnExportPDFTousComptes, &QPushButton::clicked,
             this, &MainWindow::exporterPDFTousComptes);
+
+    connect(ui->comboFiltreCategorieOp,
+            &QComboBox::currentIndexChanged,
+            this,
+            &MainWindow::appliquerFiltreOperations);
+
+    connect(ui->editFiltreTexteOp,
+            &QLineEdit::textChanged,
+            this,
+            &MainWindow::appliquerFiltreOperations);
+
+    QRegularExpression regex("^[a-zA-Z0-9 éèêàùçîôû_-]*$");
+    QValidator* filtreValidator =
+        new QRegularExpressionValidator(regex, this);
+
+    ui->editFiltreTexteOp->setValidator(filtreValidator);
 
 
 
@@ -450,7 +467,7 @@ void MainWindow::remplirHistoriqueComptes()
 
 void MainWindow::chargerHistoriqueCompte()
 {
-    // Déconnecter d'abord pour éviter les signaux pendant le chargement
+    // 🔒 Éviter les signaux pendant le chargement
     disconnect(ui->tableOperations, &QTableWidget::cellChanged,
                this, &MainWindow::onTableOperationsCellChanged);
 
@@ -458,100 +475,172 @@ void MainWindow::chargerHistoriqueCompte()
     ui->tableOperations->clearContents();
 
     QString compteId = ui->comboCompteHistorique->currentData().toString();
-
     if (compteId.isEmpty()) {
-        // Reconnecter
         connect(ui->tableOperations, &QTableWidget::cellChanged,
                 this, &MainWindow::onTableOperationsCellChanged);
         return;
     }
 
-    // Charger opérations
-    QList<QVariantMap> ops = OperationRepository::chargerOperationsParCompte(compteId);
+    // ===============================
+    // 1️⃣ Charger les données depuis la DB
+    // ===============================
 
-    // Charger transferts
-    QList<QVariantMap> transferts = TransfertRepository::chargerTransfertsParCompte(compteId);
+    QList<QVariantMap> ops =
+        OperationRepository::chargerOperationsParCompte(compteId);
 
-    // Fusionner
-    QList<QVariantMap> all = ops;
-    all.append(transferts);
+    QList<QVariantMap> transferts =
+        TransfertRepository::chargerTransfertsParCompte(compteId);
 
-    // Trier par date décroissante
-    std::sort(all.begin(), all.end(),
+    // ===============================
+    // 2️⃣ Stocker TOUTES les opérations
+    // ===============================
+
+    allOperations.clear();
+    allOperations = ops;
+    allOperations.append(transferts);
+
+    // ===============================
+    // 3️⃣ Trier par date décroissante
+    // ===============================
+
+    std::sort(allOperations.begin(), allOperations.end(),
               [](const QVariantMap& a, const QVariantMap& b) {
                   return a["date"].toDate() > b["date"].toDate();
               });
 
-    // Afficher
-    ui->tableOperations->setRowCount(all.size());
+    // ===============================
+    // 4️⃣ Remplir le combo filtre catégories
+    // ===============================
 
-    for (int i = 0; i < all.size(); ++i) {
-        // Stocker toutes les données dans un QVariantMap
-        QVariantMap operationData;
+    ui->comboFiltreCategorieOp->blockSignals(true);
+    ui->comboFiltreCategorieOp->clear();
+    ui->comboFiltreCategorieOp->addItem("Toutes les catégories", "");
 
-        // Copier toutes les données originales
-        operationData = all[i];
+    QSet<QString> categoriesUniques;
+    for (const QVariantMap& op : allOperations) {
+        categoriesUniques.insert(op["categorie"].toString());
+    }
 
-        // Ajouter l'ID si présent
-        if (all[i].contains("id")) {
-            operationData["id"] = all[i]["id"];
-        }
+    for (const QString& cat : categoriesUniques) {
+        ui->comboFiltreCategorieOp->addItem(cat, cat);
+    }
 
+    ui->comboFiltreCategorieOp->blockSignals(false);
+
+    // ===============================
+    // 5️⃣ Appliquer le filtre (affichage)
+    // ===============================
+
+    appliquerFiltreOperations();
+
+    // ===============================
+    // 6️⃣ Réactiver les signaux
+    // ===============================
+
+    connect(ui->tableOperations, &QTableWidget::cellChanged,
+            this, &MainWindow::onTableOperationsCellChanged);
+
+    // Bouton supprimer désactivé par défaut
+    ui->btnSupprimerOperation->setEnabled(false);
+}
+
+
+void MainWindow::appliquerFiltreOperations()
+{
+    if (allOperations.isEmpty())
+        return;
+
+    QString filtreCategorie =
+        ui->comboFiltreCategorieOp->currentData().toString();
+
+    QString filtreTexte =
+        ui->editFiltreTexteOp->text().trimmed().toLower();
+
+    QList<QVariantMap> filtered;
+
+    for (const QVariantMap& op : allOperations) {
+
+        // 🔹 Filtre catégorie
+        if (!filtreCategorie.isEmpty() &&
+            op["categorie"].toString() != filtreCategorie)
+            continue;
+
+        // 🔹 Filtre texte (nom)
+        if (!filtreTexte.isEmpty() &&
+            !op["nom"].toString().toLower().contains(filtreTexte))
+            continue;
+
+        filtered.append(op);
+    }
+
+    afficherOperations(filtered);
+}
+
+void MainWindow::afficherOperations(const QList<QVariantMap>& operations)
+{
+    disconnect(ui->tableOperations, &QTableWidget::cellChanged,
+               this, &MainWindow::onTableOperationsCellChanged);
+
+    ui->tableOperations->clearContents();
+    ui->tableOperations->setRowCount(operations.size());
+
+    for (int i = 0; i < operations.size(); ++i) {
+        const QVariantMap& op = operations[i];
+
+        // ======================
         // Date
-        QDate date = all[i]["date"].toDate();
-        QTableWidgetItem *dateItem = new QTableWidgetItem(date.toString("dd/MM/yyyy"));
-        dateItem->setData(Qt::UserRole, operationData);
+        // ======================
+        QDate date = op["date"].toDate();
+        QTableWidgetItem* dateItem =
+            new QTableWidgetItem(date.toString("dd/MM/yyyy"));
+        dateItem->setData(Qt::UserRole, op);
         dateItem->setFlags(dateItem->flags() | Qt::ItemIsEditable);
         ui->tableOperations->setItem(i, 0, dateItem);
 
+        // ======================
         // Nom
-        QString nom = all[i]["nom"].toString();
-        QTableWidgetItem *nomItem = new QTableWidgetItem(nom);
-        nomItem->setData(Qt::UserRole, operationData);
+        // ======================
+        QTableWidgetItem* nomItem =
+            new QTableWidgetItem(op["nom"].toString());
+        nomItem->setData(Qt::UserRole, op);
         nomItem->setFlags(nomItem->flags() | Qt::ItemIsEditable);
         ui->tableOperations->setItem(i, 1, nomItem);
 
+        // ======================
         // Catégorie
-        QString categorie = all[i]["categorie"].toString();
-        QString categorieId = all[i].value("categorie_id").toString();
-        QTableWidgetItem *categorieItem = new QTableWidgetItem(categorie);
-        categorieItem->setData(Qt::UserRole, operationData);
-        categorieItem->setFlags(categorieItem->flags() | Qt::ItemIsEditable);
+        // ======================
+        QTableWidgetItem* catItem =
+            new QTableWidgetItem(op["categorie"].toString());
+        catItem->setData(Qt::UserRole, op);
+        catItem->setFlags(catItem->flags() | Qt::ItemIsEditable);
 
-        // Stocker l'ID de catégorie dans UserRole+1
-        if (!categorieId.isEmpty()) {
-            categorieItem->setData(Qt::UserRole + 1, categorieId);
+        if (op.contains("categorie_id")) {
+            catItem->setData(Qt::UserRole + 1, op["categorie_id"]);
         }
 
-        ui->tableOperations->setItem(i, 2, categorieItem);
+        ui->tableOperations->setItem(i, 2, catItem);
 
-        // Montant avec signe métier
-        double montant = all[i]["montant"].toDouble();
-        QString type = all[i].value("type").toString();
+        // ======================
+        // Montant
+        // ======================
+        double montant = op["montant"].toDouble();
+        QString type = op.value("type").toString();
 
         if (type == "DEPENSE" || type == "TRANSFERT_SORTANT") {
             montant = -montant;
         }
 
-        QTableWidgetItem *montantItem = new QTableWidgetItem(QString::number(montant, 'f', 2));
-        montantItem->setData(Qt::UserRole, operationData);
+        QTableWidgetItem* montantItem =
+            new QTableWidgetItem(QString::number(montant, 'f', 2));
+        montantItem->setData(Qt::UserRole, op);
         montantItem->setFlags(montantItem->flags() | Qt::ItemIsEditable);
-
-        if (montant < 0) {
-            montantItem->setForeground(Qt::red);
-        } else {
-            montantItem->setForeground(Qt::darkGreen);
-        }
+        montantItem->setForeground(montant < 0 ? Qt::red : Qt::darkGreen);
 
         ui->tableOperations->setItem(i, 3, montantItem);
     }
 
-    // Reconnecter après le chargement
     connect(ui->tableOperations, &QTableWidget::cellChanged,
             this, &MainWindow::onTableOperationsCellChanged);
-
-    // Désactiver le bouton de suppression par défaut
-    ui->btnSupprimerOperation->setEnabled(false);
 }
 
 void MainWindow::chargerSousCategories()
