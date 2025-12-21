@@ -39,6 +39,8 @@ private slots:
     void mettreAJourDashboardUI(const DashboardManager::Statistiques& stats,
                                 const QString& recommandations);
 
+    void importerOperationsCSV();
+
 
     // === SLOTS POUR LA GESTION DES CATÉGORIES ===
     void ajouterCategorie();
@@ -90,6 +92,8 @@ private:
     QList<QVariantMap> allOperations;   // toutes les opérations chargées
     void appliquerFiltreOperations();
     void afficherOperations(const QList<QVariantMap>& operations);
+
+    void importerDepuisCSV(const QString& chemin);
 
 
 };

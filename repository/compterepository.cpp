@@ -73,7 +73,6 @@ double CompteRepository::calculerSolde(const QString& compteId)
     double solde = 0.0;
     QSqlQuery query;
 
-    // 1️⃣ Revenus
     query.prepare(
         "SELECT IFNULL(SUM(montant), 0) "
         "FROM Operation "
@@ -84,7 +83,6 @@ double CompteRepository::calculerSolde(const QString& compteId)
     query.next();
     solde += query.value(0).toDouble();
 
-    // 2️⃣ Dépenses
     query.prepare(
         "SELECT IFNULL(SUM(montant), 0) "
         "FROM Operation "
@@ -95,7 +93,6 @@ double CompteRepository::calculerSolde(const QString& compteId)
     query.next();
     solde -= query.value(0).toDouble();
 
-    // 3️⃣ Transferts entrants
     query.prepare(
         "SELECT IFNULL(SUM(montant), 0) "
         "FROM Transfert "
@@ -106,7 +103,6 @@ double CompteRepository::calculerSolde(const QString& compteId)
     query.next();
     solde += query.value(0).toDouble();
 
-    // 4️⃣ Transferts sortants
     query.prepare(
         "SELECT IFNULL(SUM(montant), 0) "
         "FROM Transfert "
@@ -197,25 +193,21 @@ bool CompteRepository::supprimerCompteEtDependances(const QString& compteId)
         return true;
     };
 
-    // ✅ 1) Supprimer opérations
     if (!execDelete("DELETE FROM Operation WHERE compte_id = ?")) {
         db.rollback();
         return false;
     }
 
-    // ✅ 2) Supprimer transferts SORTANTS
     if (!execDelete("DELETE FROM Transfert WHERE source_id = ?")) {
         db.rollback();
         return false;
     }
 
-    // ✅ 3) Supprimer transferts ENTRANTS
     if (!execDelete("DELETE FROM Transfert WHERE destination_id = ?")) {
         db.rollback();
         return false;
     }
 
-    // ✅ 4) Supprimer le compte
     {
         QSqlQuery q(db);
         q.prepare("DELETE FROM Compte WHERE id = ?");
@@ -234,4 +226,23 @@ bool CompteRepository::supprimerCompteEtDependances(const QString& compteId)
     }
 
     return true;
+}
+
+QString CompteRepository::getIdParNom(const QString& nom, const QString& utilisateurId)
+{
+    QSqlQuery query;
+    query.prepare("SELECT id FROM Compte WHERE nom = :nom AND utilisateur_id = :uid LIMIT 1");
+    query.bindValue(":nom", nom);
+    query.bindValue(":uid", utilisateurId);
+
+    if (!query.exec()) {
+        qDebug() << "Erreur getIdParNom Compte:" << query.lastError();
+        return "";
+    }
+
+    if (query.next()) {
+        return query.value(0).toString();
+    }
+
+    return "";
 }

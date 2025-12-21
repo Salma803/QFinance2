@@ -20,6 +20,7 @@ public:
         double montantMin
         );
     static bool supprimerCompteEtDependances(const QString& compteId);
+    static QString getIdParNom(const QString& nom, const QString& utilisateurId);
 
 
 

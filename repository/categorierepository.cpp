@@ -249,3 +249,22 @@ QList<QString> CategorieRepository::chargerIdsSousCategories(
 
     return enfants;
 }
+
+QString CategorieRepository::getIdParNom(const QString& nom)
+{
+    QSqlQuery query;
+    query.prepare("SELECT id FROM Categorie WHERE nom = :nom LIMIT 1");
+    query.bindValue(":nom", nom);
+
+    if (!query.exec()) {
+        qDebug() << "Erreur getIdParNom Categorie:" << query.lastError();
+        return "";
+    }
+
+    if (query.next()) {
+        return query.value(0).toString();
+    }
+
+    return "";
+}
+

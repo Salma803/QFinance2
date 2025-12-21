@@ -104,6 +104,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(dashboardManager, &DashboardManager::dashboardActualise,
             this, &MainWindow::mettreAJourDashboardUI);
 
+    connect(ui->btnImporterCSV, &QPushButton::clicked,
+            this, &MainWindow::importerOperationsCSV);
+
+
 
 
 
@@ -162,6 +166,94 @@ void MainWindow::mettreAJourDashboardUI(
 
     ui->textRecommandations->setHtml(recommandations);
 }
+
+
+
+
+void MainWindow::importerOperationsCSV()
+{
+    QString chemin = QFileDialog::getOpenFileName(
+        this,
+        "Importer un fichier CSV",
+        "",
+        "Fichiers CSV (*.csv)"
+        );
+    if (chemin.isEmpty())
+        return;
+
+    // Bloquer temporairement les mises à jour UI
+    setEnabled(false);
+
+    QFile fichier(chemin);
+    if (!fichier.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, "Erreur", "Impossible d'ouvrir le fichier CSV");
+        setEnabled(true);
+        return;
+    }
+
+    QTextStream in(&fichier);
+    bool premiereLigne = true;
+    int nbAjoutees = 0;
+    int nbErreurs = 0;
+
+    QSqlDatabase::database().transaction(); // transaction unique
+
+    while (!in.atEnd()) {
+        QString ligne = in.readLine();
+        if (premiereLigne) { premiereLigne = false; continue; }
+
+        QStringList champs = ligne.split(";");
+        if (champs.size() < 6) { nbErreurs++; continue; }
+
+        QString type = champs[0].trimmed();
+        QString nom = champs[1].trimmed();
+        QDate date = QDate::fromString(champs[2].trimmed(), Qt::ISODate);
+        double montant = champs[3].toDouble();
+        QString compteNom = champs[4].trimmed();
+        QString compteId = CompteRepository::getIdParNom(compteNom, "1");
+
+        QString categorieNom = champs[5].trimmed();
+        QString categorieId = CategorieRepository::getIdParNom(categorieNom);
+
+        if (compteId.isEmpty() || categorieId.isEmpty()) {
+            nbErreurs++;
+            continue;
+        }
+
+        if (compteId.isEmpty() || categorieId.isEmpty()) {
+            nbErreurs++;
+            qDebug() << "Erreur: compte ou catégorie introuvable pour" << nom << compteId << categorieId << date << type;
+            continue;
+        }
+
+
+        bool ok = false;
+        if (type == "REVENU") {
+            ok = OperationRepository::ajouterRevenu(nom, date, montant, compteId, categorieId, "Import CSV");
+        } else if (type == "DEPENSE") {
+            ok = OperationRepository::ajouterDepense(nom, date, montant, compteId, categorieId, false, "");
+        }
+
+        if (ok) nbAjoutees++; else nbErreurs++;
+    }
+
+    if (!QSqlDatabase::database().commit()) {
+        QSqlDatabase::database().rollback();
+        QMessageBox::warning(this, "Erreur", "Erreur lors de l'import, transaction annulée");
+    }
+
+    fichier.close();
+
+    setEnabled(true); // réactiver l'UI
+
+    QMessageBox::information(this, "Import CSV",
+                             QString("Import terminé.\nOpérations ajoutées : %1\nErreurs : %2").arg(nbAjoutees).arg(nbErreurs));
+
+    appliquerFiltreOperations();
+}
+
+
+
 
 
 void MainWindow::ajouterCompte()
