@@ -101,6 +101,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btnSupprimerCompte, &QPushButton::clicked,
             this, &MainWindow::supprimerCompte);
 
+    connect(dashboardManager, &DashboardManager::dashboardActualise,
+            this, &MainWindow::mettreAJourDashboardUI);
+
+
+
 
     QRegularExpression regex("^[a-zA-Z0-9 éèêàùçîôû_-]*$");
     QValidator* filtreValidator =
@@ -141,6 +146,23 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::mettreAJourDashboardUI(
+    const DashboardManager::Statistiques& stats,
+    const QString& recommandations)
+{
+    ui->labelRevenusTotal->setText(QString::number(stats.totalRevenus, 'f', 2) + " €");
+    ui->labelDepensesTotal->setText(QString::number(stats.totalDepenses, 'f', 2) + " €");
+    ui->labelSolde->setText(QString::number(stats.solde, 'f', 2) + " €");
+    ui->labelDepensesMoyennes->setText(QString::number(stats.depensesParJour, 'f', 2) + " €");
+    ui->labelTransfertsSortants->setText(
+        QString::number(stats.transfertsSortants, 'f', 2) + " €");
+    ui->labelTransfertsEntrants->setText(
+        QString::number(stats.transfertsEntrants, 'f', 2) + " €");
+
+    ui->textRecommandations->setHtml(recommandations);
+}
+
 
 void MainWindow::ajouterCompte()
 {
@@ -1401,4 +1423,17 @@ void MainWindow::supprimerCompte()
 
     QMessageBox::information(this, "Succès",
                              "Compte supprimé avec succès.");
+}
+
+
+void MainWindow::mettreAJourStatistiques()
+{
+    const auto stats = dashboardManager->getStatistiques();
+
+    ui->labelRevenusTotal->setText(QString::number(stats.totalRevenus, 'f', 2) + " €");
+    ui->labelDepensesTotal->setText(QString::number(stats.totalDepenses, 'f', 2) + " €");
+    ui->labelSolde->setText(QString::number(stats.solde, 'f', 2) + " €");
+    ui->labelDepensesMoyennes->setText(QString::number(stats.depensesParJour, 'f', 2) + " €");
+    ui->labelTransfertsSortants->setText(QString::number(stats.transfertsSortants, 'f', 2) + " €");
+    ui->labelTransfertsEntrants->setText(QString::number(stats.transfertsEntrants, 'f', 2) + " €");
 }

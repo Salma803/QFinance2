@@ -61,7 +61,8 @@ public:
     double getTransfertsEntrants(int mois, int annee, const QString &compteId);
 
 signals:
-    void dashboardActualise();
+    void dashboardActualise(const DashboardManager::Statistiques& stats,
+                            const QString& recommandations);
 
 private:
     void calculerStatistiques(int mois, int annee,

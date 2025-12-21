@@ -18,10 +18,8 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
-
-      <!-- ONGLET COMPTES -->
       <widget class="QWidget" name="tabComptes">
        <attribute name="title">
         <string>Comptes</string>
@@ -105,8 +103,6 @@
         </item>
        </layout>
       </widget>
-
-      <!-- ONGLET CATÉGORIES -->
       <widget class="QWidget" name="tabCategories">
        <attribute name="title">
         <string>Catégories</string>
@@ -137,28 +133,25 @@
          </widget>
         </item>
         <item>
-        <layout class="QHBoxLayout">
+         <layout class="QHBoxLayout">
           <item>
-            <widget class="QPushButton" name="btnAjouterCategorie">
-              <property name="text">
-                <string>Ajouter</string>
-              </property>
-            </widget>
+           <widget class="QPushButton" name="btnAjouterCategorie">
+            <property name="text">
+             <string>Ajouter</string>
+            </property>
+           </widget>
           </item>
-
           <item>
-            <widget class="QPushButton" name="btnSupprimerCategorie">
-              <property name="text">
-                <string>Supprimer</string>
-              </property>
-            </widget>
+           <widget class="QPushButton" name="btnSupprimerCategorie">
+            <property name="text">
+             <string>Supprimer</string>
+            </property>
+           </widget>
           </item>
-        </layout>
+         </layout>
         </item>
        </layout>
       </widget>
-
-      <!-- ONGLET OPÉRATIONS -->
       <widget class="QWidget" name="tabOperations">
        <attribute name="title">
         <string>Opérations</string>
@@ -258,34 +251,25 @@
         </item>
        </layout>
       </widget>
-
-      <!-- ONGLET HISTORIQUE -->
       <widget class="QWidget" name="tabHistorique">
        <attribute name="title">
         <string>Historique</string>
        </attribute>
        <layout class="QVBoxLayout">
-       <!-- FILTRES HISTORIQUE -->
-       <item>
-        <layout class="QHBoxLayout">
-         <item>
-          <widget class="QComboBox" name="comboFiltreCategorieOp">
-           <property name="minimumWidth">
-            <number>180</number>
-           </property>
-          </widget>
-         </item>
-
-         <item>
-          <widget class="QLineEdit" name="editFiltreTexteOp">
-           <property name="placeholderText">
-            <string>Filtrer par texte…</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-
+        <item>
+         <layout class="QHBoxLayout">
+          <item>
+           <widget class="QComboBox" name="comboFiltreCategorieOp"/>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="editFiltreTexteOp">
+            <property name="placeholderText">
+             <string>Filtrer par texte…</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
         <item>
          <widget class="QComboBox" name="comboCompteHistorique"/>
         </item>
@@ -324,6 +308,13 @@
         </item>
         <item>
          <layout class="QHBoxLayout">
+         <item>
+                    <widget class="QPushButton" name="btnImporterCSV">
+                     <property name="text">
+                      <string>📂 Importer CSV</string>
+                     </property>
+                    </widget>
+                   </item>
           <item>
            <widget class="QPushButton" name="btnSupprimerOperation">
             <property name="enabled">
@@ -351,15 +342,11 @@
         </item>
        </layout>
       </widget>
-
-      <!-- ONGLET DASHBOARD -->
       <widget class="QWidget" name="tabDashboard">
        <attribute name="title">
         <string>Dashboard</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayoutDashboard">
-
-        <!-- FILTRES -->
         <item>
          <widget class="QGroupBox" name="groupFiltres">
           <property name="title">
@@ -423,8 +410,6 @@
           </layout>
          </widget>
         </item>
-
-        <!-- EXPORT PDF -->
         <item>
          <widget class="QGroupBox" name="groupExport">
           <property name="title">
@@ -433,21 +418,21 @@
           <layout class="QHBoxLayout" name="horizontalLayoutExport">
            <item>
             <widget class="QPushButton" name="btnExportPDF">
-             <property name="text">
-              <string>📄 Exporter avec filtres actuels</string>
-             </property>
              <property name="toolTip">
               <string>Exporte les statistiques avec les filtres de mois, compte et catégorie sélectionnés</string>
+             </property>
+             <property name="text">
+              <string>📄 Exporter avec filtres actuels</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="btnExportPDFTousComptes">
-             <property name="text">
-              <string>📋 Exporter rapport complet</string>
-             </property>
              <property name="toolTip">
               <string>Exporte un rapport détaillé sur tous les comptes et catégories</string>
+             </property>
+             <property name="text">
+              <string>📋 Exporter rapport complet</string>
              </property>
             </widget>
            </item>
@@ -467,8 +452,6 @@
           </layout>
          </widget>
         </item>
-
-        <!-- SCROLL AREA POUR TOUT LE CONTENU -->
         <item>
          <widget class="QScrollArea" name="scrollArea">
           <property name="widgetResizable">
@@ -479,13 +462,11 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1362</width>
-             <height>662</height>
+             <width>1360</width>
+             <height>941</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
-
-            <!-- PREMIÈRE LIGNE DE GRAPHIQUES -->
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <item>
@@ -510,8 +491,6 @@
               </item>
              </layout>
             </item>
-
-            <!-- DEUXIÈME LIGNE DE GRAPHIQUES -->
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <item>
@@ -536,8 +515,6 @@
               </item>
              </layout>
             </item>
-
-            <!-- STATISTIQUES -->
             <item>
              <widget class="QGroupBox" name="groupBox">
               <property name="title">
@@ -557,7 +534,7 @@
                   <string>0 €</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignRight</set>
+                  <set>Qt::AlignmentFlag::AlignRight</set>
                  </property>
                 </widget>
                </item>
@@ -574,7 +551,7 @@
                   <string>0 €</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignRight</set>
+                  <set>Qt::AlignmentFlag::AlignRight</set>
                  </property>
                 </widget>
                </item>
@@ -591,7 +568,7 @@
                   <string>0 €</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignRight</set>
+                  <set>Qt::AlignmentFlag::AlignRight</set>
                  </property>
                 </widget>
                </item>
@@ -608,7 +585,7 @@
                   <string>0 €</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignRight</set>
+                  <set>Qt::AlignmentFlag::AlignRight</set>
                  </property>
                 </widget>
                </item>
@@ -625,7 +602,7 @@
                   <string>0 €</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignRight</set>
+                  <set>Qt::AlignmentFlag::AlignRight</set>
                  </property>
                 </widget>
                </item>
@@ -642,15 +619,13 @@
                   <string>0 €</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignRight</set>
+                  <set>Qt::AlignmentFlag::AlignRight</set>
                  </property>
                 </widget>
                </item>
               </layout>
              </widget>
             </item>
-
-            <!-- RECOMMANDATIONS -->
             <item>
              <widget class="QGroupBox" name="groupRecommandations">
               <property name="title">
@@ -664,18 +639,19 @@
                  </property>
                  <property name="html">
                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Cliquez sur &quot;Actualiser&quot; pour voir les recommandations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;Cliquez sur &amp;quot;Actualiser&amp;quot; pour voir les recommandations.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>
               </layout>
              </widget>
             </item>
-
-            <!-- ESPACE POUR PUSH VERS LE BAS -->
             <item>
              <spacer name="verticalSpacer">
               <property name="orientation">
@@ -689,15 +665,12 @@ p, li { white-space: pre-wrap; }
               </property>
              </spacer>
             </item>
-
            </layout>
           </widget>
          </widget>
         </item>
-
        </layout>
       </widget>
-
      </widget>
     </item>
    </layout>

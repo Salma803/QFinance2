@@ -35,6 +35,10 @@ private slots:
     void effectuerTransfert();
     void supprimerCompte();
 
+    void mettreAJourStatistiques();
+    void mettreAJourDashboardUI(const DashboardManager::Statistiques& stats,
+                                const QString& recommandations);
+
 
     // === SLOTS POUR LA GESTION DES CATÉGORIES ===
     void ajouterCategorie();

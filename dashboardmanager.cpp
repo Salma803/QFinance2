@@ -104,7 +104,8 @@ void DashboardManager::actualiserDashboard(int mois, int annee,
     creerChartEvolution(annee, filtreCategorie, filtreCompte);
     creerChartRepartition(mois, annee, filtreCompte, filtreCategorie);
 
-    emit dashboardActualise();
+    emit dashboardActualise(m_statistiques, m_recommandations);
+
 }
 
 void DashboardManager::calculerStatistiques(int mois, int annee,
@@ -198,6 +199,10 @@ void DashboardManager::calculerStatistiques(int mois, int annee,
     qDebug() << "Transferts sortants:" << transfertsSortants;
     qDebug() << "Solde:" << m_statistiques.solde;
     qDebug() << "=== FIN STATISTIQUES ===";
+
+
+
+
 }
 
 QString DashboardManager::genererRecommandations(int mois, int annee, const QString &filtreCompte)
