@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-19824cb76e8c48a9ef62.json",
+					"jsonFile" : "directory-.-Debug-c6c692fe062118a0cbf1.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "QFinance2::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-QFinance2-Debug-143e9d2545c60c19858b.json",
+					"jsonFile" : "target-QFinance2-Debug-7f3b5a80b1b42477746a.json",
 					"name" : "QFinance2",
 					"projectIndex" : 0
 				},

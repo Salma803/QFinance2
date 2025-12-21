@@ -43,7 +43,9 @@
 			"C:/Qt/6.10.1/mingw_64/lib/cmake/Qt6EntryPointPrivate/Qt6EntryPointPrivateConfig.cmake",
 			"C:/Qt/6.10.1/mingw_64/lib/cmake/Qt6Core/Qt6CoreDependencies.cmake",
 			"C:/Qt/6.10.1/mingw_64/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake",
-			"C:/Qt/6.10.1/mingw_64/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake"
+			"C:/Qt/6.10.1/mingw_64/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake",
+			"C:/Qt/6.10.1/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportTargets.cmake",
+			"C:/Qt/6.10.1/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportConfig.cmake"
 		],
 		"nodes" : 
 		[
@@ -77,7 +79,7 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 102,
+				"line" : 103,
 				"parent" : 0
 			},
 			{
@@ -307,6 +309,32 @@
 				"file" : 15,
 				"line" : 61,
 				"parent" : 46
+			},
+			{
+				"command" : 8,
+				"file" : 4,
+				"line" : 315,
+				"parent" : 7
+			},
+			{
+				"file" : 18,
+				"parent" : 48
+			},
+			{
+				"command" : 7,
+				"file" : 18,
+				"line" : 52,
+				"parent" : 49
+			},
+			{
+				"file" : 17,
+				"parent" : 50
+			},
+			{
+				"command" : 6,
+				"file" : 17,
+				"line" : 61,
+				"parent" : 51
 			}
 		]
 	},
@@ -348,6 +376,10 @@
 				{
 					"backtrace" : 6,
 					"define" : "QT_OPENGL_LIB"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "QT_PRINTSUPPORT_LIB"
 				},
 				{
 					"backtrace" : 6,
@@ -432,6 +464,11 @@
 					"backtrace" : 6,
 					"isSystem" : true,
 					"path" : "C:/Qt/6.10.1/mingw_64/include/QtOpenGLWidgets"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "C:/Qt/6.10.1/mingw_64/include/QtPrintSupport"
 				}
 			],
 			"language" : "CXX",
@@ -514,18 +551,28 @@
 				"role" : "libraries"
 			},
 			{
+				"backtrace" : 6,
+				"fragment" : "C:\\Qt\\6.10.1\\mingw_64\\lib\\libQt6PrintSupport.a",
+				"role" : "libraries"
+			},
+			{
 				"backtrace" : 12,
 				"fragment" : "C:\\Qt\\6.10.1\\mingw_64\\lib\\libQt6OpenGLWidgets.a",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 6,
-				"fragment" : "C:\\Qt\\6.10.1\\mingw_64\\lib\\libQt6Widgets.a",
+				"backtrace" : 12,
+				"fragment" : "C:\\Qt\\6.10.1\\mingw_64\\lib\\libQt6OpenGL.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 12,
-				"fragment" : "C:\\Qt\\6.10.1\\mingw_64\\lib\\libQt6OpenGL.a",
+				"fragment" : "-luser32",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 6,
+				"fragment" : "C:\\Qt\\6.10.1\\mingw_64\\lib\\libQt6Widgets.a",
 				"role" : "libraries"
 			},
 			{
@@ -584,8 +631,13 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 12,
-				"fragment" : "-luser32",
+				"backtrace" : 52,
+				"fragment" : "-lcomdlg32",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 52,
+				"fragment" : "-lwinspool",
 				"role" : "libraries"
 			},
 			{

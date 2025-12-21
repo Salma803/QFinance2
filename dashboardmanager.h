@@ -2,11 +2,15 @@
 #define DASHBOARDMANAGER_H
 
 #include <QObject>
-#include <QtCharts/QChartView>
 #include <QList>
+#include <QString>
+#include <QMap>
 
-class Categorie;
-class Compte;
+#include "model/Categorie.h"
+#include "model/Compte.h"
+
+class QChartView;
+class QChart;
 
 class DashboardManager : public QObject
 {
@@ -40,6 +44,13 @@ public:
                              const QString &filtreCategorie,
                              const QString &filtreCompte);
 
+    bool exporterPDF(const QString &cheminFichier,
+                     int mois,
+                     int annee,
+                     const QString &filtreCompte,
+                     const QString &filtreCategorie,
+                     bool tousLesComptes);
+
     Statistiques getStatistiques() const;
     QString getRecommandations() const;
 
@@ -57,21 +68,34 @@ private:
                                         const QString &filtreCompte,
                                         const QString &filtreCategorie);
 
-    void creerChartRevenusVsDepenses(int mois, int annee,
-                                     const QString &filtreCompte);
-
-    void creerChartEvolution(int annee,
-                             const QString &filtreCategorie,
-                             const QString &filtreCompte);
-
+    void creerChartRevenusVsDepenses(int mois, int annee, const QString &filtreCompte);
+    void creerChartEvolution(int annee, const QString &filtreCategorie, const QString &filtreCompte);
     void creerChartRepartition(int mois, int annee,
                                const QString &filtreCompte,
                                const QString &filtreCategorie);
 
-    // Méthodes pour les transferts
     double getTotalTransferts(int mois, int annee);
     double getTotalTransfertsCompte(int mois, int annee, const QString &compteId);
-    double getTransfertsSortants(int mois, int annee, const QString &compteId = QString());
+    double getTransfertsSortants(int mois, int annee, const QString &compteId);
+
+    QString captureDiagrammeEnImage(QChartView* chartView, const QString &nom);
+
+    QString genererHTMLStatistiques(int mois, int annee,
+                                    const QString &filtreCompte,
+                                    const QString &filtreCategorie,
+                                    bool tousLesComptes);
+
+    QString genererHTMLStatistiques(int mois, int annee,
+                                    const QString &filtreCompte,
+                                    const QString &filtreCategorie,
+                                    bool tousLesComptes,
+                                    const QString &imageDepensesPath,
+                                    const QString &imageRevenusPath,
+                                    const QString &imageEvolutionPath,
+                                    const QString &imageRepartitionPath);
+
+    QString genererHTMLTableauComptes();
+    QString genererHTMLTableauCategories(int mois, int annee);
 
 private:
     QChartView *m_chartDepenses;

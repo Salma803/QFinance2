@@ -24,6 +24,15 @@
 #include <QSqlQuery>
 #include <functional>
 
+// AJOUTER CES INCLUSIONS POUR L'EXPORT PDF
+#include <QFileDialog>
+#include <QDir>
+#include <QProgressDialog>
+#include <QApplication>
+#include <QDesktopServices>
+#include <QUrl>
+#include <exception>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -67,6 +76,12 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::onFiltreCompteChanged);
     connect(ui->comboFiltreCategorie, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &MainWindow::onFiltreCategorieChanged);
+
+    // AJOUTER CES CONNEXIONS POUR L'EXPORT PDF
+    connect(ui->btnExportPDF, &QPushButton::clicked,
+            this, &MainWindow::exporterPDFStatistiques);
+    connect(ui->btnExportPDFTousComptes, &QPushButton::clicked,
+            this, &MainWindow::exporterPDFTousComptes);
 
     // IMPORTANT: Ne pas connecter cellChanged ici - nous le ferons dans chargerHistoriqueCompte
 
@@ -1133,5 +1148,116 @@ void MainWindow::mettreAJourRecommandations()
         } else {
             labelTransfertsSortants->setStyleSheet("");
         }
+    }
+}
+
+
+void MainWindow::exporterPDFStatistiques()
+{
+    exporterPDF(false);  // Export avec filtres actuels
+}
+
+void MainWindow::exporterPDFTousComptes()
+{
+    exporterPDF(true);   // Export tous les comptes
+}
+
+void MainWindow::exporterPDF(bool tousLesComptes)
+{
+    // Demander où sauvegarder le PDF
+    QString defaultFileName;
+
+    if (tousLesComptes) {
+        defaultFileName = QString("rapport_complet_%1_%2.pdf")
+        .arg(ui->comboMois->currentData().toInt())
+            .arg(ui->spinAnnee->value());
+    } else {
+        QString filtreCompte = ui->comboFiltreCompte->currentText();
+        QString filtreCategorie = ui->comboFiltreCategorie->currentText();
+
+        defaultFileName = QString("rapport_%1_%2")
+                              .arg(ui->comboMois->currentData().toInt())
+                              .arg(ui->spinAnnee->value());
+
+        if (!filtreCompte.isEmpty() && filtreCompte != "Tous les comptes") {
+            defaultFileName += "_" + filtreCompte;
+        }
+        if (!filtreCategorie.isEmpty() && filtreCategorie != "Toutes les catégories") {
+            defaultFileName += "_" + filtreCategorie;
+        }
+        defaultFileName += ".pdf";
+    }
+
+    // Nettoyer le nom de fichier
+    defaultFileName = defaultFileName.replace(" ", "_").replace("/", "-");
+
+    QString cheminFichier = QFileDialog::getSaveFileName(this,
+                                                         "Exporter le rapport PDF",
+                                                         QDir::homePath() + "/" + defaultFileName,
+                                                         "Fichiers PDF (*.pdf)");
+
+    if (cheminFichier.isEmpty()) {
+        return;  // L'utilisateur a annulé
+    }
+
+    // S'assurer que l'extension est .pdf
+    if (!cheminFichier.endsWith(".pdf", Qt::CaseInsensitive)) {
+        cheminFichier += ".pdf";
+    }
+
+    // Récupérer les paramètres actuels
+    int mois = ui->comboMois->currentData().toInt();
+    int annee = ui->spinAnnee->value();
+    QString filtreCompte = ui->comboFiltreCompte->currentData().toString();
+    QString filtreCategorie = ui->comboFiltreCategorie->currentData().toString();
+
+    // Afficher une boîte de dialogue de progression
+    QProgressDialog progress("Génération du rapport PDF...", "Annuler", 0, 100, this);
+    progress.setWindowModality(Qt::WindowModal);
+    progress.setValue(10);
+    QApplication::processEvents();
+
+    try {
+        // Exporter le PDF
+        progress.setValue(30);
+
+        bool succes = dashboardManager->exporterPDF(cheminFichier,
+                                                    mois,
+                                                    annee,
+                                                    filtreCompte,
+                                                    filtreCategorie,
+                                                    tousLesComptes);
+
+        progress.setValue(100);
+
+        if (succes) {
+            QMessageBox::information(this,
+                                     "Export réussi",
+                                     QString("Le rapport PDF a été généré avec succès :\n%1").arg(cheminFichier));
+
+            // Optionnel : ouvrir le PDF
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this,
+                                          "Ouvrir le PDF",
+                                          "Voulez-vous ouvrir le fichier PDF maintenant ?",
+                                          QMessageBox::Yes | QMessageBox::No);
+
+            if (reply == QMessageBox::Yes) {
+                QDesktopServices::openUrl(QUrl::fromLocalFile(cheminFichier));
+            }
+        } else {
+            QMessageBox::warning(this,
+                                 "Erreur d'export",
+                                 "Une erreur est survenue lors de la génération du PDF.");
+        }
+
+    } catch (const std::exception& e) {
+        QMessageBox::critical(this,
+                              "Erreur",
+                              QString("Erreur lors de l'export : %1").arg(e.what()));
+    } catch (...) {
+        QMessageBox::critical(this,
+                              "Erreur",
+                              "Une erreur inconnue est survenue lors de l'export.");
     }
 }

@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
-find_package(Qt6 REQUIRED COMPONENTS Widgets Charts Sql)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Charts Sql PrintSupport)
 
 
 
@@ -82,7 +82,8 @@ target_link_libraries(
     QFinance2 PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Sql
-    Qt${QT_VERSION_MAJOR}::Charts)
+    Qt${QT_VERSION_MAJOR}::Charts
+    Qt${QT_VERSION_MAJOR}::PrintSupport)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

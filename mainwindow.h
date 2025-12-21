@@ -57,6 +57,9 @@ private slots:
     void onFiltreCategorieChanged(int index);
     void mettreAJourRecommandations();
 
+    void exporterPDFStatistiques();      // Export avec filtres actuels
+    void exporterPDFTousComptes();
+
 private:
     // === MÉTHODES PRIVÉES D'INITIALISATION ===
     void rafraichirUI();
@@ -76,6 +79,7 @@ private:
     // Variables pour la gestion des opérations
     bool isModifyingTable;                // Flag pour éviter les boucles infinies
     QString currentOperationId;           // ID de l'opération sélectionnée
+    void exporterPDF(bool tousLesComptes);
 };
 
 #endif // MAINWINDOW_H

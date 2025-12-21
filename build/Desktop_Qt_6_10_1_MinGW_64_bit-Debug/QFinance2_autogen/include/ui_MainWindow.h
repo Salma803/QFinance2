@@ -97,6 +97,11 @@ public:
     QLabel *labelCategorie;
     QComboBox *comboFiltreCategorie;
     QPushButton *btnActualiser;
+    QGroupBox *groupExport;
+    QHBoxLayout *horizontalLayoutExport;
+    QPushButton *btnExportPDF;
+    QPushButton *btnExportPDFTousComptes;
+    QSpacerItem *spacerItem1;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QVBoxLayout *verticalLayout_2;
@@ -116,6 +121,10 @@ public:
     QLabel *labelSolde;
     QLabel *label_4;
     QLabel *labelDepensesMoyennes;
+    QLabel *label_5;
+    QLabel *labelTransfertsSortants;
+    QLabel *label_6;
+    QLabel *labelTransfertsEntrants;
     QGroupBox *groupRecommandations;
     QVBoxLayout *verticalLayout_3;
     QTextEdit *textRecommandations;
@@ -125,7 +134,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1200, 800);
+        MainWindow->resize(1400, 850);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         verticalLayout = new QVBoxLayout(centralwidget);
@@ -388,25 +397,46 @@ public:
 
         verticalLayoutDashboard->addWidget(groupFiltres);
 
+        groupExport = new QGroupBox(tabDashboard);
+        groupExport->setObjectName("groupExport");
+        horizontalLayoutExport = new QHBoxLayout(groupExport);
+        horizontalLayoutExport->setObjectName("horizontalLayoutExport");
+        btnExportPDF = new QPushButton(groupExport);
+        btnExportPDF->setObjectName("btnExportPDF");
+
+        horizontalLayoutExport->addWidget(btnExportPDF);
+
+        btnExportPDFTousComptes = new QPushButton(groupExport);
+        btnExportPDFTousComptes->setObjectName("btnExportPDFTousComptes");
+
+        horizontalLayoutExport->addWidget(btnExportPDFTousComptes);
+
+        spacerItem1 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        horizontalLayoutExport->addItem(spacerItem1);
+
+
+        verticalLayoutDashboard->addWidget(groupExport);
+
         scrollArea = new QScrollArea(tabDashboard);
         scrollArea->setObjectName("scrollArea");
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1162, 662));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1362, 662));
         verticalLayout_2 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_2->setObjectName("verticalLayout_2");
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName("horizontalLayout_2");
         chartDepensesParCategorie = new QChartView(scrollAreaWidgetContents);
         chartDepensesParCategorie->setObjectName("chartDepensesParCategorie");
-        chartDepensesParCategorie->setMinimumSize(QSize(550, 350));
+        chartDepensesParCategorie->setMinimumSize(QSize(650, 350));
 
         horizontalLayout_2->addWidget(chartDepensesParCategorie);
 
         chartRevenusVsDepenses = new QChartView(scrollAreaWidgetContents);
         chartRevenusVsDepenses->setObjectName("chartRevenusVsDepenses");
-        chartRevenusVsDepenses->setMinimumSize(QSize(550, 350));
+        chartRevenusVsDepenses->setMinimumSize(QSize(650, 350));
 
         horizontalLayout_2->addWidget(chartRevenusVsDepenses);
 
@@ -417,13 +447,13 @@ public:
         horizontalLayout_3->setObjectName("horizontalLayout_3");
         chartEvolution = new QChartView(scrollAreaWidgetContents);
         chartEvolution->setObjectName("chartEvolution");
-        chartEvolution->setMinimumSize(QSize(550, 350));
+        chartEvolution->setMinimumSize(QSize(650, 350));
 
         horizontalLayout_3->addWidget(chartEvolution);
 
         chartRepartition = new QChartView(scrollAreaWidgetContents);
         chartRepartition->setObjectName("chartRepartition");
-        chartRepartition->setMinimumSize(QSize(550, 350));
+        chartRepartition->setMinimumSize(QSize(650, 350));
 
         horizontalLayout_3->addWidget(chartRepartition);
 
@@ -478,6 +508,28 @@ public:
 
         gridLayout->addWidget(labelDepensesMoyennes, 3, 1, 1, 1);
 
+        label_5 = new QLabel(groupBox);
+        label_5->setObjectName("label_5");
+
+        gridLayout->addWidget(label_5, 4, 0, 1, 1);
+
+        labelTransfertsSortants = new QLabel(groupBox);
+        labelTransfertsSortants->setObjectName("labelTransfertsSortants");
+        labelTransfertsSortants->setAlignment(Qt::AlignRight);
+
+        gridLayout->addWidget(labelTransfertsSortants, 4, 1, 1, 1);
+
+        label_6 = new QLabel(groupBox);
+        label_6->setObjectName("label_6");
+
+        gridLayout->addWidget(label_6, 5, 0, 1, 1);
+
+        labelTransfertsEntrants = new QLabel(groupBox);
+        labelTransfertsEntrants->setObjectName("labelTransfertsEntrants");
+        labelTransfertsEntrants->setAlignment(Qt::AlignRight);
+
+        gridLayout->addWidget(labelTransfertsEntrants, 5, 1, 1, 1);
+
 
         verticalLayout_2->addWidget(groupBox);
 
@@ -510,7 +562,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -566,6 +618,15 @@ public:
         labelCompte->setText(QCoreApplication::translate("MainWindow", "Compte:", nullptr));
         labelCategorie->setText(QCoreApplication::translate("MainWindow", "Cat\303\251gorie:", nullptr));
         btnActualiser->setText(QCoreApplication::translate("MainWindow", "Actualiser", nullptr));
+        groupExport->setTitle(QCoreApplication::translate("MainWindow", "Export PDF", nullptr));
+        btnExportPDF->setText(QCoreApplication::translate("MainWindow", "\360\237\223\204 Exporter avec filtres actuels", nullptr));
+#if QT_CONFIG(tooltip)
+        btnExportPDF->setToolTip(QCoreApplication::translate("MainWindow", "Exporte les statistiques avec les filtres de mois, compte et cat\303\251gorie s\303\251lectionn\303\251s", nullptr));
+#endif // QT_CONFIG(tooltip)
+        btnExportPDFTousComptes->setText(QCoreApplication::translate("MainWindow", "\360\237\223\213 Exporter rapport complet", nullptr));
+#if QT_CONFIG(tooltip)
+        btnExportPDFTousComptes->setToolTip(QCoreApplication::translate("MainWindow", "Exporte un rapport d\303\251taill\303\251 sur tous les comptes et cat\303\251gories", nullptr));
+#endif // QT_CONFIG(tooltip)
         groupBox->setTitle(QCoreApplication::translate("MainWindow", "Statistiques du mois", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Revenus totaux:", nullptr));
         labelRevenusTotal->setText(QCoreApplication::translate("MainWindow", "0 \342\202\254", nullptr));
@@ -575,6 +636,10 @@ public:
         labelSolde->setText(QCoreApplication::translate("MainWindow", "0 \342\202\254", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "D\303\251penses moyennes/jour:", nullptr));
         labelDepensesMoyennes->setText(QCoreApplication::translate("MainWindow", "0 \342\202\254", nullptr));
+        label_5->setText(QCoreApplication::translate("MainWindow", "Transferts sortants:", nullptr));
+        labelTransfertsSortants->setText(QCoreApplication::translate("MainWindow", "0 \342\202\254", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "Transferts entrants:", nullptr));
+        labelTransfertsEntrants->setText(QCoreApplication::translate("MainWindow", "0 \342\202\254", nullptr));
         groupRecommandations->setTitle(QCoreApplication::translate("MainWindow", "Analyse & Recommandations", nullptr));
         textRecommandations->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
