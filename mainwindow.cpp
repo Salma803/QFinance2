@@ -2,7 +2,6 @@
 #include "ui_MainWindow.h"
 
 #include "ui_dialogAjouterCategorie.h"
-#include "ui_dialogModifierCategorie.h"
 #include "ui_dialogSupprimerCategorie.h"
 
 #include "model/CompteCourant.h"
@@ -48,8 +47,10 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::effectuerTransfert);
     connect(ui->btnAjouterCategorie, &QPushButton::clicked,
             this, &MainWindow::ajouterCategorie);
-    connect(ui->btnModifierCategorie, &QPushButton::clicked,
-            this, &MainWindow::modifierCategorie);
+    connect(ui->treeCategories,
+            &QTreeWidget::itemChanged,
+            this,
+            &MainWindow::onCategorieItemChanged);
     connect(ui->btnSupprimerCategorie, &QPushButton::clicked,
             this, &MainWindow::supprimerCategorie);
     connect(ui->btnAjouterOperation, &QPushButton::clicked,
@@ -82,6 +83,8 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::exporterPDFStatistiques);
     connect(ui->btnExportPDFTousComptes, &QPushButton::clicked,
             this, &MainWindow::exporterPDFTousComptes);
+
+
 
     // IMPORTANT: Ne pas connecter cellChanged ici - nous le ferons dans chargerHistoriqueCompte
 
@@ -247,79 +250,10 @@ void MainWindow::ajouterCategorie()
     }
 }
 
-void MainWindow::modifierCategorie()
-{
-    QTreeWidgetItem* item = ui->treeCategories->currentItem();
-    if (!item)
-        return;
-
-    // Récupérer l'ID depuis l'item
-    QString categorieId = item->data(0, Qt::UserRole).toString();
-    if (categorieId.isEmpty())
-        return;
-
-    // Trouver la catégorie
-    Categorie* categorie = nullptr;
-    for (Categorie* c : categories) {
-        if (c->getId() == categorieId) {
-            categorie = c;
-            break;
-        }
-    }
-
-    if (!categorie)
-        return;
-
-    QDialog dialog(this);
-    Ui::DialogModifierCategorie uiDialog;
-    uiDialog.setupUi(&dialog);
-
-    uiDialog.editNomCategorie->setText(categorie->getNom());
-
-    int mois = QDate::currentDate().month();
-    int annee = QDate::currentDate().year();
-
-    double budgetActuel = BudgetRepository::obtenirBudget(
-        categorieId, mois, annee
-        );
-
-    if (budgetActuel >= 0)
-        uiDialog.spinBudget->setValue(budgetActuel);
-
-    connect(uiDialog.btnOk, &QPushButton::clicked,
-            &dialog, &QDialog::accept);
-    connect(uiDialog.btnCancel, &QPushButton::clicked,
-            &dialog, &QDialog::reject);
-
-    if (dialog.exec() == QDialog::Accepted) {
-        QString nouveauNom = uiDialog.editNomCategorie->text();
-        double nouveauBudget = uiDialog.spinBudget->value();
-
-        if (nouveauNom.isEmpty())
-            return;
-
-        // Utilise la méthode statique
-        CategorieRepository::modifierCategorie(categorieId, nouveauNom);
-
-        if (nouveauBudget > 0) {
-            BudgetRepository::definirBudget(
-                categorieId, mois, annee, nouveauBudget
-                );
-        }
-
-        // Recharger les catégories
-        categories = CategorieRepository::chargerCategories("1");
-        chargerCategoriesUI();
-        remplirCombosOperation();
-        initialiserFiltresDashboard();
-
-        dashboardManager->setCategories(categories);
-        actualiserDashboard();
-    }
-}
 
 void MainWindow::chargerCategoriesUI()
 {
+    ui->treeCategories->blockSignals(true);
     ui->treeCategories->clear();
 
     int mois = ui->comboMois->currentData().toInt();
@@ -338,7 +272,6 @@ void MainWindow::chargerCategoriesUI()
             c->getId(), mois, annee
             );
 
-
         double depenses = BudgetRepository::calculerDepensesCategorie(
             c->getId(), mois, annee
             );
@@ -346,21 +279,21 @@ void MainWindow::chargerCategoriesUI()
         double restant = budget - depenses;
 
         QTreeWidgetItem* item = new QTreeWidgetItem();
-        item->setText(0, c->getNom());
 
-        if (budget >= 0) {
-            item->setText(1, QString::number(budget, 'f', 2));
-            item->setText(2, QString::number(depenses, 'f', 2));
-            item->setText(3, QString::number(restant, 'f', 2));
+        // 🔹 Rendre l'item éditable UNE SEULE FOIS
+        item->setFlags(item->flags() | Qt::ItemIsEditable);
 
-            item->setForeground(3, restant < 0 ? Qt::red : Qt::darkGreen);
-        } else {
-            item->setText(1, "-");
-            item->setText(2, "-");
-            item->setText(3, "-");
-        }
+        // Colonnes
+        item->setText(0, c->getNom()); // Nom
+        item->setText(1, budget >= 0 ? QString::number(budget, 'f', 2) : "-"); // Budget
+        item->setText(2, budget >= 0 ? QString::number(depenses, 'f', 2) : "-"); // Dépenses
+        item->setText(3, budget >= 0 ? QString::number(restant, 'f', 2) : "-"); // Restant
 
+        item->setForeground(3, restant < 0 ? Qt::red : Qt::darkGreen);
+
+        // ID catégorie
         item->setData(0, Qt::UserRole, c->getId());
+
         map[c->getId()] = item;
     }
 
@@ -374,6 +307,7 @@ void MainWindow::chargerCategoriesUI()
     }
 
     ui->treeCategories->expandAll();
+    ui->treeCategories->blockSignals(false);
 }
 
 void MainWindow::supprimerCategorie()
@@ -1260,4 +1194,54 @@ void MainWindow::exporterPDF(bool tousLesComptes)
                               "Erreur",
                               "Une erreur inconnue est survenue lors de l'export.");
     }
+}
+void MainWindow::onCategorieItemChanged(QTreeWidgetItem *item, int column)
+{
+    if (isModifyingCategorie) return;
+
+    // 🔒 Colonnes NON modifiables
+    if (column == 2 || column == 3) {
+        chargerCategoriesUI();   // rollback visuel
+        return;
+    }
+
+    isModifyingCategorie = true;
+
+    QString categorieId = item->data(0, Qt::UserRole).toString();
+    if (categorieId.isEmpty()) {
+        isModifyingCategorie = false;
+        return;
+    }
+
+    int mois = ui->comboMois->currentData().toInt();
+    int annee = ui->spinAnnee->value();
+
+    if (column == 0) {
+        QString nouveauNom = item->text(0).trimmed();
+        if (nouveauNom.isEmpty()) {
+            QMessageBox::warning(this, "Erreur", "Nom invalide");
+            chargerCategoriesUI();
+            isModifyingCategorie = false;
+            return;
+        }
+        CategorieRepository::modifierCategorie(categorieId, nouveauNom);
+    }
+
+    else if (column == 1) {
+        bool ok;
+        double budget = item->text(1).toDouble(&ok);
+        if (!ok || budget < 0) {
+            QMessageBox::warning(this, "Erreur", "Budget invalide");
+            chargerCategoriesUI();
+            isModifyingCategorie = false;
+            return;
+        }
+        BudgetRepository::definirBudget(categorieId, mois, annee, budget);
+    }
+
+    categories = CategorieRepository::chargerCategories("1");
+    chargerCategoriesUI();
+    actualiserDashboard();
+
+    isModifyingCategorie = false;
 }

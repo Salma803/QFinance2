@@ -130,29 +130,23 @@
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout">
+        <layout class="QHBoxLayout">
           <item>
-           <widget class="QPushButton" name="btnAjouterCategorie">
-            <property name="text">
-             <string>Ajouter</string>
-            </property>
-           </widget>
+            <widget class="QPushButton" name="btnAjouterCategorie">
+              <property name="text">
+                <string>Ajouter</string>
+              </property>
+            </widget>
           </item>
+
           <item>
-           <widget class="QPushButton" name="btnModifierCategorie">
-            <property name="text">
-             <string>Modifier</string>
-            </property>
-           </widget>
+            <widget class="QPushButton" name="btnSupprimerCategorie">
+              <property name="text">
+                <string>Supprimer</string>
+              </property>
+            </widget>
           </item>
-          <item>
-           <widget class="QPushButton" name="btnSupprimerCategorie">
-            <property name="text">
-             <string>Supprimer</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+        </layout>
         </item>
        </layout>
       </widget>

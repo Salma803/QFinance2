@@ -41,7 +41,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         repository/categorierepository.h repository/categorierepository.cpp
         model/categorie.h model/categorie.cpp
         dialogAjouterCategorie.ui
-        dialogModifierCategorie.ui
+
         dialogSupprimerCategorie.ui
 
         repository/budgetrepository.h repository/budgetrepository.cpp

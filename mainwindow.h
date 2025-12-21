@@ -36,7 +36,7 @@ private slots:
 
     // === SLOTS POUR LA GESTION DES CATÉGORIES ===
     void ajouterCategorie();
-    void modifierCategorie();
+    void onCategorieItemChanged(QTreeWidgetItem* item, int column);
     void supprimerCategorie();
     void chargerCategoriesUI();
 
@@ -80,6 +80,12 @@ private:
     bool isModifyingTable;                // Flag pour éviter les boucles infinies
     QString currentOperationId;           // ID de l'opération sélectionnée
     void exporterPDF(bool tousLesComptes);
+    bool isModifyingCategorie = false;
+    QList<QVariantMap> allOperations;   // toutes les opérations chargées
+    void appliquerFiltreOperations();
+    void afficherOperations(const QList<QVariantMap>& operations);
+
+
 };
 
 #endif // MAINWINDOW_H
