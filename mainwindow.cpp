@@ -611,7 +611,7 @@ void MainWindow::chargerHistoriqueCompte()
     }
 
     // ===============================
-    // 1️⃣ Charger les données depuis la DB
+    // Charger les données depuis la DB
     // ===============================
 
     QList<QVariantMap> ops =
@@ -621,16 +621,14 @@ void MainWindow::chargerHistoriqueCompte()
         TransfertRepository::chargerTransfertsParCompte(compteId);
 
     // ===============================
-    // 2️⃣ Stocker TOUTES les opérations
+    // Stocker TOUTES les opérations
     // ===============================
 
     allOperations.clear();
     allOperations = ops;
     allOperations.append(transferts);
 
-    // ===============================
-    // 3️⃣ Trier par date décroissante
-    // ===============================
+
 
     std::sort(allOperations.begin(), allOperations.end(),
               [](const QVariantMap& a, const QVariantMap& b) {
@@ -638,7 +636,7 @@ void MainWindow::chargerHistoriqueCompte()
               });
 
     // ===============================
-    // 4️⃣ Remplir le combo filtre catégories
+    // Remplir le combo filtre catégories
     // ===============================
 
     ui->comboFiltreCategorieOp->blockSignals(true);
@@ -656,15 +654,9 @@ void MainWindow::chargerHistoriqueCompte()
 
     ui->comboFiltreCategorieOp->blockSignals(false);
 
-    // ===============================
-    // 5️⃣ Appliquer le filtre (affichage)
-    // ===============================
-
     appliquerFiltreOperations();
 
-    // ===============================
-    // 6️⃣ Réactiver les signaux
-    // ===============================
+
 
     connect(ui->tableOperations, &QTableWidget::cellChanged,
             this, &MainWindow::onTableOperationsCellChanged);
