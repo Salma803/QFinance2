@@ -1,0 +1,30 @@
+\doxysection{Revenu.\+h}
+\hypertarget{_revenu_8h_source}{}\label{_revenu_8h_source}\index{model/Revenu.h@{model/Revenu.h}}
+\mbox{\hyperlink{_revenu_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ REVENU\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ REVENU\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{operation_8h}{Operation.h}}"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_revenu_acce7b783b7280f1923989b2f4d25aa25}{Revenu}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_operation_a4fd684a7219be65b8aa44650856ca92e}{Operation}}}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ \mbox{\hyperlink{class_revenu_acce7b783b7280f1923989b2f4d25aa25}{Revenu}}(\textcolor{keyword}{const}\ QString\&\ \textcolor{keywordtype}{id},}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ \mbox{\hyperlink{class_operation_a0f52d10d95dacf94f5601bd859a76b21}{nom}},}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QDate\&\ \mbox{\hyperlink{class_operation_a631c768685076ffd775f88e2ec3526a3}{date}},}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_operation_a40cd9f843b80718c6f831f66586367bc}{montant}},}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ \mbox{\hyperlink{class_operation_a424b6b9e65bfe597f06f648a355412dc}{compteId}},}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ \mbox{\hyperlink{class_operation_a1f4b10cdc17c8bed479ca387aefc0e79}{categorieId}},}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ provenance);}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ QString\ \mbox{\hyperlink{class_revenu_ac56f0bad25bb805d10e93f204ee298fa}{getProvenance}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_revenu_af184a276f9f58e11cb0ff2457cc04cab}{estDepense}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00021\ \ \ \ \ QString\ provenance;}
+\DoxyCodeLine{00022\ \};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

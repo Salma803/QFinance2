@@ -1,0 +1,132 @@
+\doxysection{Operation\+Repository Class Reference}
+\hypertarget{class_operation_repository}{}\label{class_operation_repository}\index{OperationRepository@{OperationRepository}}
+
+
+{\ttfamily \#include $<$operationrepository.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{class_operation_repository_a84a8112ba6b50e76257f6ccc591c533e}{ajouter\+Revenu}} (const QString \&nom, const QDate \&date, double montant, const QString \&compte\+Id, const QString \&categorie\+Id, const QString \&provenance)
+\item 
+static bool \mbox{\hyperlink{class_operation_repository_ae3f2237e990015ae868690081e30b114}{ajouter\+Depense}} (const QString \&nom, const QDate \&date, double montant, const QString \&compte\+Id, const QString \&categorie\+Id, bool est\+Recurrente, const QString \&frequence)
+\item 
+static QList$<$ QVariant\+Map $>$ \mbox{\hyperlink{class_operation_repository_a67ee6626cd288bb578c53134c10464c2}{charger\+Operations\+Par\+Compte}} (const QString \&compte\+Id)
+\item 
+static double \mbox{\hyperlink{class_operation_repository_a02bafbb6468113eb01f3837dd5e5a6fb}{get\+Total\+Revenus}} (int mois, int annee)
+\item 
+static double \mbox{\hyperlink{class_operation_repository_a91f35da573eed1d4e3c087f46de5120a}{get\+Total\+Depenses}} (int mois, int annee)
+\item 
+static double \mbox{\hyperlink{class_operation_repository_a63cc1c8204748213f80e81cba5b27216}{get\+Total\+Depenses\+Categorie}} (const QString \&categorie\+Id, int mois, int annee)
+\item 
+static QList$<$ QVariant\+Map $>$ \mbox{\hyperlink{class_operation_repository_a840a30b050a39f39bdc8b62d8f9c5750}{get\+Depenses\+Par\+Categorie}} (int mois, int annee)
+\item 
+static QString \mbox{\hyperlink{class_operation_repository_a0b06e682fdd8ab52814a126a6ca9245a}{get\+Operation\+Id}} (const QString \&compte\+Id, const QString \&nom\+Operation, const QDate \&date, double montant)
+\item 
+static bool \mbox{\hyperlink{class_operation_repository_af6da947f7455842b543d64a757b3556a}{supprimer\+Operation}} (const QString \&operation\+Id, const QString \&compte\+Id)
+\item 
+static QVariant\+Map \mbox{\hyperlink{class_operation_repository_af17369f3bb2bddeb704afc4737575907}{get\+Operation\+Details}} (const QString \&operation\+Id)
+\item 
+static bool \mbox{\hyperlink{class_operation_repository_aebd1e9f21d867e28e2fede9949b32286}{modifier\+Operation}} (const QString \&operation\+Id, const QString \&nouveau\+Nom, const QDate \&nouvelle\+Date, double nouveau\+Montant, const QString \&nouvelle\+Categorie\+Id)
+\item 
+static double \mbox{\hyperlink{class_operation_repository_a1867994d236c9dd06fdb2e4cf0fe5f85}{get\+Total\+Revenus\+Compte}} (int mois, int annee, const QString \&compte\+Id)
+\item 
+static double \mbox{\hyperlink{class_operation_repository_ac9751d2a58ff28f75fd1cb35d5c54187}{get\+Total\+Depenses\+Compte}} (int mois, int annee, const QString \&compte\+Id)
+\item 
+static double \mbox{\hyperlink{class_operation_repository_a9f332f3d6dea8ff53fe685856e50dac5}{get\+Total\+Depenses\+Categorie\+Compte}} (const QString \&categorie\+Id, int mois, int annee, const QString \&compte\+Id)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_operation_repository_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_operation_repository_ae3f2237e990015ae868690081e30b114}\index{OperationRepository@{OperationRepository}!ajouterDepense@{ajouterDepense}}
+\index{ajouterDepense@{ajouterDepense}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{ajouterDepense()}{ajouterDepense()}}
+{\footnotesize\ttfamily \label{class_operation_repository_ae3f2237e990015ae868690081e30b114} 
+bool Operation\+Repository\+::ajouter\+Depense (\begin{DoxyParamCaption}\item[{const QString \&}]{nom}{, }\item[{const QDate \&}]{date}{, }\item[{double}]{montant}{, }\item[{const QString \&}]{compte\+Id}{, }\item[{const QString \&}]{categorie\+Id}{, }\item[{bool}]{est\+Recurrente}{, }\item[{const QString \&}]{frequence}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_a84a8112ba6b50e76257f6ccc591c533e}\index{OperationRepository@{OperationRepository}!ajouterRevenu@{ajouterRevenu}}
+\index{ajouterRevenu@{ajouterRevenu}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{ajouterRevenu()}{ajouterRevenu()}}
+{\footnotesize\ttfamily \label{class_operation_repository_a84a8112ba6b50e76257f6ccc591c533e} 
+bool Operation\+Repository\+::ajouter\+Revenu (\begin{DoxyParamCaption}\item[{const QString \&}]{nom}{, }\item[{const QDate \&}]{date}{, }\item[{double}]{montant}{, }\item[{const QString \&}]{compte\+Id}{, }\item[{const QString \&}]{categorie\+Id}{, }\item[{const QString \&}]{provenance}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_a67ee6626cd288bb578c53134c10464c2}\index{OperationRepository@{OperationRepository}!chargerOperationsParCompte@{chargerOperationsParCompte}}
+\index{chargerOperationsParCompte@{chargerOperationsParCompte}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{chargerOperationsParCompte()}{chargerOperationsParCompte()}}
+{\footnotesize\ttfamily \label{class_operation_repository_a67ee6626cd288bb578c53134c10464c2} 
+QList$<$ QVariant\+Map $>$ Operation\+Repository\+::charger\+Operations\+Par\+Compte (\begin{DoxyParamCaption}\item[{const QString \&}]{compte\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_a840a30b050a39f39bdc8b62d8f9c5750}\index{OperationRepository@{OperationRepository}!getDepensesParCategorie@{getDepensesParCategorie}}
+\index{getDepensesParCategorie@{getDepensesParCategorie}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{getDepensesParCategorie()}{getDepensesParCategorie()}}
+{\footnotesize\ttfamily \label{class_operation_repository_a840a30b050a39f39bdc8b62d8f9c5750} 
+QList$<$ QVariant\+Map $>$ Operation\+Repository\+::get\+Depenses\+Par\+Categorie (\begin{DoxyParamCaption}\item[{int}]{mois}{, }\item[{int}]{annee}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_af17369f3bb2bddeb704afc4737575907}\index{OperationRepository@{OperationRepository}!getOperationDetails@{getOperationDetails}}
+\index{getOperationDetails@{getOperationDetails}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{getOperationDetails()}{getOperationDetails()}}
+{\footnotesize\ttfamily \label{class_operation_repository_af17369f3bb2bddeb704afc4737575907} 
+QVariant\+Map Operation\+Repository\+::get\+Operation\+Details (\begin{DoxyParamCaption}\item[{const QString \&}]{operation\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_a0b06e682fdd8ab52814a126a6ca9245a}\index{OperationRepository@{OperationRepository}!getOperationId@{getOperationId}}
+\index{getOperationId@{getOperationId}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{getOperationId()}{getOperationId()}}
+{\footnotesize\ttfamily \label{class_operation_repository_a0b06e682fdd8ab52814a126a6ca9245a} 
+QString Operation\+Repository\+::get\+Operation\+Id (\begin{DoxyParamCaption}\item[{const QString \&}]{compte\+Id}{, }\item[{const QString \&}]{nom\+Operation}{, }\item[{const QDate \&}]{date}{, }\item[{double}]{montant}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_a91f35da573eed1d4e3c087f46de5120a}\index{OperationRepository@{OperationRepository}!getTotalDepenses@{getTotalDepenses}}
+\index{getTotalDepenses@{getTotalDepenses}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{getTotalDepenses()}{getTotalDepenses()}}
+{\footnotesize\ttfamily \label{class_operation_repository_a91f35da573eed1d4e3c087f46de5120a} 
+double Operation\+Repository\+::get\+Total\+Depenses (\begin{DoxyParamCaption}\item[{int}]{mois}{, }\item[{int}]{annee}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_a63cc1c8204748213f80e81cba5b27216}\index{OperationRepository@{OperationRepository}!getTotalDepensesCategorie@{getTotalDepensesCategorie}}
+\index{getTotalDepensesCategorie@{getTotalDepensesCategorie}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{getTotalDepensesCategorie()}{getTotalDepensesCategorie()}}
+{\footnotesize\ttfamily \label{class_operation_repository_a63cc1c8204748213f80e81cba5b27216} 
+double Operation\+Repository\+::get\+Total\+Depenses\+Categorie (\begin{DoxyParamCaption}\item[{const QString \&}]{categorie\+Id}{, }\item[{int}]{mois}{, }\item[{int}]{annee}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_a9f332f3d6dea8ff53fe685856e50dac5}\index{OperationRepository@{OperationRepository}!getTotalDepensesCategorieCompte@{getTotalDepensesCategorieCompte}}
+\index{getTotalDepensesCategorieCompte@{getTotalDepensesCategorieCompte}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{getTotalDepensesCategorieCompte()}{getTotalDepensesCategorieCompte()}}
+{\footnotesize\ttfamily \label{class_operation_repository_a9f332f3d6dea8ff53fe685856e50dac5} 
+double Operation\+Repository\+::get\+Total\+Depenses\+Categorie\+Compte (\begin{DoxyParamCaption}\item[{const QString \&}]{categorie\+Id}{, }\item[{int}]{mois}{, }\item[{int}]{annee}{, }\item[{const QString \&}]{compte\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_ac9751d2a58ff28f75fd1cb35d5c54187}\index{OperationRepository@{OperationRepository}!getTotalDepensesCompte@{getTotalDepensesCompte}}
+\index{getTotalDepensesCompte@{getTotalDepensesCompte}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{getTotalDepensesCompte()}{getTotalDepensesCompte()}}
+{\footnotesize\ttfamily \label{class_operation_repository_ac9751d2a58ff28f75fd1cb35d5c54187} 
+double Operation\+Repository\+::get\+Total\+Depenses\+Compte (\begin{DoxyParamCaption}\item[{int}]{mois}{, }\item[{int}]{annee}{, }\item[{const QString \&}]{compte\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_a02bafbb6468113eb01f3837dd5e5a6fb}\index{OperationRepository@{OperationRepository}!getTotalRevenus@{getTotalRevenus}}
+\index{getTotalRevenus@{getTotalRevenus}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{getTotalRevenus()}{getTotalRevenus()}}
+{\footnotesize\ttfamily \label{class_operation_repository_a02bafbb6468113eb01f3837dd5e5a6fb} 
+double Operation\+Repository\+::get\+Total\+Revenus (\begin{DoxyParamCaption}\item[{int}]{mois}{, }\item[{int}]{annee}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_a1867994d236c9dd06fdb2e4cf0fe5f85}\index{OperationRepository@{OperationRepository}!getTotalRevenusCompte@{getTotalRevenusCompte}}
+\index{getTotalRevenusCompte@{getTotalRevenusCompte}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{getTotalRevenusCompte()}{getTotalRevenusCompte()}}
+{\footnotesize\ttfamily \label{class_operation_repository_a1867994d236c9dd06fdb2e4cf0fe5f85} 
+double Operation\+Repository\+::get\+Total\+Revenus\+Compte (\begin{DoxyParamCaption}\item[{int}]{mois}{, }\item[{int}]{annee}{, }\item[{const QString \&}]{compte\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_aebd1e9f21d867e28e2fede9949b32286}\index{OperationRepository@{OperationRepository}!modifierOperation@{modifierOperation}}
+\index{modifierOperation@{modifierOperation}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{modifierOperation()}{modifierOperation()}}
+{\footnotesize\ttfamily \label{class_operation_repository_aebd1e9f21d867e28e2fede9949b32286} 
+bool Operation\+Repository\+::modifier\+Operation (\begin{DoxyParamCaption}\item[{const QString \&}]{operation\+Id}{, }\item[{const QString \&}]{nouveau\+Nom}{, }\item[{const QDate \&}]{nouvelle\+Date}{, }\item[{double}]{nouveau\+Montant}{, }\item[{const QString \&}]{nouvelle\+Categorie\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_operation_repository_af6da947f7455842b543d64a757b3556a}\index{OperationRepository@{OperationRepository}!supprimerOperation@{supprimerOperation}}
+\index{supprimerOperation@{supprimerOperation}!OperationRepository@{OperationRepository}}
+\doxysubsubsection{\texorpdfstring{supprimerOperation()}{supprimerOperation()}}
+{\footnotesize\ttfamily \label{class_operation_repository_af6da947f7455842b543d64a757b3556a} 
+bool Operation\+Repository\+::supprimer\+Operation (\begin{DoxyParamCaption}\item[{const QString \&}]{operation\+Id}{, }\item[{const QString \&}]{compte\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+repository/\mbox{\hyperlink{operationrepository_8h}{operationrepository.\+h}}\item 
+repository/\mbox{\hyperlink{operationrepository_8cpp}{operationrepository.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,118 @@
+\doxysection{dashboardmanager.\+h}
+\hypertarget{dashboardmanager_8h_source}{}\label{dashboardmanager_8h_source}\mbox{\hyperlink{dashboardmanager_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DASHBOARDMANAGER\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DASHBOARDMANAGER\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QObject>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <QList>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <QMap>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{categorie_8h}{model/Categorie.h}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{compte_8h}{model/Compte.h}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }QChartView;}
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }QChart;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_dashboard_manager_ae23f088013ca9b5477b152f96be7f465}{DashboardManager}}\ :\ \textcolor{keyword}{public}\ QObject}
+\DoxyCodeLine{00016\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques}{Statistiques}}\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques_aa650884a251a0813b68a1ae3a5cf824a}{totalRevenus}};}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques_a77b0ee620aecaf3115a59253d79ac097}{totalDepenses}};}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques_a465b1d99bb994bbde17281f2ed562374}{totalTransferts}};}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques_ac70605bddea3caf800515e2b92e318e9}{solde}};}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques_a335b435708a61a4d5c67449486c9c54e}{depensesParJour}};}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ QMap<QString,\ double>\ \mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques_aeded4bbf4cbca53825d5681771269975}{depensesParCategorie}};}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ QMap<QString,\ double>\ \mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques_a8e3808aea6d11dc5ab2eac398205f4e3}{evolutionMensuelle}};}
+\DoxyCodeLine{00028\ \ \ \ \ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_dashboard_manager_ae23f088013ca9b5477b152f96be7f465}{DashboardManager}}(QObject\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{class_dashboard_manager_ab1bd4598446d066a80ba6997b48ebcac}{\string~DashboardManager}}();}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_dashboard_manager_ad65ebd40d62dd65ffe71bee4e2ff599e}{initialiserCharts}}(QChartView\ *chartDepenses,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QChartView\ *chartRevenusVsDepenses,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QChartView\ *chartEvolution,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QChartView\ *chartRepartition);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_dashboard_manager_a0cdaec674e6eb17b86723bc2a911f875}{setCategories}}(\textcolor{keyword}{const}\ QList<Categorie*>\ \&categories);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_dashboard_manager_a35a294b920b38b1b4fcb289e6b5ae9f1}{setComptes}}(\textcolor{keyword}{const}\ QList<Compte*>\ \&comptes);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_dashboard_manager_ac8e7a1f7c05d97899f6f9cfdb41ee0f4}{actualiserDashboard}}(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QList<Categorie*>\ \&categories,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QList<Compte*>\ \&comptes,}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCategorie,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCompte);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_dashboard_manager_a3caf082c78d9c1bbe76e227e5f5bf48c}{exporterPDF}}(\textcolor{keyword}{const}\ QString\ \&cheminFichier,}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ mois,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ annee,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCompte,}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCategorie,}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ tousLesComptes);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques}{Statistiques}}\ \mbox{\hyperlink{class_dashboard_manager_a5f86a06de9c618cec996297461969884}{getStatistiques}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00055\ \ \ \ \ QString\ \mbox{\hyperlink{class_dashboard_manager_ae6c87c8e993247dbc9f4a1d4dec6ed6b}{getRecommandations}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ signals:}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_dashboard_manager_a80a601ec31011d5b4323cd160ff19d0d}{dashboardActualise}}();}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ calculerStatistiques(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCompte,}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCategorie);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ QString\ genererRecommandations(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,\ \textcolor{keyword}{const}\ QString\ \&filtreCompte);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ creerChartDepensesParCategorie(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCompte,}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCategorie);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ creerChartRevenusVsDepenses(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,\ \textcolor{keyword}{const}\ QString\ \&filtreCompte);}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ creerChartEvolution(\textcolor{keywordtype}{int}\ annee,\ \textcolor{keyword}{const}\ QString\ \&filtreCategorie,\ \textcolor{keyword}{const}\ QString\ \&filtreCompte);}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ creerChartRepartition(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCompte,}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCategorie);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{double}\ getTotalTransferts(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee);}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{double}\ getTotalTransfertsCompte(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,\ \textcolor{keyword}{const}\ QString\ \&compteId);}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{double}\ getTransfertsSortants(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,\ \textcolor{keyword}{const}\ QString\ \&compteId);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ QString\ captureDiagrammeEnImage(QChartView*\ chartView,\ \textcolor{keyword}{const}\ QString\ \&nom);}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ QString\ genererHTMLStatistiques(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCompte,}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCategorie,}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ tousLesComptes);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ QString\ genererHTMLStatistiques(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCompte,}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&filtreCategorie,}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ tousLesComptes,}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&imageDepensesPath,}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&imageRevenusPath,}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&imageEvolutionPath,}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&imageRepartitionPath);}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ QString\ genererHTMLTableauComptes();}
+\DoxyCodeLine{00098\ \ \ \ \ QString\ genererHTMLTableauCategories(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee);}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00101\ \ \ \ \ QChartView\ *m\_chartDepenses;}
+\DoxyCodeLine{00102\ \ \ \ \ QChartView\ *m\_chartRevenusVsDepenses;}
+\DoxyCodeLine{00103\ \ \ \ \ QChartView\ *m\_chartEvolution;}
+\DoxyCodeLine{00104\ \ \ \ \ QChartView\ *m\_chartRepartition;}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ QList<Categorie*>\ m\_categories;}
+\DoxyCodeLine{00107\ \ \ \ \ QList<Compte*>\ m\_comptes;}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques}{Statistiques}}\ m\_statistiques;}
+\DoxyCodeLine{00110\ \ \ \ \ QString\ m\_recommandations;}
+\DoxyCodeLine{00111\ \};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DASHBOARDMANAGER\_H}}
+
+\end{DoxyCode}

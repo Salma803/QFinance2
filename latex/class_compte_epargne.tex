@@ -1,0 +1,149 @@
+\doxysection{Compte\+Epargne Class Reference}
+\hypertarget{class_compte_epargne}{}\label{class_compte_epargne}\index{CompteEpargne@{CompteEpargne}}
+
+
+Représente un compte épargne.  
+
+
+
+
+{\ttfamily \#include $<$compteepargne.\+h$>$}
+
+Inheritance diagram for Compte\+Epargne\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_compte_epargne}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_compte_epargne_a2381b111df93b36c26ff7eaebd4e850b}{Compte\+Epargne}} (const QString \&\mbox{\hyperlink{class_compte_aafbc61a8e8e47be9a77f6b9fda77b005}{id}}, const QString \&\mbox{\hyperlink{class_compte_a5d7c420d4003853d9cf8990d2e113282}{nom}}, double \mbox{\hyperlink{class_compte_a91d76a02b311e171cf117ea39efbf9a1}{solde}})
+\begin{DoxyCompactList}\small\item\em Constructeur de la classe \doxylink{class_compte_epargne}{Compte\+Epargne}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_compte_epargne_a659eeeccb7ec89a7b470f179544031d7}{mettre\+AJour\+Solde}} () override
+\begin{DoxyCompactList}\small\item\em Recalcule le solde du compte épargne. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_compte_epargne_a44b8994858bbe6c8e3ccbe1112e57e72}{est\+Courant}} () const override
+\begin{DoxyCompactList}\small\item\em boolean pour savoir si un copte est courant \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_compte}{Compte}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_compte_afb1b4cad70c8bdf1e370f2d09497894d}{Compte}} (const QString \&\mbox{\hyperlink{class_compte_aafbc61a8e8e47be9a77f6b9fda77b005}{id}}, const QString \&\mbox{\hyperlink{class_compte_a5d7c420d4003853d9cf8990d2e113282}{nom}}, double \mbox{\hyperlink{class_compte_a91d76a02b311e171cf117ea39efbf9a1}{solde}})
+\begin{DoxyCompactList}\small\item\em Constructeur de la classe \doxylink{class_compte}{Compte}. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_compte_a38914ce92caf4dd150b959f6d1d4eea9}{\texorpdfstring{$\sim$}{\string~}\+Compte}} ()=default
+\begin{DoxyCompactList}\small\item\em Destructeur virtuel. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_compte_aad8080e9b4c5d5511443b43705521858}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}identifiant du compte. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_compte_ad79df79f6669445eab850f6024655e73}{get\+Nom}} () const
+\begin{DoxyCompactList}\small\item\em Retourne le nom du compte. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_compte_a543600a0bfd9b2436f1ec1df794623b0}{get\+Solde}} () const
+\begin{DoxyCompactList}\small\item\em Retourne le solde actuel du compte. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_compte_a73f7a49aefbdd017ae996fa0b0194dbb}{ajouter\+Operation}} (\mbox{\hyperlink{class_operation}{Operation}} \texorpdfstring{$\ast$}{*}operation)
+\begin{DoxyCompactList}\small\item\em Ajoute une opération au compte. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_compte_af37a43320c32cb1ed8446babab9d9956}{supprimer\+Operation}} (\mbox{\hyperlink{class_operation}{Operation}} \texorpdfstring{$\ast$}{*}operation)
+\begin{DoxyCompactList}\small\item\em Supprime une opération du compte. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_compte_a7d9685718cb5b02b3713e64a76f2e7f1}{ajouter\+Transfert\+Source}} (\mbox{\hyperlink{class_transfert}{Transfert}} \texorpdfstring{$\ast$}{*}transfert)
+\begin{DoxyCompactList}\small\item\em Ajoute un transfert sortant (source). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_compte_af85f696079c836d04874310cee15bd40}{ajouter\+Transfert\+Destination}} (\mbox{\hyperlink{class_transfert}{Transfert}} \texorpdfstring{$\ast$}{*}transfert)
+\begin{DoxyCompactList}\small\item\em Ajoute un transfert entrant (destination). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_compte}{Compte}}}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{class_compte_aafbc61a8e8e47be9a77f6b9fda77b005}{id}}
+\begin{DoxyCompactList}\small\item\em Identifiant unique du compte. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_compte_a5d7c420d4003853d9cf8990d2e113282}{nom}}
+\begin{DoxyCompactList}\small\item\em Nom du compte. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_compte_a91d76a02b311e171cf117ea39efbf9a1}{solde}}
+\begin{DoxyCompactList}\small\item\em Solde actuel du compte. \end{DoxyCompactList}\item 
+QList$<$ \mbox{\hyperlink{class_operation}{Operation}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_compte_a55a96821f78af3cef8a57486d1ab1fd4}{operations}}
+\begin{DoxyCompactList}\small\item\em Liste des opérations liées au compte. \end{DoxyCompactList}\item 
+QList$<$ \mbox{\hyperlink{class_transfert}{Transfert}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_compte_ae0b8712703f028ac80ec34f52d9b8e28}{transferts\+Source}}
+\begin{DoxyCompactList}\small\item\em Transferts sortants. \end{DoxyCompactList}\item 
+QList$<$ \mbox{\hyperlink{class_transfert}{Transfert}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_compte_a4218e4e4cc711d5e911d70e3a3804e87}{transferts\+Destination}}
+\begin{DoxyCompactList}\small\item\em Transferts entrants. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Représente un compte épargne. 
+
+Un compte épargne est un type de compte bancaire destiné principalement à la conservation de fonds.
+
+Il hérite de la classe \doxylink{class_compte}{Compte} et partage le même mécanisme de calcul de solde que le compte courant. 
+
+\label{doc-constructors}
+\Hypertarget{class_compte_epargne_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_compte_epargne_a2381b111df93b36c26ff7eaebd4e850b}\index{CompteEpargne@{CompteEpargne}!CompteEpargne@{CompteEpargne}}
+\index{CompteEpargne@{CompteEpargne}!CompteEpargne@{CompteEpargne}}
+\doxysubsubsection{\texorpdfstring{CompteEpargne()}{CompteEpargne()}}
+{\footnotesize\ttfamily \label{class_compte_epargne_a2381b111df93b36c26ff7eaebd4e850b} 
+Compte\+Epargne\+::\+Compte\+Epargne (\begin{DoxyParamCaption}\item[{const QString \&}]{id}{, }\item[{const QString \&}]{nom}{, }\item[{double}]{solde}{}\end{DoxyParamCaption})}
+
+
+
+Constructeur de la classe \doxylink{class_compte_epargne}{Compte\+Epargne}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Identifiant unique du compte (UUID) \\
+\hline
+{\em nom} & Nom du compte \\
+\hline
+{\em solde} & Solde initial du compte \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{class_compte_epargne_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_compte_epargne_a44b8994858bbe6c8e3ccbe1112e57e72}\index{CompteEpargne@{CompteEpargne}!estCourant@{estCourant}}
+\index{estCourant@{estCourant}!CompteEpargne@{CompteEpargne}}
+\doxysubsubsection{\texorpdfstring{estCourant()}{estCourant()}}
+{\footnotesize\ttfamily \label{class_compte_epargne_a44b8994858bbe6c8e3ccbe1112e57e72} 
+bool Compte\+Epargne\+::est\+Courant (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+boolean pour savoir si un copte est courant 
+
+
+
+Implements \mbox{\hyperlink{class_compte_acd4b4f067675e194b7b1bf26e636288c}{Compte}}.
+
+\Hypertarget{class_compte_epargne_a659eeeccb7ec89a7b470f179544031d7}\index{CompteEpargne@{CompteEpargne}!mettreAJourSolde@{mettreAJourSolde}}
+\index{mettreAJourSolde@{mettreAJourSolde}!CompteEpargne@{CompteEpargne}}
+\doxysubsubsection{\texorpdfstring{mettreAJourSolde()}{mettreAJourSolde()}}
+{\footnotesize\ttfamily \label{class_compte_epargne_a659eeeccb7ec89a7b470f179544031d7} 
+void Compte\+Epargne\+::mettre\+AJour\+Solde (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Recalcule le solde du compte épargne. 
+
+Le solde est calculé à partir \+:
+\begin{DoxyItemize}
+\item des opérations associées au compte
+\item des transferts sortants
+\item des transferts entrants
+\end{DoxyItemize}
+
+Le solde est recalculé dynamiquement en additionnant \+:
+\begin{DoxyItemize}
+\item les montants des opérations
+\item les transferts entrants
+\end{DoxyItemize}
+
+Et en soustrayant \+:
+\begin{DoxyItemize}
+\item les transferts sortants 
+\end{DoxyItemize}
+
+Implements \mbox{\hyperlink{class_compte_a4eddd17bac39fe6a2c4425abe6541dd8}{Compte}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+model/\mbox{\hyperlink{compteepargne_8h}{compteepargne.\+h}}\item 
+model/\mbox{\hyperlink{compteepargne_8cpp}{compteepargne.\+cpp}}\end{DoxyCompactItemize}

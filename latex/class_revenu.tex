@@ -1,0 +1,87 @@
+\doxysection{Revenu Class Reference}
+\hypertarget{class_revenu}{}\label{class_revenu}\index{Revenu@{Revenu}}
+
+
+{\ttfamily \#include $<$Revenu.\+h$>$}
+
+Inheritance diagram for Revenu\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_revenu}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_revenu_acce7b783b7280f1923989b2f4d25aa25}{Revenu}} (const QString \&\mbox{\hyperlink{class_operation_aefe88f255c6216aa2129a199ade22a6d}{id}}, const QString \&\mbox{\hyperlink{class_operation_a0f52d10d95dacf94f5601bd859a76b21}{nom}}, const QDate \&\mbox{\hyperlink{class_operation_a631c768685076ffd775f88e2ec3526a3}{date}}, double \mbox{\hyperlink{class_operation_a40cd9f843b80718c6f831f66586367bc}{montant}}, const QString \&\mbox{\hyperlink{class_operation_a424b6b9e65bfe597f06f648a355412dc}{compte\+Id}}, const QString \&\mbox{\hyperlink{class_operation_a1f4b10cdc17c8bed479ca387aefc0e79}{categorie\+Id}}, const QString \&provenance)
+\item 
+QString \mbox{\hyperlink{class_revenu_ac56f0bad25bb805d10e93f204ee298fa}{get\+Provenance}} () const
+\item 
+bool \mbox{\hyperlink{class_revenu_af184a276f9f58e11cb0ff2457cc04cab}{est\+Depense}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_operation}{Operation}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_operation_a4fd684a7219be65b8aa44650856ca92e}{Operation}} (const QString \&\mbox{\hyperlink{class_operation_aefe88f255c6216aa2129a199ade22a6d}{id}}, const QString \&\mbox{\hyperlink{class_operation_a0f52d10d95dacf94f5601bd859a76b21}{nom}}, const QDate \&\mbox{\hyperlink{class_operation_a631c768685076ffd775f88e2ec3526a3}{date}}, double \mbox{\hyperlink{class_operation_a40cd9f843b80718c6f831f66586367bc}{montant}}, const QString \&\mbox{\hyperlink{class_operation_a424b6b9e65bfe597f06f648a355412dc}{compte\+Id}}, const QString \&\mbox{\hyperlink{class_operation_a1f4b10cdc17c8bed479ca387aefc0e79}{categorie\+Id}})
+\begin{DoxyCompactList}\small\item\em Constructeur de la classe \doxylink{class_operation}{Operation}. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_operation_ae46f6d722c2b28cc194dd09b9ea4e92b}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}identifiant de l\textquotesingle{}opération. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_operation_af12ef4a8ab72213309c97ee8852dd785}{get\+Nom}} () const
+\begin{DoxyCompactList}\small\item\em Retourne le nom (libellé) de l\textquotesingle{}opération. \end{DoxyCompactList}\item 
+QDate \mbox{\hyperlink{class_operation_addc0b20989012d4386b57b10be2692b5}{get\+Date}} () const
+\begin{DoxyCompactList}\small\item\em Retourne la date de l\textquotesingle{}opération. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_operation_a04f69726060503033db4b07dbbc28323}{get\+Montant}} () const
+\begin{DoxyCompactList}\small\item\em Retourne le montant de l\textquotesingle{}opération. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_operation_a49388c8108a51dd2a995fe00bf977aff}{get\+Compte\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}identifiant du compte associé. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_operation_a344268291b2c6dd2bfdd57e59a1d22bb}{get\+Categorie\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}identifiant de la catégorie associée. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_operation}{Operation}}}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{class_operation_aefe88f255c6216aa2129a199ade22a6d}{id}}
+\item 
+QString \mbox{\hyperlink{class_operation_a0f52d10d95dacf94f5601bd859a76b21}{nom}}
+\item 
+QDate \mbox{\hyperlink{class_operation_a631c768685076ffd775f88e2ec3526a3}{date}}
+\item 
+double \mbox{\hyperlink{class_operation_a40cd9f843b80718c6f831f66586367bc}{montant}}
+\item 
+QString \mbox{\hyperlink{class_operation_a424b6b9e65bfe597f06f648a355412dc}{compte\+Id}}
+\item 
+QString \mbox{\hyperlink{class_operation_a1f4b10cdc17c8bed479ca387aefc0e79}{categorie\+Id}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_revenu_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_revenu_acce7b783b7280f1923989b2f4d25aa25}\index{Revenu@{Revenu}!Revenu@{Revenu}}
+\index{Revenu@{Revenu}!Revenu@{Revenu}}
+\doxysubsubsection{\texorpdfstring{Revenu()}{Revenu()}}
+{\footnotesize\ttfamily \label{class_revenu_acce7b783b7280f1923989b2f4d25aa25} 
+Revenu\+::\+Revenu (\begin{DoxyParamCaption}\item[{const QString \&}]{id}{, }\item[{const QString \&}]{nom}{, }\item[{const QDate \&}]{date}{, }\item[{double}]{montant}{, }\item[{const QString \&}]{compte\+Id}{, }\item[{const QString \&}]{categorie\+Id}{, }\item[{const QString \&}]{provenance}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_revenu_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_revenu_af184a276f9f58e11cb0ff2457cc04cab}\index{Revenu@{Revenu}!estDepense@{estDepense}}
+\index{estDepense@{estDepense}!Revenu@{Revenu}}
+\doxysubsubsection{\texorpdfstring{estDepense()}{estDepense()}}
+{\footnotesize\ttfamily \label{class_revenu_af184a276f9f58e11cb0ff2457cc04cab} 
+bool Revenu\+::est\+Depense (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}}
+
+\Hypertarget{class_revenu_ac56f0bad25bb805d10e93f204ee298fa}\index{Revenu@{Revenu}!getProvenance@{getProvenance}}
+\index{getProvenance@{getProvenance}!Revenu@{Revenu}}
+\doxysubsubsection{\texorpdfstring{getProvenance()}{getProvenance()}}
+{\footnotesize\ttfamily \label{class_revenu_ac56f0bad25bb805d10e93f204ee298fa} 
+QString Revenu\+::get\+Provenance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+model/\mbox{\hyperlink{_revenu_8h}{Revenu.\+h}}\end{DoxyCompactItemize}

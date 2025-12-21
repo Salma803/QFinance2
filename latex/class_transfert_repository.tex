@@ -1,0 +1,44 @@
+\doxysection{Transfert\+Repository Class Reference}
+\hypertarget{class_transfert_repository}{}\label{class_transfert_repository}\index{TransfertRepository@{TransfertRepository}}
+
+
+{\ttfamily \#include $<$transfertrepository.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{class_transfert_repository_a0acf5f4b20af9558cdd5edbbe1017a63}{ajouter\+Transfert}} (const \mbox{\hyperlink{class_transfert}{Transfert}} \texorpdfstring{$\ast$}{*}transfert)
+\item 
+static QList$<$ QVariant\+Map $>$ \mbox{\hyperlink{class_transfert_repository_a5d21cd3772c304b41a75fd56e77b31de}{charger\+Transferts\+Par\+Compte}} (const QString \&compte\+Id)
+\item 
+static bool \mbox{\hyperlink{class_transfert_repository_ad8620dac4e6d1630454fb78ac52f3719}{ajouter\+Transfert\+Auto}} (const QString \&source\+Id, const QString \&destination\+Id, double montant, const QDate \&date)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_transfert_repository_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_transfert_repository_a0acf5f4b20af9558cdd5edbbe1017a63}\index{TransfertRepository@{TransfertRepository}!ajouterTransfert@{ajouterTransfert}}
+\index{ajouterTransfert@{ajouterTransfert}!TransfertRepository@{TransfertRepository}}
+\doxysubsubsection{\texorpdfstring{ajouterTransfert()}{ajouterTransfert()}}
+{\footnotesize\ttfamily \label{class_transfert_repository_a0acf5f4b20af9558cdd5edbbe1017a63} 
+bool Transfert\+Repository\+::ajouter\+Transfert (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_transfert}{Transfert}} \texorpdfstring{$\ast$}{*}}]{transfert}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_transfert_repository_ad8620dac4e6d1630454fb78ac52f3719}\index{TransfertRepository@{TransfertRepository}!ajouterTransfertAuto@{ajouterTransfertAuto}}
+\index{ajouterTransfertAuto@{ajouterTransfertAuto}!TransfertRepository@{TransfertRepository}}
+\doxysubsubsection{\texorpdfstring{ajouterTransfertAuto()}{ajouterTransfertAuto()}}
+{\footnotesize\ttfamily \label{class_transfert_repository_ad8620dac4e6d1630454fb78ac52f3719} 
+bool Transfert\+Repository\+::ajouter\+Transfert\+Auto (\begin{DoxyParamCaption}\item[{const QString \&}]{source\+Id}{, }\item[{const QString \&}]{destination\+Id}{, }\item[{double}]{montant}{, }\item[{const QDate \&}]{date}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_transfert_repository_a5d21cd3772c304b41a75fd56e77b31de}\index{TransfertRepository@{TransfertRepository}!chargerTransfertsParCompte@{chargerTransfertsParCompte}}
+\index{chargerTransfertsParCompte@{chargerTransfertsParCompte}!TransfertRepository@{TransfertRepository}}
+\doxysubsubsection{\texorpdfstring{chargerTransfertsParCompte()}{chargerTransfertsParCompte()}}
+{\footnotesize\ttfamily \label{class_transfert_repository_a5d21cd3772c304b41a75fd56e77b31de} 
+QList$<$ QVariant\+Map $>$ Transfert\+Repository\+::charger\+Transferts\+Par\+Compte (\begin{DoxyParamCaption}\item[{const QString \&}]{compte\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+repository/\mbox{\hyperlink{transfertrepository_8h}{transfertrepository.\+h}}\item 
+repository/\mbox{\hyperlink{transfertrepository_8cpp}{transfertrepository.\+cpp}}\end{DoxyCompactItemize}

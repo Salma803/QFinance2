@@ -1,0 +1,79 @@
+\doxysection{Categorie\+Repository Class Reference}
+\hypertarget{class_categorie_repository}{}\label{class_categorie_repository}\index{CategorieRepository@{CategorieRepository}}
+
+
+{\ttfamily \#include $<$categorierepository.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_categorie_repository_a3f44a7fcf2bf7d4b5969a563e2916514}{supprimer\+Categorie}} (const QString \&categorie\+Id)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_categorie_repository_a5415723f610995b9d1ba509708896c69}{creer\+Categories\+Par\+Defaut}} ()
+\item 
+static QList$<$ \mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_categorie_repository_a603837c561317de866b116b54cfd35e7}{charger\+Categories}} (const QString \&utilisateur\+Id)
+\item 
+static QString \mbox{\hyperlink{class_categorie_repository_a92724e23ac0d0c67949c156c5ae410a8}{ajouter\+Categorie}} (const QString \&nom, const QString \&utilisateur\+Id, const QString \&parent\+Id)
+\item 
+static bool \mbox{\hyperlink{class_categorie_repository_a0cffc0b667344f0e7b8e9abf005a6501}{modifier\+Categorie}} (const QString \&categorie\+Id, const QString \&nouveau\+Nom)
+\item 
+static bool \mbox{\hyperlink{class_categorie_repository_aae669454a639410562c4b5a7d7edd216}{supprimer\+Categorie\+Avec\+Enfants}} (const QString \&categorie\+Id)
+\item 
+static QList$<$ QString $>$ \mbox{\hyperlink{class_categorie_repository_a1afbb5a8fd86e704a8342df6700bab6d}{charger\+Ids\+Sous\+Categories}} (const QString \&parent\+Id)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_categorie_repository_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_categorie_repository_a92724e23ac0d0c67949c156c5ae410a8}\index{CategorieRepository@{CategorieRepository}!ajouterCategorie@{ajouterCategorie}}
+\index{ajouterCategorie@{ajouterCategorie}!CategorieRepository@{CategorieRepository}}
+\doxysubsubsection{\texorpdfstring{ajouterCategorie()}{ajouterCategorie()}}
+{\footnotesize\ttfamily \label{class_categorie_repository_a92724e23ac0d0c67949c156c5ae410a8} 
+QString Categorie\+Repository\+::ajouter\+Categorie (\begin{DoxyParamCaption}\item[{const QString \&}]{nom}{, }\item[{const QString \&}]{utilisateur\+Id}{, }\item[{const QString \&}]{parent\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_categorie_repository_a603837c561317de866b116b54cfd35e7}\index{CategorieRepository@{CategorieRepository}!chargerCategories@{chargerCategories}}
+\index{chargerCategories@{chargerCategories}!CategorieRepository@{CategorieRepository}}
+\doxysubsubsection{\texorpdfstring{chargerCategories()}{chargerCategories()}}
+{\footnotesize\ttfamily \label{class_categorie_repository_a603837c561317de866b116b54cfd35e7} 
+QList$<$ \mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*} $>$ Categorie\+Repository\+::charger\+Categories (\begin{DoxyParamCaption}\item[{const QString \&}]{utilisateur\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_categorie_repository_a1afbb5a8fd86e704a8342df6700bab6d}\index{CategorieRepository@{CategorieRepository}!chargerIdsSousCategories@{chargerIdsSousCategories}}
+\index{chargerIdsSousCategories@{chargerIdsSousCategories}!CategorieRepository@{CategorieRepository}}
+\doxysubsubsection{\texorpdfstring{chargerIdsSousCategories()}{chargerIdsSousCategories()}}
+{\footnotesize\ttfamily \label{class_categorie_repository_a1afbb5a8fd86e704a8342df6700bab6d} 
+QList$<$ QString $>$ Categorie\+Repository\+::charger\+Ids\+Sous\+Categories (\begin{DoxyParamCaption}\item[{const QString \&}]{parent\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_categorie_repository_a5415723f610995b9d1ba509708896c69}\index{CategorieRepository@{CategorieRepository}!creerCategoriesParDefaut@{creerCategoriesParDefaut}}
+\index{creerCategoriesParDefaut@{creerCategoriesParDefaut}!CategorieRepository@{CategorieRepository}}
+\doxysubsubsection{\texorpdfstring{creerCategoriesParDefaut()}{creerCategoriesParDefaut()}}
+{\footnotesize\ttfamily \label{class_categorie_repository_a5415723f610995b9d1ba509708896c69} 
+void Categorie\+Repository\+::creer\+Categories\+Par\+Defaut (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_categorie_repository_a0cffc0b667344f0e7b8e9abf005a6501}\index{CategorieRepository@{CategorieRepository}!modifierCategorie@{modifierCategorie}}
+\index{modifierCategorie@{modifierCategorie}!CategorieRepository@{CategorieRepository}}
+\doxysubsubsection{\texorpdfstring{modifierCategorie()}{modifierCategorie()}}
+{\footnotesize\ttfamily \label{class_categorie_repository_a0cffc0b667344f0e7b8e9abf005a6501} 
+bool Categorie\+Repository\+::modifier\+Categorie (\begin{DoxyParamCaption}\item[{const QString \&}]{categorie\+Id}{, }\item[{const QString \&}]{nouveau\+Nom}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_categorie_repository_a3f44a7fcf2bf7d4b5969a563e2916514}\index{CategorieRepository@{CategorieRepository}!supprimerCategorie@{supprimerCategorie}}
+\index{supprimerCategorie@{supprimerCategorie}!CategorieRepository@{CategorieRepository}}
+\doxysubsubsection{\texorpdfstring{supprimerCategorie()}{supprimerCategorie()}}
+{\footnotesize\ttfamily \label{class_categorie_repository_a3f44a7fcf2bf7d4b5969a563e2916514} 
+bool Categorie\+Repository\+::supprimer\+Categorie (\begin{DoxyParamCaption}\item[{const QString \&}]{categorie\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_categorie_repository_aae669454a639410562c4b5a7d7edd216}\index{CategorieRepository@{CategorieRepository}!supprimerCategorieAvecEnfants@{supprimerCategorieAvecEnfants}}
+\index{supprimerCategorieAvecEnfants@{supprimerCategorieAvecEnfants}!CategorieRepository@{CategorieRepository}}
+\doxysubsubsection{\texorpdfstring{supprimerCategorieAvecEnfants()}{supprimerCategorieAvecEnfants()}}
+{\footnotesize\ttfamily \label{class_categorie_repository_aae669454a639410562c4b5a7d7edd216} 
+bool Categorie\+Repository\+::supprimer\+Categorie\+Avec\+Enfants (\begin{DoxyParamCaption}\item[{const QString \&}]{categorie\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+repository/\mbox{\hyperlink{categorierepository_8h}{categorierepository.\+h}}\item 
+repository/\mbox{\hyperlink{categorierepository_8cpp}{categorierepository.\+cpp}}\end{DoxyCompactItemize}

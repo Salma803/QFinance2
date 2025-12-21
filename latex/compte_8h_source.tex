@@ -1,0 +1,62 @@
+\doxysection{compte.\+h}
+\hypertarget{compte_8h_source}{}\label{compte_8h_source}\index{model/compte.h@{model/compte.h}}
+\mbox{\hyperlink{compte_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ COMPTE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ COMPTE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <QList>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_operation}{Operation}};}
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_transfert}{Transfert}};}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_compte_afb1b4cad70c8bdf1e370f2d09497894d}{Compte}}}
+\DoxyCodeLine{00027\ \{}
+\DoxyCodeLine{00028\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_compte_afb1b4cad70c8bdf1e370f2d09497894d}{Compte}}(\textcolor{keyword}{const}\ QString\&\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ QString\&\ \mbox{\hyperlink{class_compte_a5d7c420d4003853d9cf8990d2e113282}{nom}},\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_compte_a91d76a02b311e171cf117ea39efbf9a1}{solde}});}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_compte_a38914ce92caf4dd150b959f6d1d4eea9}{\string~Compte}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_compte_acd4b4f067675e194b7b1bf26e636288c}{estCourant}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ =======================}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ =======================}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00058\ \ \ \ \ QString\ \mbox{\hyperlink{class_compte_aad8080e9b4c5d5511443b43705521858}{getId}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00064\ \ \ \ \ QString\ \mbox{\hyperlink{class_compte_ad79df79f6669445eab850f6024655e73}{getNom}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_compte_a543600a0bfd9b2436f1ec1df794623b0}{getSolde}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ =======================}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ Méthodes\ métier}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ =======================}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_compte_a73f7a49aefbdd017ae996fa0b0194dbb}{ajouterOperation}}(\mbox{\hyperlink{class_operation}{Operation}}*\ operation);}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_compte_af37a43320c32cb1ed8446babab9d9956}{supprimerOperation}}(\mbox{\hyperlink{class_operation}{Operation}}*\ operation);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_compte_a7d9685718cb5b02b3713e64a76f2e7f1}{ajouterTransfertSource}}(\mbox{\hyperlink{class_transfert}{Transfert}}*\ transfert);}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_compte_af85f696079c836d04874310cee15bd40}{ajouterTransfertDestination}}(\mbox{\hyperlink{class_transfert}{Transfert}}*\ transfert);}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_compte_a4eddd17bac39fe6a2c4425abe6541dd8}{mettreAJourSolde}}()\ =\ 0;}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00118\ \ \ \ \ QString\ \mbox{\hyperlink{class_compte_aafbc61a8e8e47be9a77f6b9fda77b005}{id}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00119\ \ \ \ \ QString\ \mbox{\hyperlink{class_compte_a5d7c420d4003853d9cf8990d2e113282}{nom}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_compte_a91d76a02b311e171cf117ea39efbf9a1}{solde}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ QList<Operation*>\ \mbox{\hyperlink{class_compte_a55a96821f78af3cef8a57486d1ab1fd4}{operations}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00123\ \ \ \ \ QList<Transfert*>\ \mbox{\hyperlink{class_compte_ae0b8712703f028ac80ec34f52d9b8e28}{transfertsSource}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00124\ \ \ \ \ QList<Transfert*>\ \mbox{\hyperlink{class_compte_a4218e4e4cc711d5e911d70e3a3804e87}{transfertsDestination}};\ \ }
+\DoxyCodeLine{00125\ \};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ COMPTE\_H}}
+
+\end{DoxyCode}

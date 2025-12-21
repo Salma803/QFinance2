@@ -1,0 +1,29 @@
+\doxysection{transfertrepository.\+h}
+\hypertarget{transfertrepository_8h_source}{}\label{transfertrepository_8h_source}\index{repository/transfertrepository.h@{repository/transfertrepository.h}}
+\mbox{\hyperlink{transfertrepository_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ TRANSFERTREPOSITORY\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ TRANSFERTREPOSITORY\_H}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <QVariantMap>}}
+\DoxyCodeLine{00004\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_transfert}{Transfert}};}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_transfert_repository}{TransfertRepository}}}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_transfert_repository_a0acf5f4b20af9558cdd5edbbe1017a63}{ajouterTransfert}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_transfert}{Transfert}}*\ transfert);}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{static}\ QList<QVariantMap>\ \mbox{\hyperlink{class_transfert_repository_a5d21cd3772c304b41a75fd56e77b31de}{chargerTransfertsParCompte}}(}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ compteId}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_transfert_repository_ad8620dac4e6d1630454fb78ac52f3719}{ajouterTransfertAuto}}(}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ sourceId,}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ destinationId,}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ montant,}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QDate\&\ date}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TRANSFERTREPOSITORY\_H}}
+
+\end{DoxyCode}

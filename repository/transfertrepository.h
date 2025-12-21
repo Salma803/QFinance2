@@ -10,6 +10,12 @@ public:
     static QList<QVariantMap> chargerTransfertsParCompte(
         const QString& compteId
         );
+    static bool ajouterTransfertAuto(
+        const QString& sourceId,
+        const QString& destinationId,
+        double montant,
+        const QDate& date
+        );
 
 
 };

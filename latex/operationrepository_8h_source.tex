@@ -1,0 +1,58 @@
+\doxysection{operationrepository.\+h}
+\hypertarget{operationrepository_8h_source}{}\label{operationrepository_8h_source}\index{repository/operationrepository.h@{repository/operationrepository.h}}
+\mbox{\hyperlink{operationrepository_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ OPERATIONREPOSITORY\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ OPERATIONREPOSITORY\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <QDate>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_operation_repository}{OperationRepository}}}
+\DoxyCodeLine{00008\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_operation_repository_a84a8112ba6b50e76257f6ccc591c533e}{ajouterRevenu}}(\textcolor{keyword}{const}\ QString\&\ nom,}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QDate\&\ date,}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ montant,}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ compteId,}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ categorieId,}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ provenance);}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_operation_repository_ae3f2237e990015ae868690081e30b114}{ajouterDepense}}(\textcolor{keyword}{const}\ QString\&\ nom,}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QDate\&\ date,}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ montant,}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ compteId,}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ categorieId,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ estRecurrente,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ frequence);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{static}\ QList<QVariantMap>\ \mbox{\hyperlink{class_operation_repository_a67ee6626cd288bb578c53134c10464c2}{chargerOperationsParCompte}}(\textcolor{keyword}{const}\ QString\&\ compteId);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_operation_repository_a02bafbb6468113eb01f3837dd5e5a6fb}{getTotalRevenus}}(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_operation_repository_a91f35da573eed1d4e3c087f46de5120a}{getTotalDepenses}}(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee);}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_operation_repository_a63cc1c8204748213f80e81cba5b27216}{getTotalDepensesCategorie}}(\textcolor{keyword}{const}\ QString\ \&categorieId,\ \textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee);}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{static}\ QList<QVariantMap>\ \mbox{\hyperlink{class_operation_repository_a840a30b050a39f39bdc8b62d8f9c5750}{getDepensesParCategorie}}(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ Méthodes\ pour\ la\ suppression\ et\ modification}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{static}\ QString\ \mbox{\hyperlink{class_operation_repository_a0b06e682fdd8ab52814a126a6ca9245a}{getOperationId}}(\textcolor{keyword}{const}\ QString\&\ compteId,\ \textcolor{keyword}{const}\ QString\&\ nomOperation,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QDate\&\ date,\ \textcolor{keywordtype}{double}\ montant);}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_operation_repository_af6da947f7455842b543d64a757b3556a}{supprimerOperation}}(\textcolor{keyword}{const}\ QString\&\ operationId,\ \textcolor{keyword}{const}\ QString\&\ compteId);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ NOUVELLES\ MÉTHODES\ POUR\ LA\ MODIFICATION}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{static}\ QVariantMap\ \mbox{\hyperlink{class_operation_repository_af17369f3bb2bddeb704afc4737575907}{getOperationDetails}}(\textcolor{keyword}{const}\ QString\&\ operationId);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_operation_repository_aebd1e9f21d867e28e2fede9949b32286}{modifierOperation}}(\textcolor{keyword}{const}\ QString\&\ operationId,}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ nouveauNom,}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QDate\&\ nouvelleDate,}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ nouveauMontant,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ nouvelleCategorieId);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_operation_repository_a1867994d236c9dd06fdb2e4cf0fe5f85}{getTotalRevenusCompte}}(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,\ \textcolor{keyword}{const}\ QString\ \&compteId);}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_operation_repository_ac9751d2a58ff28f75fd1cb35d5c54187}{getTotalDepensesCompte}}(\textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,\ \textcolor{keyword}{const}\ QString\ \&compteId);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_operation_repository_a9f332f3d6dea8ff53fe685856e50dac5}{getTotalDepensesCategorieCompte}}(\textcolor{keyword}{const}\ QString\ \&categorieId,}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ mois,\ \textcolor{keywordtype}{int}\ annee,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\ \&compteId);}
+\DoxyCodeLine{00050\ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ OPERATIONREPOSITORY\_H}}
+
+\end{DoxyCode}

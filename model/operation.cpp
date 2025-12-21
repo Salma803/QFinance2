@@ -1,5 +1,8 @@
 #include "Operation.h"
 
+/**
+ * @brief Constructeur de la classe Operation.
+ */
 Operation::Operation(const QString& id,
                      const QString& nom,
                      const QDate& date,

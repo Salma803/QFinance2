@@ -14,6 +14,12 @@ public:
     static QList<Compte*> chargerComptes(const QString& utilisateurId);
     static void mettreAJourSolde(const QString& compteId);
     static double calculerSolde(const QString& compteId);
+    static QString trouverCompteCourantAvecSoldeSuffisant(
+        const QString& utilisateurId,
+        const QString& compteExcluId,
+        double montantMin
+        );
+
 
 };
 

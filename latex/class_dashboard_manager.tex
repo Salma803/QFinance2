@@ -1,0 +1,120 @@
+\doxysection{Dashboard\+Manager Class Reference}
+\hypertarget{class_dashboard_manager}{}\label{class_dashboard_manager}\index{DashboardManager@{DashboardManager}}
+
+
+{\ttfamily \#include $<$dashboardmanager.\+h$>$}
+
+Inheritance diagram for Dashboard\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_dashboard_manager}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques}{Statistiques}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_dashboard_manager_a80a601ec31011d5b4323cd160ff19d0d}{dashboard\+Actualise}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_dashboard_manager_ae23f088013ca9b5477b152f96be7f465}{Dashboard\+Manager}} (QObject \texorpdfstring{$\ast$}{*}parent=nullptr)
+\item 
+\mbox{\hyperlink{class_dashboard_manager_ab1bd4598446d066a80ba6997b48ebcac}{\texorpdfstring{$\sim$}{\string~}\+Dashboard\+Manager}} ()
+\item 
+void \mbox{\hyperlink{class_dashboard_manager_ad65ebd40d62dd65ffe71bee4e2ff599e}{initialiser\+Charts}} (QChart\+View \texorpdfstring{$\ast$}{*}chart\+Depenses, QChart\+View \texorpdfstring{$\ast$}{*}chart\+Revenus\+Vs\+Depenses, QChart\+View \texorpdfstring{$\ast$}{*}chart\+Evolution, QChart\+View \texorpdfstring{$\ast$}{*}chart\+Repartition)
+\item 
+void \mbox{\hyperlink{class_dashboard_manager_a0cdaec674e6eb17b86723bc2a911f875}{set\+Categories}} (const QList$<$ \mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*} $>$ \&categories)
+\item 
+void \mbox{\hyperlink{class_dashboard_manager_a35a294b920b38b1b4fcb289e6b5ae9f1}{set\+Comptes}} (const QList$<$ \mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} $>$ \&comptes)
+\item 
+void \mbox{\hyperlink{class_dashboard_manager_ac8e7a1f7c05d97899f6f9cfdb41ee0f4}{actualiser\+Dashboard}} (int mois, int annee, const QList$<$ \mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*} $>$ \&categories, const QList$<$ \mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} $>$ \&comptes, const QString \&filtre\+Categorie, const QString \&filtre\+Compte)
+\item 
+bool \mbox{\hyperlink{class_dashboard_manager_a3caf082c78d9c1bbe76e227e5f5bf48c}{exporter\+PDF}} (const QString \&chemin\+Fichier, int mois, int annee, const QString \&filtre\+Compte, const QString \&filtre\+Categorie, bool tous\+Les\+Comptes)
+\item 
+\mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques}{Statistiques}} \mbox{\hyperlink{class_dashboard_manager_a5f86a06de9c618cec996297461969884}{get\+Statistiques}} () const
+\item 
+QString \mbox{\hyperlink{class_dashboard_manager_ae6c87c8e993247dbc9f4a1d4dec6ed6b}{get\+Recommandations}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_dashboard_manager_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_dashboard_manager_ae23f088013ca9b5477b152f96be7f465}\index{DashboardManager@{DashboardManager}!DashboardManager@{DashboardManager}}
+\index{DashboardManager@{DashboardManager}!DashboardManager@{DashboardManager}}
+\doxysubsubsection{\texorpdfstring{DashboardManager()}{DashboardManager()}}
+{\footnotesize\ttfamily \label{class_dashboard_manager_ae23f088013ca9b5477b152f96be7f465} 
+Dashboard\+Manager\+::\+Dashboard\+Manager (\begin{DoxyParamCaption}\item[{QObject \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\Hypertarget{class_dashboard_manager_ab1bd4598446d066a80ba6997b48ebcac}\index{DashboardManager@{DashboardManager}!````~DashboardManager@{\texorpdfstring{$\sim$}{\string~}DashboardManager}}
+\index{````~DashboardManager@{\texorpdfstring{$\sim$}{\string~}DashboardManager}!DashboardManager@{DashboardManager}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}DashboardManager()}{\string~DashboardManager()}}
+{\footnotesize\ttfamily \label{class_dashboard_manager_ab1bd4598446d066a80ba6997b48ebcac} 
+Dashboard\+Manager\+::\texorpdfstring{$\sim$}{\string~}\+Dashboard\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_dashboard_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_dashboard_manager_ac8e7a1f7c05d97899f6f9cfdb41ee0f4}\index{DashboardManager@{DashboardManager}!actualiserDashboard@{actualiserDashboard}}
+\index{actualiserDashboard@{actualiserDashboard}!DashboardManager@{DashboardManager}}
+\doxysubsubsection{\texorpdfstring{actualiserDashboard()}{actualiserDashboard()}}
+{\footnotesize\ttfamily \label{class_dashboard_manager_ac8e7a1f7c05d97899f6f9cfdb41ee0f4} 
+void Dashboard\+Manager\+::actualiser\+Dashboard (\begin{DoxyParamCaption}\item[{int}]{mois}{, }\item[{int}]{annee}{, }\item[{const QList$<$ \mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*} $>$ \&}]{categories}{, }\item[{const QList$<$ \mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} $>$ \&}]{comptes}{, }\item[{const QString \&}]{filtre\+Categorie}{, }\item[{const QString \&}]{filtre\+Compte}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_dashboard_manager_a80a601ec31011d5b4323cd160ff19d0d}\index{DashboardManager@{DashboardManager}!dashboardActualise@{dashboardActualise}}
+\index{dashboardActualise@{dashboardActualise}!DashboardManager@{DashboardManager}}
+\doxysubsubsection{\texorpdfstring{dashboardActualise}{dashboardActualise}}
+{\footnotesize\ttfamily \label{class_dashboard_manager_a80a601ec31011d5b4323cd160ff19d0d} 
+void Dashboard\+Manager\+::dashboard\+Actualise (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\Hypertarget{class_dashboard_manager_a3caf082c78d9c1bbe76e227e5f5bf48c}\index{DashboardManager@{DashboardManager}!exporterPDF@{exporterPDF}}
+\index{exporterPDF@{exporterPDF}!DashboardManager@{DashboardManager}}
+\doxysubsubsection{\texorpdfstring{exporterPDF()}{exporterPDF()}}
+{\footnotesize\ttfamily \label{class_dashboard_manager_a3caf082c78d9c1bbe76e227e5f5bf48c} 
+bool Dashboard\+Manager\+::exporter\+PDF (\begin{DoxyParamCaption}\item[{const QString \&}]{chemin\+Fichier}{, }\item[{int}]{mois}{, }\item[{int}]{annee}{, }\item[{const QString \&}]{filtre\+Compte}{, }\item[{const QString \&}]{filtre\+Categorie}{, }\item[{bool}]{tous\+Les\+Comptes}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_dashboard_manager_ae6c87c8e993247dbc9f4a1d4dec6ed6b}\index{DashboardManager@{DashboardManager}!getRecommandations@{getRecommandations}}
+\index{getRecommandations@{getRecommandations}!DashboardManager@{DashboardManager}}
+\doxysubsubsection{\texorpdfstring{getRecommandations()}{getRecommandations()}}
+{\footnotesize\ttfamily \label{class_dashboard_manager_ae6c87c8e993247dbc9f4a1d4dec6ed6b} 
+QString Dashboard\+Manager\+::get\+Recommandations (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_dashboard_manager_a5f86a06de9c618cec996297461969884}\index{DashboardManager@{DashboardManager}!getStatistiques@{getStatistiques}}
+\index{getStatistiques@{getStatistiques}!DashboardManager@{DashboardManager}}
+\doxysubsubsection{\texorpdfstring{getStatistiques()}{getStatistiques()}}
+{\footnotesize\ttfamily \label{class_dashboard_manager_a5f86a06de9c618cec996297461969884} 
+\mbox{\hyperlink{struct_dashboard_manager_1_1_statistiques}{Dashboard\+Manager\+::\+Statistiques}} Dashboard\+Manager\+::get\+Statistiques (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_dashboard_manager_ad65ebd40d62dd65ffe71bee4e2ff599e}\index{DashboardManager@{DashboardManager}!initialiserCharts@{initialiserCharts}}
+\index{initialiserCharts@{initialiserCharts}!DashboardManager@{DashboardManager}}
+\doxysubsubsection{\texorpdfstring{initialiserCharts()}{initialiserCharts()}}
+{\footnotesize\ttfamily \label{class_dashboard_manager_ad65ebd40d62dd65ffe71bee4e2ff599e} 
+void Dashboard\+Manager\+::initialiser\+Charts (\begin{DoxyParamCaption}\item[{QChart\+View \texorpdfstring{$\ast$}{*}}]{chart\+Depenses}{, }\item[{QChart\+View \texorpdfstring{$\ast$}{*}}]{chart\+Revenus\+Vs\+Depenses}{, }\item[{QChart\+View \texorpdfstring{$\ast$}{*}}]{chart\+Evolution}{, }\item[{QChart\+View \texorpdfstring{$\ast$}{*}}]{chart\+Repartition}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_dashboard_manager_a0cdaec674e6eb17b86723bc2a911f875}\index{DashboardManager@{DashboardManager}!setCategories@{setCategories}}
+\index{setCategories@{setCategories}!DashboardManager@{DashboardManager}}
+\doxysubsubsection{\texorpdfstring{setCategories()}{setCategories()}}
+{\footnotesize\ttfamily \label{class_dashboard_manager_a0cdaec674e6eb17b86723bc2a911f875} 
+void Dashboard\+Manager\+::set\+Categories (\begin{DoxyParamCaption}\item[{const QList$<$ \mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*} $>$ \&}]{categories}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_dashboard_manager_a35a294b920b38b1b4fcb289e6b5ae9f1}\index{DashboardManager@{DashboardManager}!setComptes@{setComptes}}
+\index{setComptes@{setComptes}!DashboardManager@{DashboardManager}}
+\doxysubsubsection{\texorpdfstring{setComptes()}{setComptes()}}
+{\footnotesize\ttfamily \label{class_dashboard_manager_a35a294b920b38b1b4fcb289e6b5ae9f1} 
+void Dashboard\+Manager\+::set\+Comptes (\begin{DoxyParamCaption}\item[{const QList$<$ \mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} $>$ \&}]{comptes}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{dashboardmanager_8h}{dashboardmanager.\+h}}\item 
+build/\+Desktop\+\_\+\+Qt\+\_\+6\+\_\+9\+\_\+3\+\_\+\+Min\+GW\+\_\+64\+\_\+bit-\/\+Debug/\+QFinance2\+\_\+autogen/\+EWIEGA46\+WW/\mbox{\hyperlink{moc__dashboardmanager_8cpp}{moc\+\_\+dashboardmanager.\+cpp}}\item 
+\mbox{\hyperlink{dashboardmanager_8cpp}{dashboardmanager.\+cpp}}\end{DoxyCompactItemize}

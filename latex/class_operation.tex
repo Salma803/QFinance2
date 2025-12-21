@@ -1,0 +1,222 @@
+\doxysection{Operation Class Reference}
+\hypertarget{class_operation}{}\label{class_operation}\index{Operation@{Operation}}
+
+
+Représente une opération financière.  
+
+
+
+
+{\ttfamily \#include $<$operation.\+h$>$}
+
+Inheritance diagram for Operation\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_operation}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_operation_a4fd684a7219be65b8aa44650856ca92e}{Operation}} (const QString \&\mbox{\hyperlink{class_operation_aefe88f255c6216aa2129a199ade22a6d}{id}}, const QString \&\mbox{\hyperlink{class_operation_a0f52d10d95dacf94f5601bd859a76b21}{nom}}, const QDate \&\mbox{\hyperlink{class_operation_a631c768685076ffd775f88e2ec3526a3}{date}}, double \mbox{\hyperlink{class_operation_a40cd9f843b80718c6f831f66586367bc}{montant}}, const QString \&\mbox{\hyperlink{class_operation_a424b6b9e65bfe597f06f648a355412dc}{compte\+Id}}, const QString \&\mbox{\hyperlink{class_operation_a1f4b10cdc17c8bed479ca387aefc0e79}{categorie\+Id}})
+\begin{DoxyCompactList}\small\item\em Constructeur de la classe \doxylink{class_operation}{Operation}. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_operation_ae46f6d722c2b28cc194dd09b9ea4e92b}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}identifiant de l\textquotesingle{}opération. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_operation_af12ef4a8ab72213309c97ee8852dd785}{get\+Nom}} () const
+\begin{DoxyCompactList}\small\item\em Retourne le nom (libellé) de l\textquotesingle{}opération. \end{DoxyCompactList}\item 
+QDate \mbox{\hyperlink{class_operation_addc0b20989012d4386b57b10be2692b5}{get\+Date}} () const
+\begin{DoxyCompactList}\small\item\em Retourne la date de l\textquotesingle{}opération. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_operation_a04f69726060503033db4b07dbbc28323}{get\+Montant}} () const
+\begin{DoxyCompactList}\small\item\em Retourne le montant de l\textquotesingle{}opération. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_operation_a49388c8108a51dd2a995fe00bf977aff}{get\+Compte\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}identifiant du compte associé. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_operation_a344268291b2c6dd2bfdd57e59a1d22bb}{get\+Categorie\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}identifiant de la catégorie associée. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{class_operation_aefe88f255c6216aa2129a199ade22a6d}{id}}
+\item 
+QString \mbox{\hyperlink{class_operation_a0f52d10d95dacf94f5601bd859a76b21}{nom}}
+\item 
+QDate \mbox{\hyperlink{class_operation_a631c768685076ffd775f88e2ec3526a3}{date}}
+\item 
+double \mbox{\hyperlink{class_operation_a40cd9f843b80718c6f831f66586367bc}{montant}}
+\item 
+QString \mbox{\hyperlink{class_operation_a424b6b9e65bfe597f06f648a355412dc}{compte\+Id}}
+\item 
+QString \mbox{\hyperlink{class_operation_a1f4b10cdc17c8bed479ca387aefc0e79}{categorie\+Id}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Représente une opération financière. 
+
+Une opération correspond à un mouvement financier associé à un compte et à une catégorie.
+
+Elle peut représenter \+:
+\begin{DoxyItemize}
+\item une dépense
+\item un revenu
+\end{DoxyItemize}
+
+Les opérations sont stockées en base de données et utilisées pour le calcul des soldes, des statistiques et des budgets. 
+
+\label{doc-constructors}
+\Hypertarget{class_operation_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_operation_a4fd684a7219be65b8aa44650856ca92e}\index{Operation@{Operation}!Operation@{Operation}}
+\index{Operation@{Operation}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{Operation()}{Operation()}}
+{\footnotesize\ttfamily \label{class_operation_a4fd684a7219be65b8aa44650856ca92e} 
+Operation\+::\+Operation (\begin{DoxyParamCaption}\item[{const QString \&}]{id}{, }\item[{const QString \&}]{nom}{, }\item[{const QDate \&}]{date}{, }\item[{double}]{montant}{, }\item[{const QString \&}]{compte\+Id}{, }\item[{const QString \&}]{categorie\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Constructeur de la classe \doxylink{class_operation}{Operation}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Identifiant unique de l\textquotesingle{}opération (UUID) \\
+\hline
+{\em nom} & Libellé de l\textquotesingle{}opération \\
+\hline
+{\em date} & Date de l\textquotesingle{}opération \\
+\hline
+{\em montant} & Montant de l\textquotesingle{}opération \\
+\hline
+{\em compte\+Id} & Identifiant du compte associé \\
+\hline
+{\em categorie\+Id} & Identifiant de la catégorie associée \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{class_operation_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_operation_a344268291b2c6dd2bfdd57e59a1d22bb}\index{Operation@{Operation}!getCategorieId@{getCategorieId}}
+\index{getCategorieId@{getCategorieId}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{getCategorieId()}{getCategorieId()}}
+{\footnotesize\ttfamily \label{class_operation_a344268291b2c6dd2bfdd57e59a1d22bb} 
+QString Operation\+::get\+Categorie\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne l\textquotesingle{}identifiant de la catégorie associée. 
+
+\begin{DoxyReturn}{Returns}
+ID de la catégorie 
+\end{DoxyReturn}
+\Hypertarget{class_operation_a49388c8108a51dd2a995fe00bf977aff}\index{Operation@{Operation}!getCompteId@{getCompteId}}
+\index{getCompteId@{getCompteId}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{getCompteId()}{getCompteId()}}
+{\footnotesize\ttfamily \label{class_operation_a49388c8108a51dd2a995fe00bf977aff} 
+QString Operation\+::get\+Compte\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne l\textquotesingle{}identifiant du compte associé. 
+
+\begin{DoxyReturn}{Returns}
+ID du compte 
+\end{DoxyReturn}
+\Hypertarget{class_operation_addc0b20989012d4386b57b10be2692b5}\index{Operation@{Operation}!getDate@{getDate}}
+\index{getDate@{getDate}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{getDate()}{getDate()}}
+{\footnotesize\ttfamily \label{class_operation_addc0b20989012d4386b57b10be2692b5} 
+QDate Operation\+::get\+Date (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne la date de l\textquotesingle{}opération. 
+
+\begin{DoxyReturn}{Returns}
+Date de l\textquotesingle{}opération 
+\end{DoxyReturn}
+\Hypertarget{class_operation_ae46f6d722c2b28cc194dd09b9ea4e92b}\index{Operation@{Operation}!getId@{getId}}
+\index{getId@{getId}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily \label{class_operation_ae46f6d722c2b28cc194dd09b9ea4e92b} 
+QString Operation\+::get\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne l\textquotesingle{}identifiant de l\textquotesingle{}opération. 
+
+\begin{DoxyReturn}{Returns}
+UUID de l\textquotesingle{}opération 
+\end{DoxyReturn}
+\Hypertarget{class_operation_a04f69726060503033db4b07dbbc28323}\index{Operation@{Operation}!getMontant@{getMontant}}
+\index{getMontant@{getMontant}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{getMontant()}{getMontant()}}
+{\footnotesize\ttfamily \label{class_operation_a04f69726060503033db4b07dbbc28323} 
+double Operation\+::get\+Montant (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne le montant de l\textquotesingle{}opération. 
+
+\begin{DoxyReturn}{Returns}
+Montant de l\textquotesingle{}opération 
+\end{DoxyReturn}
+\Hypertarget{class_operation_af12ef4a8ab72213309c97ee8852dd785}\index{Operation@{Operation}!getNom@{getNom}}
+\index{getNom@{getNom}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{getNom()}{getNom()}}
+{\footnotesize\ttfamily \label{class_operation_af12ef4a8ab72213309c97ee8852dd785} 
+QString Operation\+::get\+Nom (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne le nom (libellé) de l\textquotesingle{}opération. 
+
+\begin{DoxyReturn}{Returns}
+Nom de l\textquotesingle{}opération 
+\end{DoxyReturn}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_operation_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_operation_a1f4b10cdc17c8bed479ca387aefc0e79}\index{Operation@{Operation}!categorieId@{categorieId}}
+\index{categorieId@{categorieId}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{categorieId}{categorieId}}
+{\footnotesize\ttfamily \label{class_operation_a1f4b10cdc17c8bed479ca387aefc0e79} 
+QString Operation\+::categorie\+Id\hspace{0.3cm}{\ttfamily [protected]}}
+
+Identifiant de la catégorie liée \Hypertarget{class_operation_a424b6b9e65bfe597f06f648a355412dc}\index{Operation@{Operation}!compteId@{compteId}}
+\index{compteId@{compteId}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{compteId}{compteId}}
+{\footnotesize\ttfamily \label{class_operation_a424b6b9e65bfe597f06f648a355412dc} 
+QString Operation\+::compte\+Id\hspace{0.3cm}{\ttfamily [protected]}}
+
+Identifiant du compte lié \Hypertarget{class_operation_a631c768685076ffd775f88e2ec3526a3}\index{Operation@{Operation}!date@{date}}
+\index{date@{date}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{date}{date}}
+{\footnotesize\ttfamily \label{class_operation_a631c768685076ffd775f88e2ec3526a3} 
+QDate Operation\+::date\hspace{0.3cm}{\ttfamily [protected]}}
+
+Date de l\textquotesingle{}opération \Hypertarget{class_operation_aefe88f255c6216aa2129a199ade22a6d}\index{Operation@{Operation}!id@{id}}
+\index{id@{id}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily \label{class_operation_aefe88f255c6216aa2129a199ade22a6d} 
+QString Operation\+::id\hspace{0.3cm}{\ttfamily [protected]}}
+
+Identifiant unique de l\textquotesingle{}opération \Hypertarget{class_operation_a40cd9f843b80718c6f831f66586367bc}\index{Operation@{Operation}!montant@{montant}}
+\index{montant@{montant}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{montant}{montant}}
+{\footnotesize\ttfamily \label{class_operation_a40cd9f843b80718c6f831f66586367bc} 
+double Operation\+::montant\hspace{0.3cm}{\ttfamily [protected]}}
+
+Montant de l\textquotesingle{}opération \Hypertarget{class_operation_a0f52d10d95dacf94f5601bd859a76b21}\index{Operation@{Operation}!nom@{nom}}
+\index{nom@{nom}!Operation@{Operation}}
+\doxysubsubsection{\texorpdfstring{nom}{nom}}
+{\footnotesize\ttfamily \label{class_operation_a0f52d10d95dacf94f5601bd859a76b21} 
+QString Operation\+::nom\hspace{0.3cm}{\ttfamily [protected]}}
+
+Nom ou libellé de l\textquotesingle{}opération 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+model/\mbox{\hyperlink{operation_8h}{operation.\+h}}\item 
+model/\mbox{\hyperlink{operation_8cpp}{operation.\+cpp}}\end{DoxyCompactItemize}

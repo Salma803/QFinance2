@@ -1,4 +1,6 @@
 #include "OperationRepository.h"
+#include "CompteRepository.h"
+#include "TransfertRepository.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QUuid>
@@ -42,6 +44,12 @@ bool OperationRepository::ajouterDepense(const QString& nom,
                                          bool estRecurrente,
                                          const QString& frequence)
 {
+
+    qDebug() << ">>> ajouterDepense APPELEE <<<";
+
+    // =========================
+    // 1️⃣ Insérer la dépense
+    // =========================
     QSqlQuery query;
     query.prepare(
         "INSERT INTO Operation "
@@ -49,7 +57,9 @@ bool OperationRepository::ajouterDepense(const QString& nom,
         "VALUES (:id, :nom, :date, :montant, 'DEPENSE', :compte, :categorie, :rec, :freq)"
         );
 
-    query.bindValue(":id", QUuid::createUuid().toString());
+    QString operationId = QUuid::createUuid().toString();
+
+    query.bindValue(":id", operationId);
     query.bindValue(":nom", nom);
     query.bindValue(":date", date.toString(Qt::ISODate));
     query.bindValue(":montant", montant);
@@ -59,12 +69,65 @@ bool OperationRepository::ajouterDepense(const QString& nom,
     query.bindValue(":freq", frequence);
 
     if (!query.exec()) {
-        qDebug() << "Erreur ajout dépense:" << query.lastError().text();
+        qDebug() << "❌ Erreur ajout dépense:" << query.lastError().text();
         return false;
+    }
+
+    // =========================
+    // 2️⃣ Mettre à jour le solde
+    // =========================
+    CompteRepository::mettreAJourSolde(compteId);
+
+    double solde = CompteRepository::calculerSolde(compteId);
+    qDebug() << "Solde apres depense =" << solde;
+
+
+    // =========================
+    // 3️⃣ Si solde négatif → transfert automatique
+    // =========================
+    if (solde < 0) {
+        qDebug() << ">>> SOLDE NEGATIF DETECTE <<<";
+
+        double montantManquant = -solde;
+
+        // Trouver un autre compte avec assez d'argent
+        QString compteSourceId =
+            CompteRepository::trouverCompteCourantAvecSoldeSuffisant(
+                "1",              // utilisateurId (chez toi = "1")
+                compteId,          // compte déficitaire
+                montantManquant
+                );
+        qDebug() << "Compte source trouve =" << compteSourceId;
+
+
+        if (!compteSourceId.isEmpty()) {
+
+            qDebug() << "⚠️ Solde négatif → transfert auto de"
+                     << montantManquant
+                     << "depuis"
+                     << compteSourceId;
+
+            // Créer le transfert automatique
+            bool ok = TransfertRepository::ajouterTransfertAuto(
+                compteSourceId,
+                compteId,
+                montantManquant,
+                QDate::currentDate()
+                );
+
+            if (ok) {
+                // Mettre à jour les soldes après transfert
+                CompteRepository::mettreAJourSolde(compteSourceId);
+                CompteRepository::mettreAJourSolde(compteId);
+            }
+        } else {
+            qDebug() << "❗ Aucun compte avec solde suffisant pour transfert auto";
+        }
     }
 
     return true;
 }
+
 
 QList<QVariantMap> OperationRepository::chargerOperationsParCompte(
     const QString& compteId)
@@ -73,27 +136,29 @@ QList<QVariantMap> OperationRepository::chargerOperationsParCompte(
     QSqlQuery query;
 
     query.prepare(
-        "SELECT o.id, o.date, o.nom, c.nom AS categorie, o.montant, o.type, o.categorie_id "
+        "SELECT o.id, o.date, o.nom, "
+        "COALESCE(c.nom, 'Sans catégorie') AS categorie, "
+        "o.montant, o.type, o.categorie_id "
         "FROM Operation o "
-        "JOIN Categorie c ON o.categorie_id = c.id "
+        "LEFT JOIN Categorie c ON o.categorie_id = c.id "
         "WHERE o.compte_id = :cid "
         "ORDER BY o.date DESC"
         );
     query.bindValue(":cid", compteId);
 
     if (!query.exec()) {
-        qDebug() << query.lastError();
+        qDebug() << "Erreur chargerOperationsParCompte:" << query.lastError().text();
         return ops;
     }
 
     while (query.next()) {
         QVariantMap row;
         row["id"] = query.value("id");
-        row["date"] = query.value("date");
+        row["date"] = QDate::fromString(query.value("date").toString(), Qt::ISODate);
         row["nom"] = query.value("nom");
         row["categorie"] = query.value("categorie");
-        row["montant"] = query.value("montant");
-        row["type"] = query.value("type");
+        row["montant"] = query.value("montant").toDouble();
+        row["type"] = query.value("type").toString();
         row["categorie_id"] = query.value("categorie_id");
         ops.append(row);
     }

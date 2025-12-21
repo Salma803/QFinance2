@@ -1,0 +1,41 @@
+\doxysection{categorie.\+h}
+\hypertarget{categorie_8h_source}{}\label{categorie_8h_source}\index{model/categorie.h@{model/categorie.h}}
+\mbox{\hyperlink{categorie_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ CATEGORIE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ CATEGORIE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <QList>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_categorie_af00ac466e6c634203585b6869881afbf}{Categorie}}}
+\DoxyCodeLine{00020\ \{}
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{class_categorie_af00ac466e6c634203585b6869881afbf}{Categorie}}(\textcolor{keyword}{const}\ QString\&\ \textcolor{keywordtype}{id},}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ nom,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_categorie_af00ac466e6c634203585b6869881afbf}{Categorie}}*\ parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00037\ \ \ \ \ QString\ \mbox{\hyperlink{class_categorie_a72bf93afc50cea1c3dae3afb110fccbf}{getId}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00043\ \ \ \ \ QString\ \mbox{\hyperlink{class_categorie_a91a9f801a755f19e021350eb6e7dad5b}{getNom}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{class_categorie_af00ac466e6c634203585b6869881afbf}{Categorie}}*\ \mbox{\hyperlink{class_categorie_ab9451cfb6415c6f43a4c116a6a6858de}{getParent}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00055\ \ \ \ \ QList<Categorie*>\ \mbox{\hyperlink{class_categorie_a11cfd63ab781bee5abb985e45b29abd7}{getEnfants}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_categorie_a551b7d0c4b6cc2363c4e684bd9b4318e}{ajouterEnfant}}(\mbox{\hyperlink{class_categorie_af00ac466e6c634203585b6869881afbf}{Categorie}}*\ enfant);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00072\ \ \ \ \ QString\ \mbox{\hyperlink{class_categorie_a51b27be16c7aebd8a83ed428345d7479}{getCategorieBudgetSource}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_categorie_a7508d0911515b65b82c3a42d9a7061fb}{setParent}}(\mbox{\hyperlink{class_categorie_af00ac466e6c634203585b6869881afbf}{Categorie}}*\ p);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00082\ \ \ \ \ QString\ id;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ QString\ nom;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{class_categorie_af00ac466e6c634203585b6869881afbf}{Categorie}}*\ parent;\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ QList<Categorie*>\ enfants;\ \ \ \ \ \ }
+\DoxyCodeLine{00086\ \};}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CATEGORIE\_H}}
+
+\end{DoxyCode}

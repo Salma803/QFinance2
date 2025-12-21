@@ -1,10 +1,16 @@
 #include "Utilisateur.h"
 #include "Compte.h"
 
+/**
+ * @brief Constructeur par défaut.
+ */
 Utilisateur::Utilisateur()
 {
 }
 
+/**
+ * @brief Constructeur avec identifiant et nom.
+ */
 Utilisateur::Utilisateur(const QString& id, const QString& nom)
     : id(id), nom(nom)
 {
@@ -53,6 +59,7 @@ void Utilisateur::supprimerCompte(Compte* compte)
 {
     comptes.removeAll(compte);
 }
+
 Compte* Utilisateur::getCompteById(const QString& id) const
 {
     for (Compte* compte : comptes) {

@@ -1,0 +1,32 @@
+\doxysection{compterepository.\+h}
+\hypertarget{compterepository_8h_source}{}\label{compterepository_8h_source}\index{repository/compterepository.h@{repository/compterepository.h}}
+\mbox{\hyperlink{compterepository_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ COMPTEREPOSITORY\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ COMPTEREPOSITORY\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QList>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_compte}{Compte}};}
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_utilisateur}{Utilisateur}};}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_compte_repository}{CompteRepository}}}
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_compte_repository_a31fc44dd0c8079940f3920df5f740db7}{ajouterCompte}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_compte}{Compte}}*\ compte,\ \textcolor{keyword}{const}\ QString\&\ utilisateurId);}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{static}\ QList<Compte*>\ \mbox{\hyperlink{class_compte_repository_a7f3c133030e50461c8fc8ec3f453a401}{chargerComptes}}(\textcolor{keyword}{const}\ QString\&\ utilisateurId);}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_compte_repository_a8e3d7c4561bc7b03760109c7d6d555ed}{mettreAJourSolde}}(\textcolor{keyword}{const}\ QString\&\ compteId);}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_compte_repository_abfe684f74ca74c23abf9a9db9a4052c9}{calculerSolde}}(\textcolor{keyword}{const}\ QString\&\ compteId);}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{static}\ QString\ \mbox{\hyperlink{class_compte_repository_aed7a84fb6e210fe9b85716d11fe58465}{trouverCompteCourantAvecSoldeSuffisant}}(}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ utilisateurId,}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ compteExcluId,}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ montantMin}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ COMPTEREPOSITORY\_H}}
+
+\end{DoxyCode}

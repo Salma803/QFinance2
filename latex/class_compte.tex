@@ -1,0 +1,321 @@
+\doxysection{Compte Class Reference}
+\hypertarget{class_compte}{}\label{class_compte}\index{Compte@{Compte}}
+
+
+Classe abstraite représentant un compte bancaire.  
+
+
+
+
+{\ttfamily \#include $<$compte.\+h$>$}
+
+Inheritance diagram for Compte\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_compte}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_compte_afb1b4cad70c8bdf1e370f2d09497894d}{Compte}} (const QString \&\mbox{\hyperlink{class_compte_aafbc61a8e8e47be9a77f6b9fda77b005}{id}}, const QString \&\mbox{\hyperlink{class_compte_a5d7c420d4003853d9cf8990d2e113282}{nom}}, double \mbox{\hyperlink{class_compte_a91d76a02b311e171cf117ea39efbf9a1}{solde}})
+\begin{DoxyCompactList}\small\item\em Constructeur de la classe \doxylink{class_compte}{Compte}. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_compte_a38914ce92caf4dd150b959f6d1d4eea9}{\texorpdfstring{$\sim$}{\string~}\+Compte}} ()=default
+\begin{DoxyCompactList}\small\item\em Destructeur virtuel. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_compte_acd4b4f067675e194b7b1bf26e636288c}{est\+Courant}} () const =0
+\begin{DoxyCompactList}\small\item\em boolean pour savoir si un copte est courant \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_compte_aad8080e9b4c5d5511443b43705521858}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}identifiant du compte. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_compte_ad79df79f6669445eab850f6024655e73}{get\+Nom}} () const
+\begin{DoxyCompactList}\small\item\em Retourne le nom du compte. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_compte_a543600a0bfd9b2436f1ec1df794623b0}{get\+Solde}} () const
+\begin{DoxyCompactList}\small\item\em Retourne le solde actuel du compte. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_compte_a73f7a49aefbdd017ae996fa0b0194dbb}{ajouter\+Operation}} (\mbox{\hyperlink{class_operation}{Operation}} \texorpdfstring{$\ast$}{*}operation)
+\begin{DoxyCompactList}\small\item\em Ajoute une opération au compte. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_compte_af37a43320c32cb1ed8446babab9d9956}{supprimer\+Operation}} (\mbox{\hyperlink{class_operation}{Operation}} \texorpdfstring{$\ast$}{*}operation)
+\begin{DoxyCompactList}\small\item\em Supprime une opération du compte. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_compte_a7d9685718cb5b02b3713e64a76f2e7f1}{ajouter\+Transfert\+Source}} (\mbox{\hyperlink{class_transfert}{Transfert}} \texorpdfstring{$\ast$}{*}transfert)
+\begin{DoxyCompactList}\small\item\em Ajoute un transfert sortant (source). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_compte_af85f696079c836d04874310cee15bd40}{ajouter\+Transfert\+Destination}} (\mbox{\hyperlink{class_transfert}{Transfert}} \texorpdfstring{$\ast$}{*}transfert)
+\begin{DoxyCompactList}\small\item\em Ajoute un transfert entrant (destination). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{class_compte_a4eddd17bac39fe6a2c4425abe6541dd8}{mettre\+AJour\+Solde}} ()=0
+\begin{DoxyCompactList}\small\item\em Recalcule le solde du compte. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{class_compte_aafbc61a8e8e47be9a77f6b9fda77b005}{id}}
+\begin{DoxyCompactList}\small\item\em Identifiant unique du compte. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_compte_a5d7c420d4003853d9cf8990d2e113282}{nom}}
+\begin{DoxyCompactList}\small\item\em Nom du compte. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_compte_a91d76a02b311e171cf117ea39efbf9a1}{solde}}
+\begin{DoxyCompactList}\small\item\em Solde actuel du compte. \end{DoxyCompactList}\item 
+QList$<$ \mbox{\hyperlink{class_operation}{Operation}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_compte_a55a96821f78af3cef8a57486d1ab1fd4}{operations}}
+\begin{DoxyCompactList}\small\item\em Liste des opérations liées au compte. \end{DoxyCompactList}\item 
+QList$<$ \mbox{\hyperlink{class_transfert}{Transfert}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_compte_ae0b8712703f028ac80ec34f52d9b8e28}{transferts\+Source}}
+\begin{DoxyCompactList}\small\item\em Transferts sortants. \end{DoxyCompactList}\item 
+QList$<$ \mbox{\hyperlink{class_transfert}{Transfert}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_compte_a4218e4e4cc711d5e911d70e3a3804e87}{transferts\+Destination}}
+\begin{DoxyCompactList}\small\item\em Transferts entrants. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Classe abstraite représentant un compte bancaire. 
+
+Un compte possède \+:
+\begin{DoxyItemize}
+\item un identifiant unique
+\item un nom
+\item un solde
+\end{DoxyItemize}
+
+Il peut contenir \+:
+\begin{DoxyItemize}
+\item des opérations (revenus / dépenses)
+\item des transferts sortants et entrants
+\end{DoxyItemize}
+
+Cette classe est destinée à être héritée (ex \+: \doxylink{class_compte_courant}{Compte\+Courant}, \doxylink{class_compte_epargne}{Compte\+Epargne}). 
+
+\label{doc-constructors}
+\Hypertarget{class_compte_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_compte_afb1b4cad70c8bdf1e370f2d09497894d}\index{Compte@{Compte}!Compte@{Compte}}
+\index{Compte@{Compte}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{Compte()}{Compte()}}
+{\footnotesize\ttfamily \label{class_compte_afb1b4cad70c8bdf1e370f2d09497894d} 
+Compte\+::\+Compte (\begin{DoxyParamCaption}\item[{const QString \&}]{id}{, }\item[{const QString \&}]{nom}{, }\item[{double}]{solde}{}\end{DoxyParamCaption})}
+
+
+
+Constructeur de la classe \doxylink{class_compte}{Compte}. 
+
+Constructeur de \doxylink{class_compte}{Compte}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Identifiant unique du compte (UUID) \\
+\hline
+{\em nom} & Nom du compte \\
+\hline
+{\em solde} & Solde initial du compte \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_compte_a38914ce92caf4dd150b959f6d1d4eea9}\index{Compte@{Compte}!````~Compte@{\texorpdfstring{$\sim$}{\string~}Compte}}
+\index{````~Compte@{\texorpdfstring{$\sim$}{\string~}Compte}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Compte()}{\string~Compte()}}
+{\footnotesize\ttfamily \label{class_compte_a38914ce92caf4dd150b959f6d1d4eea9} 
+virtual Compte\+::\texorpdfstring{$\sim$}{\string~}\+Compte (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+Destructeur virtuel. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_compte_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_compte_a73f7a49aefbdd017ae996fa0b0194dbb}\index{Compte@{Compte}!ajouterOperation@{ajouterOperation}}
+\index{ajouterOperation@{ajouterOperation}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{ajouterOperation()}{ajouterOperation()}}
+{\footnotesize\ttfamily \label{class_compte_a73f7a49aefbdd017ae996fa0b0194dbb} 
+void Compte\+::ajouter\+Operation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_operation}{Operation}} \texorpdfstring{$\ast$}{*}}]{operation}{}\end{DoxyParamCaption})}
+
+
+
+Ajoute une opération au compte. 
+
+Met automatiquement à jour le solde du compte.
+
+
+\begin{DoxyParams}{Parameters}
+{\em operation} & Pointeur vers l\textquotesingle{}opération à ajouter \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_compte_af85f696079c836d04874310cee15bd40}\index{Compte@{Compte}!ajouterTransfertDestination@{ajouterTransfertDestination}}
+\index{ajouterTransfertDestination@{ajouterTransfertDestination}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{ajouterTransfertDestination()}{ajouterTransfertDestination()}}
+{\footnotesize\ttfamily \label{class_compte_af85f696079c836d04874310cee15bd40} 
+void Compte\+::ajouter\+Transfert\+Destination (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_transfert}{Transfert}} \texorpdfstring{$\ast$}{*}}]{transfert}{}\end{DoxyParamCaption})}
+
+
+
+Ajoute un transfert entrant (destination). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transfert} & Pointeur vers le transfert entrant \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_compte_a7d9685718cb5b02b3713e64a76f2e7f1}\index{Compte@{Compte}!ajouterTransfertSource@{ajouterTransfertSource}}
+\index{ajouterTransfertSource@{ajouterTransfertSource}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{ajouterTransfertSource()}{ajouterTransfertSource()}}
+{\footnotesize\ttfamily \label{class_compte_a7d9685718cb5b02b3713e64a76f2e7f1} 
+void Compte\+::ajouter\+Transfert\+Source (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_transfert}{Transfert}} \texorpdfstring{$\ast$}{*}}]{transfert}{}\end{DoxyParamCaption})}
+
+
+
+Ajoute un transfert sortant (source). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transfert} & Pointeur vers le transfert sortant \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_compte_acd4b4f067675e194b7b1bf26e636288c}\index{Compte@{Compte}!estCourant@{estCourant}}
+\index{estCourant@{estCourant}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{estCourant()}{estCourant()}}
+{\footnotesize\ttfamily \label{class_compte_acd4b4f067675e194b7b1bf26e636288c} 
+virtual bool Compte\+::est\+Courant (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+boolean pour savoir si un copte est courant 
+
+
+
+Implemented in \mbox{\hyperlink{class_compte_courant_a2573e91d173b592c0f101e2d5d54b753}{Compte\+Courant}}, and \mbox{\hyperlink{class_compte_epargne_a44b8994858bbe6c8e3ccbe1112e57e72}{Compte\+Epargne}}.
+
+\Hypertarget{class_compte_aad8080e9b4c5d5511443b43705521858}\index{Compte@{Compte}!getId@{getId}}
+\index{getId@{getId}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily \label{class_compte_aad8080e9b4c5d5511443b43705521858} 
+QString Compte\+::get\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne l\textquotesingle{}identifiant du compte. 
+
+\begin{DoxyReturn}{Returns}
+Identifiant (UUID) 
+\end{DoxyReturn}
+\Hypertarget{class_compte_ad79df79f6669445eab850f6024655e73}\index{Compte@{Compte}!getNom@{getNom}}
+\index{getNom@{getNom}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{getNom()}{getNom()}}
+{\footnotesize\ttfamily \label{class_compte_ad79df79f6669445eab850f6024655e73} 
+QString Compte\+::get\+Nom (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne le nom du compte. 
+
+\begin{DoxyReturn}{Returns}
+Nom du compte 
+\end{DoxyReturn}
+\Hypertarget{class_compte_a543600a0bfd9b2436f1ec1df794623b0}\index{Compte@{Compte}!getSolde@{getSolde}}
+\index{getSolde@{getSolde}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{getSolde()}{getSolde()}}
+{\footnotesize\ttfamily \label{class_compte_a543600a0bfd9b2436f1ec1df794623b0} 
+double Compte\+::get\+Solde (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne le solde actuel du compte. 
+
+\begin{DoxyReturn}{Returns}
+Solde du compte 
+\end{DoxyReturn}
+\Hypertarget{class_compte_a4eddd17bac39fe6a2c4425abe6541dd8}\index{Compte@{Compte}!mettreAJourSolde@{mettreAJourSolde}}
+\index{mettreAJourSolde@{mettreAJourSolde}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{mettreAJourSolde()}{mettreAJourSolde()}}
+{\footnotesize\ttfamily \label{class_compte_a4eddd17bac39fe6a2c4425abe6541dd8} 
+virtual void Compte\+::mettre\+AJour\+Solde (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Recalcule le solde du compte. 
+
+Méthode appelée automatiquement après chaque ajout ou suppression d\textquotesingle{}opération ou transfert. 
+
+Implemented in \mbox{\hyperlink{class_compte_courant_a6e97a06501fbced87c1c59d9ff101a83}{Compte\+Courant}}, and \mbox{\hyperlink{class_compte_epargne_a659eeeccb7ec89a7b470f179544031d7}{Compte\+Epargne}}.
+
+\Hypertarget{class_compte_af37a43320c32cb1ed8446babab9d9956}\index{Compte@{Compte}!supprimerOperation@{supprimerOperation}}
+\index{supprimerOperation@{supprimerOperation}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{supprimerOperation()}{supprimerOperation()}}
+{\footnotesize\ttfamily \label{class_compte_af37a43320c32cb1ed8446babab9d9956} 
+void Compte\+::supprimer\+Operation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_operation}{Operation}} \texorpdfstring{$\ast$}{*}}]{operation}{}\end{DoxyParamCaption})}
+
+
+
+Supprime une opération du compte. 
+
+Met automatiquement à jour le solde du compte.
+
+
+\begin{DoxyParams}{Parameters}
+{\em operation} & Pointeur vers l\textquotesingle{}opération à supprimer \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_compte_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_compte_aafbc61a8e8e47be9a77f6b9fda77b005}\index{Compte@{Compte}!id@{id}}
+\index{id@{id}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily \label{class_compte_aafbc61a8e8e47be9a77f6b9fda77b005} 
+QString Compte\+::id\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Identifiant unique du compte. 
+
+\Hypertarget{class_compte_a5d7c420d4003853d9cf8990d2e113282}\index{Compte@{Compte}!nom@{nom}}
+\index{nom@{nom}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{nom}{nom}}
+{\footnotesize\ttfamily \label{class_compte_a5d7c420d4003853d9cf8990d2e113282} 
+QString Compte\+::nom\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Nom du compte. 
+
+\Hypertarget{class_compte_a55a96821f78af3cef8a57486d1ab1fd4}\index{Compte@{Compte}!operations@{operations}}
+\index{operations@{operations}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{operations}{operations}}
+{\footnotesize\ttfamily \label{class_compte_a55a96821f78af3cef8a57486d1ab1fd4} 
+QList$<$\mbox{\hyperlink{class_operation}{Operation}}\texorpdfstring{$\ast$}{*}$>$ Compte\+::operations\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Liste des opérations liées au compte. 
+
+\Hypertarget{class_compte_a91d76a02b311e171cf117ea39efbf9a1}\index{Compte@{Compte}!solde@{solde}}
+\index{solde@{solde}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{solde}{solde}}
+{\footnotesize\ttfamily \label{class_compte_a91d76a02b311e171cf117ea39efbf9a1} 
+double Compte\+::solde\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Solde actuel du compte. 
+
+\Hypertarget{class_compte_a4218e4e4cc711d5e911d70e3a3804e87}\index{Compte@{Compte}!transfertsDestination@{transfertsDestination}}
+\index{transfertsDestination@{transfertsDestination}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{transfertsDestination}{transfertsDestination}}
+{\footnotesize\ttfamily \label{class_compte_a4218e4e4cc711d5e911d70e3a3804e87} 
+QList$<$\mbox{\hyperlink{class_transfert}{Transfert}}\texorpdfstring{$\ast$}{*}$>$ Compte\+::transferts\+Destination\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Transferts entrants. 
+
+\Hypertarget{class_compte_ae0b8712703f028ac80ec34f52d9b8e28}\index{Compte@{Compte}!transfertsSource@{transfertsSource}}
+\index{transfertsSource@{transfertsSource}!Compte@{Compte}}
+\doxysubsubsection{\texorpdfstring{transfertsSource}{transfertsSource}}
+{\footnotesize\ttfamily \label{class_compte_ae0b8712703f028ac80ec34f52d9b8e28} 
+QList$<$\mbox{\hyperlink{class_transfert}{Transfert}}\texorpdfstring{$\ast$}{*}$>$ Compte\+::transferts\+Source\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Transferts sortants. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+model/\mbox{\hyperlink{compte_8h}{compte.\+h}}\item 
+model/\mbox{\hyperlink{compte_8cpp}{compte.\+cpp}}\end{DoxyCompactItemize}

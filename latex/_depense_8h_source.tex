@@ -1,0 +1,40 @@
+\doxysection{Depense.\+h}
+\hypertarget{_depense_8h_source}{}\label{_depense_8h_source}\index{model/Depense.h@{model/Depense.h}}
+\mbox{\hyperlink{_depense_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DEPENSE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DEPENSE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{operation_8h}{Operation.h}}"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{_depense_8h_a6f0d57668e4a7907763aa89f79726d4e}{Frequence}}\ \{}
+\DoxyCodeLine{00007\ \ \ \ \ \mbox{\hyperlink{_depense_8h_a6f0d57668e4a7907763aa89f79726d4eab80b2c0315c188c2d67127f58e93713d}{Mensuelle}},}
+\DoxyCodeLine{00008\ \ \ \ \ \mbox{\hyperlink{_depense_8h_a6f0d57668e4a7907763aa89f79726d4eaf771e1be6719df2e1dee50cec1c31a67}{Trimestrielle}},}
+\DoxyCodeLine{00009\ \ \ \ \ \mbox{\hyperlink{_depense_8h_a6f0d57668e4a7907763aa89f79726d4eaa6fab3892c3cadc330feaa74c09776b2}{Annuelle}}}
+\DoxyCodeLine{00010\ \};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_depense_aec2a05e85cfdfb495298c92d63e801a9}{Depense}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_operation_a4fd684a7219be65b8aa44650856ca92e}{Operation}}}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_depense_aec2a05e85cfdfb495298c92d63e801a9}{Depense}}(\textcolor{keyword}{const}\ QString\&\ \textcolor{keywordtype}{id},}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ \mbox{\hyperlink{class_operation_a0f52d10d95dacf94f5601bd859a76b21}{nom}},}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QDate\&\ \mbox{\hyperlink{class_operation_a631c768685076ffd775f88e2ec3526a3}{date}},}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_operation_a40cd9f843b80718c6f831f66586367bc}{montant}},}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ \mbox{\hyperlink{class_operation_a424b6b9e65bfe597f06f648a355412dc}{compteId}},}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ \mbox{\hyperlink{class_operation_a1f4b10cdc17c8bed479ca387aefc0e79}{categorieId}},}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ estRecurrente,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_depense_8h_a6f0d57668e4a7907763aa89f79726d4e}{Frequence}}\ frequence);}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_depense_a8afd1df6f6a5c057da9c789f3c2ee826}{estDepense}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_depense_a6605f31818c92ab351e521fb606368a5}{isRecurrente}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{_depense_8h_a6f0d57668e4a7907763aa89f79726d4e}{Frequence}}\ \mbox{\hyperlink{class_depense_ab874eb7abcf7ea2518d272133cc09ba2}{getFrequence}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ recurrente;}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{_depense_8h_a6f0d57668e4a7907763aa89f79726d4e}{Frequence}}\ frequence;}
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

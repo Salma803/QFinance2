@@ -1,0 +1,54 @@
+\doxysection{utilisateur.\+h}
+\hypertarget{utilisateur_8h_source}{}\label{utilisateur_8h_source}\index{model/utilisateur.h@{model/utilisateur.h}}
+\mbox{\hyperlink{utilisateur_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ UTILISATEUR\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ UTILISATEUR\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <QList>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_compte}{Compte}};}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_utilisateur_ae76433a6d353c5f5ad0c6a6af64022ad}{Utilisateur}}}
+\DoxyCodeLine{00021\ \{}
+\DoxyCodeLine{00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{class_utilisateur_ae76433a6d353c5f5ad0c6a6af64022ad}{Utilisateur}}();}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{class_utilisateur_ae76433a6d353c5f5ad0c6a6af64022ad}{Utilisateur}}(\textcolor{keyword}{const}\ QString\&\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ QString\&\ nom);}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ =======================}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ =======================}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00043\ \ \ \ \ QString\ \mbox{\hyperlink{class_utilisateur_af571d400d83a580d853cbf6f82a33516}{getId}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00049\ \ \ \ \ QString\ \mbox{\hyperlink{class_utilisateur_adfffec2519ba338497de55b61e7bc420}{getNom}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00055\ \ \ \ \ QList<Compte*>\ \mbox{\hyperlink{class_utilisateur_a3b8fe35819dd2d741df40314605d6fae}{getComptes}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ =======================}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{comment}{//\ Setters}}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ =======================}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_utilisateur_aa126660702756ed58871d1473f0595e7}{setNom}}(\textcolor{keyword}{const}\ QString\&\ nom);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//\ =======================}}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ Méthodes\ métier}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ =======================}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_utilisateur_a9ef44b3f0403a60ebe903cc2ea92b018}{ajouterCompte}}(\mbox{\hyperlink{class_compte}{Compte}}*\ compte);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_utilisateur_afcaedddca75a8adc343903d5050ed75b}{supprimerCompte}}(\mbox{\hyperlink{class_compte}{Compte}}*\ compte);}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{class_compte}{Compte}}*\ \mbox{\hyperlink{class_utilisateur_a6368b551e61bf68fada3bf5a4ce6a7a3}{getCompteById}}(\textcolor{keyword}{const}\ QString\&\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00091\ \ \ \ \ QString\ id;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ QString\ nom;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ QList<Compte*>\ comptes;\ \ \ \ \ }
+\DoxyCodeLine{00094\ \};}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ UTILISATEUR\_H}}
+
+\end{DoxyCode}

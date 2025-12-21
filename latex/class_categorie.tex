@@ -1,0 +1,183 @@
+\doxysection{Categorie Class Reference}
+\hypertarget{class_categorie}{}\label{class_categorie}\index{Categorie@{Categorie}}
+
+
+Représente une catégorie de dépenses ou de revenus.  
+
+
+
+
+{\ttfamily \#include $<$categorie.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_categorie_af00ac466e6c634203585b6869881afbf}{Categorie}} (const QString \&id, const QString \&nom, \mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructeur de la classe \doxylink{class_categorie}{Categorie}. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_categorie_a72bf93afc50cea1c3dae3afb110fccbf}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}identifiant unique de la catégorie. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_categorie_a91a9f801a755f19e021350eb6e7dad5b}{get\+Nom}} () const
+\begin{DoxyCompactList}\small\item\em Retourne le nom de la catégorie. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_categorie_ab9451cfb6415c6f43a4c116a6a6858de}{get\+Parent}} () const
+\begin{DoxyCompactList}\small\item\em Retourne la catégorie parente. \end{DoxyCompactList}\item 
+QList$<$ \mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_categorie_a11cfd63ab781bee5abb985e45b29abd7}{get\+Enfants}} () const
+\begin{DoxyCompactList}\small\item\em Retourne la liste des sous-\/catégories. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_categorie_a551b7d0c4b6cc2363c4e684bd9b4318e}{ajouter\+Enfant}} (\mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*}enfant)
+\begin{DoxyCompactList}\small\item\em Ajoute une sous-\/catégorie à la catégorie courante. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_categorie_a51b27be16c7aebd8a83ed428345d7479}{get\+Categorie\+Budget\+Source}} () const
+\begin{DoxyCompactList}\small\item\em Détermine la catégorie source du budget. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_categorie_a7508d0911515b65b82c3a42d9a7061fb}{set\+Parent}} (\mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*}p)
+\begin{DoxyCompactList}\small\item\em Modifie la catégorie parente. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Représente une catégorie de dépenses ou de revenus. 
+
+Une catégorie peut être hiérarchique \+:
+\begin{DoxyItemize}
+\item elle peut avoir une catégorie parente
+\item elle peut contenir plusieurs sous-\/catégories
+\end{DoxyItemize}
+
+Les catégories sont utilisées pour \+:
+\begin{DoxyItemize}
+\item classer les opérations financières
+\item définir et hériter des budgets 
+\end{DoxyItemize}
+
+\label{doc-constructors}
+\Hypertarget{class_categorie_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_categorie_af00ac466e6c634203585b6869881afbf}\index{Categorie@{Categorie}!Categorie@{Categorie}}
+\index{Categorie@{Categorie}!Categorie@{Categorie}}
+\doxysubsubsection{\texorpdfstring{Categorie()}{Categorie()}}
+{\footnotesize\ttfamily \label{class_categorie_af00ac466e6c634203585b6869881afbf} 
+Categorie\+::\+Categorie (\begin{DoxyParamCaption}\item[{const QString \&}]{id}{, }\item[{const QString \&}]{nom}{, }\item[{\mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+
+
+Constructeur de la classe \doxylink{class_categorie}{Categorie}. 
+
+Constructeur de \doxylink{class_categorie}{Categorie}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Identifiant unique (UUID) de la catégorie \\
+\hline
+{\em nom} & Nom de la catégorie \\
+\hline
+{\em parent} & Catégorie parente (nullptr si catégorie principale)\\
+\hline
+\end{DoxyParams}
+Si une catégorie parente est fournie, la catégorie est automatiquement ajoutée à la liste des enfants du parent. 
+
+\label{doc-func-members}
+\Hypertarget{class_categorie_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_categorie_a551b7d0c4b6cc2363c4e684bd9b4318e}\index{Categorie@{Categorie}!ajouterEnfant@{ajouterEnfant}}
+\index{ajouterEnfant@{ajouterEnfant}!Categorie@{Categorie}}
+\doxysubsubsection{\texorpdfstring{ajouterEnfant()}{ajouterEnfant()}}
+{\footnotesize\ttfamily \label{class_categorie_a551b7d0c4b6cc2363c4e684bd9b4318e} 
+void Categorie\+::ajouter\+Enfant (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*}}]{enfant}{}\end{DoxyParamCaption})}
+
+
+
+Ajoute une sous-\/catégorie à la catégorie courante. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em enfant} & Pointeur vers la catégorie enfant à ajouter \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_categorie_a51b27be16c7aebd8a83ed428345d7479}\index{Categorie@{Categorie}!getCategorieBudgetSource@{getCategorieBudgetSource}}
+\index{getCategorieBudgetSource@{getCategorieBudgetSource}!Categorie@{Categorie}}
+\doxysubsubsection{\texorpdfstring{getCategorieBudgetSource()}{getCategorieBudgetSource()}}
+{\footnotesize\ttfamily \label{class_categorie_a51b27be16c7aebd8a83ed428345d7479} 
+QString Categorie\+::get\+Categorie\+Budget\+Source (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Détermine la catégorie source du budget. 
+
+Si la catégorie n\textquotesingle{}a pas de budget défini, la recherche remonte récursivement vers la catégorie parente.
+
+\begin{DoxyReturn}{Returns}
+Identifiant de la catégorie source du budget
+\end{DoxyReturn}
+Héritage de budget \+:
+\begin{DoxyItemize}
+\item Si la catégorie a un budget défini → elle-\/même
+\item Sinon → recherche récursive dans la hiérarchie parente 
+\end{DoxyItemize}\Hypertarget{class_categorie_a11cfd63ab781bee5abb985e45b29abd7}\index{Categorie@{Categorie}!getEnfants@{getEnfants}}
+\index{getEnfants@{getEnfants}!Categorie@{Categorie}}
+\doxysubsubsection{\texorpdfstring{getEnfants()}{getEnfants()}}
+{\footnotesize\ttfamily \label{class_categorie_a11cfd63ab781bee5abb985e45b29abd7} 
+QList$<$ \mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*} $>$ Categorie\+::get\+Enfants (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne la liste des sous-\/catégories. 
+
+\begin{DoxyReturn}{Returns}
+Liste de pointeurs vers les catégories enfants 
+\end{DoxyReturn}
+\Hypertarget{class_categorie_a72bf93afc50cea1c3dae3afb110fccbf}\index{Categorie@{Categorie}!getId@{getId}}
+\index{getId@{getId}!Categorie@{Categorie}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily \label{class_categorie_a72bf93afc50cea1c3dae3afb110fccbf} 
+QString Categorie\+::get\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne l\textquotesingle{}identifiant unique de la catégorie. 
+
+\begin{DoxyReturn}{Returns}
+Identifiant (UUID) 
+\end{DoxyReturn}
+\Hypertarget{class_categorie_a91a9f801a755f19e021350eb6e7dad5b}\index{Categorie@{Categorie}!getNom@{getNom}}
+\index{getNom@{getNom}!Categorie@{Categorie}}
+\doxysubsubsection{\texorpdfstring{getNom()}{getNom()}}
+{\footnotesize\ttfamily \label{class_categorie_a91a9f801a755f19e021350eb6e7dad5b} 
+QString Categorie\+::get\+Nom (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne le nom de la catégorie. 
+
+\begin{DoxyReturn}{Returns}
+Nom de la catégorie 
+\end{DoxyReturn}
+\Hypertarget{class_categorie_ab9451cfb6415c6f43a4c116a6a6858de}\index{Categorie@{Categorie}!getParent@{getParent}}
+\index{getParent@{getParent}!Categorie@{Categorie}}
+\doxysubsubsection{\texorpdfstring{getParent()}{getParent()}}
+{\footnotesize\ttfamily \label{class_categorie_ab9451cfb6415c6f43a4c116a6a6858de} 
+\mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*} Categorie\+::get\+Parent (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne la catégorie parente. 
+
+\begin{DoxyReturn}{Returns}
+Pointeur vers la catégorie parente ou nullptr 
+\end{DoxyReturn}
+\Hypertarget{class_categorie_a7508d0911515b65b82c3a42d9a7061fb}\index{Categorie@{Categorie}!setParent@{setParent}}
+\index{setParent@{setParent}!Categorie@{Categorie}}
+\doxysubsubsection{\texorpdfstring{setParent()}{setParent()}}
+{\footnotesize\ttfamily \label{class_categorie_a7508d0911515b65b82c3a42d9a7061fb} 
+void Categorie\+::set\+Parent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_categorie}{Categorie}} \texorpdfstring{$\ast$}{*}}]{p}{}\end{DoxyParamCaption})}
+
+
+
+Modifie la catégorie parente. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & Nouvelle catégorie parente \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+model/\mbox{\hyperlink{categorie_8h}{categorie.\+h}}\item 
+model/\mbox{\hyperlink{categorie_8cpp}{categorie.\+cpp}}\end{DoxyCompactItemize}

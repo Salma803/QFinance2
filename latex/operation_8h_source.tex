@@ -1,0 +1,44 @@
+\doxysection{operation.\+h}
+\hypertarget{operation_8h_source}{}\label{operation_8h_source}\index{model/operation.h@{model/operation.h}}
+\mbox{\hyperlink{operation_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ OPERATION\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ OPERATION\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <QDate>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_operation_a4fd684a7219be65b8aa44650856ca92e}{Operation}}}
+\DoxyCodeLine{00022\ \{}
+\DoxyCodeLine{00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{class_operation_a4fd684a7219be65b8aa44650856ca92e}{Operation}}(\textcolor{keyword}{const}\ QString\&\ \textcolor{keywordtype}{id},}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ \mbox{\hyperlink{class_operation_a0f52d10d95dacf94f5601bd859a76b21}{nom}},}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QDate\&\ \mbox{\hyperlink{class_operation_a631c768685076ffd775f88e2ec3526a3}{date}},}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_operation_a40cd9f843b80718c6f831f66586367bc}{montant}},}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ \mbox{\hyperlink{class_operation_a424b6b9e65bfe597f06f648a355412dc}{compteId}},}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QString\&\ \mbox{\hyperlink{class_operation_a1f4b10cdc17c8bed479ca387aefc0e79}{categorieId}});}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00045\ \ \ \ \ QString\ \mbox{\hyperlink{class_operation_ae46f6d722c2b28cc194dd09b9ea4e92b}{getId}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00051\ \ \ \ \ QString\ \mbox{\hyperlink{class_operation_af12ef4a8ab72213309c97ee8852dd785}{getNom}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00057\ \ \ \ \ QDate\ \mbox{\hyperlink{class_operation_addc0b20989012d4386b57b10be2692b5}{getDate}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_operation_a04f69726060503033db4b07dbbc28323}{getMontant}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00069\ \ \ \ \ QString\ \mbox{\hyperlink{class_operation_a49388c8108a51dd2a995fe00bf977aff}{getCompteId}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00075\ \ \ \ \ QString\ \mbox{\hyperlink{class_operation_a344268291b2c6dd2bfdd57e59a1d22bb}{getCategorieId}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00078\ \ \ \ \ QString\ \mbox{\hyperlink{class_operation_aefe88f255c6216aa2129a199ade22a6d}{id}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ QString\ \mbox{\hyperlink{class_operation_a0f52d10d95dacf94f5601bd859a76b21}{nom}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ QDate\ \mbox{\hyperlink{class_operation_a631c768685076ffd775f88e2ec3526a3}{date}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_operation_a40cd9f843b80718c6f831f66586367bc}{montant}};\ \ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ QString\ \mbox{\hyperlink{class_operation_a424b6b9e65bfe597f06f648a355412dc}{compteId}};\ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ QString\ \mbox{\hyperlink{class_operation_a1f4b10cdc17c8bed479ca387aefc0e79}{categorieId}};\ }
+\DoxyCodeLine{00084\ \};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ OPERATION\_H}}
+
+\end{DoxyCode}

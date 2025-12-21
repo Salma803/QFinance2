@@ -1,0 +1,96 @@
+\doxysection{mainwindow.\+h}
+\hypertarget{mainwindow_8h_source}{}\label{mainwindow_8h_source}\mbox{\hyperlink{mainwindow_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ MAINWINDOW\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ MAINWINDOW\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QMainWindow>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <QList>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_ui}{Ui}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_ui_1_1_main_window}{MainWindow}};}
+\DoxyCodeLine{00011\ \}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ Model\ includes}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{utilisateur_8h}{model/Utilisateur.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{categorie_8h}{model/Categorie.h}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{dashboardmanager_8h}{DashboardManager.h}}"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ QT\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }QTreeWidgetItem;}
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }QTableWidgetItem;}
+\DoxyCodeLine{00021\ QT\_END\_NAMESPACE}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_main_window_a996c5a2b6f77944776856f08ec30858d}{MainWindow}}\ :\ \textcolor{keyword}{public}\ QMainWindow}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Constructeur/Destructeur}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_main_window_a996c5a2b6f77944776856f08ec30858d}{MainWindow}}(QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{class_main_window_ae98d00a93bc118200eeef9f9bba1dba7}{\string~MainWindow}}();}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ ===\ SLOTS\ POUR\ LA\ GESTION\ DES\ COMPTES\ ===}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ ajouterCompte();}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ effectuerTransfert();}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ ===\ SLOTS\ POUR\ LA\ GESTION\ DES\ CATÉGORIES\ ===}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ ajouterCategorie();}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ onCategorieItemChanged(QTreeWidgetItem*\ item,\ \textcolor{keywordtype}{int}\ column);}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ supprimerCategorie();}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ chargerCategoriesUI();}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ ===\ SLOTS\ POUR\ LA\ GESTION\ DES\ OPÉRATIONS\ ===}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ ajouterOperation();}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ remplirCombosOperation();}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ remplirHistoriqueComptes();}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ chargerHistoriqueCompte();}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ chargerSousCategories();}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ onOperationSelectionChanged();}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ supprimerOperation();}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ onTableOperationsCellChanged(\textcolor{keywordtype}{int}\ row,\ \textcolor{keywordtype}{int}\ column);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ ===\ SLOTS\ POUR\ LE\ DASHBOARD\ ===}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ initialiserDashboard();}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ actualiserDashboard();}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ onFiltreCompteChanged(\textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ onFiltreCategorieChanged(\textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ mettreAJourRecommandations();}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ exporterPDFStatistiques();\ \ \ \ \ \ \textcolor{comment}{//\ Export\ avec\ filtres\ actuels}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ exporterPDFTousComptes();}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{comment}{//\ ===\ MÉTHODES\ PRIVÉES\ D'INITIALISATION\ ===}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ rafraichirUI();}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ initialiserComboMois();}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ initialiserFiltresDashboard();}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ ===\ MÉTHODES\ PRIVÉES\ UTILITAIRES\ ===}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ restoreOriginalValue(\textcolor{keywordtype}{int}\ row,\ \textcolor{keywordtype}{int}\ column,\ \textcolor{keyword}{const}\ QVariantMap\ \&originalData);}
+\DoxyCodeLine{00071\ \ \ \ \ QString\ findCategorieIdByName(\textcolor{keyword}{const}\ QString\ \&categorieName);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ ===\ VARIABLES\ MEMBRES\ ===}}
+\DoxyCodeLine{00074\ \ \ \ \ \mbox{\hyperlink{class_ui_1_1_main_window}{Ui::MainWindow}}\ *ui;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Interface\ utilisateur}}
+\DoxyCodeLine{00075\ \ \ \ \ \mbox{\hyperlink{class_utilisateur}{Utilisateur}}\ utilisateur;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Utilisateur\ courant}}
+\DoxyCodeLine{00076\ \ \ \ \ QList<Categorie*>\ categories;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Liste\ des\ catégories}}
+\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{class_dashboard_manager}{DashboardManager}}\ *dashboardManager;\ \ \ \textcolor{comment}{//\ Gestionnaire\ du\ dashboard}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ Variables\ pour\ la\ gestion\ des\ opérations}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ isModifyingTable;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Flag\ pour\ éviter\ les\ boucles\ infinies}}
+\DoxyCodeLine{00081\ \ \ \ \ QString\ currentOperationId;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ID\ de\ l'opération\ sélectionnée}}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{void}\ exporterPDF(\textcolor{keywordtype}{bool}\ tousLesComptes);}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{bool}\ isModifyingCategorie\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00084\ \ \ \ \ QList<QVariantMap>\ allOperations;\ \ \ \textcolor{comment}{//\ toutes\ les\ opérations\ chargées}}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ appliquerFiltreOperations();}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ afficherOperations(\textcolor{keyword}{const}\ QList<QVariantMap>\&\ operations);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \};}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MAINWINDOW\_H}}
+
+\end{DoxyCode}

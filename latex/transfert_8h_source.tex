@@ -1,0 +1,37 @@
+\doxysection{transfert.\+h}
+\hypertarget{transfert_8h_source}{}\label{transfert_8h_source}\index{model/transfert.h@{model/transfert.h}}
+\mbox{\hyperlink{transfert_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ TRANSFERT\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ TRANSFERT\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QDate>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_compte}{Compte}};}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_transfert_adda843104ce427b327da07ec8fc9edd5}{Transfert}}}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{class_transfert_adda843104ce427b327da07ec8fc9edd5}{Transfert}}(\textcolor{keywordtype}{double}\ montant,}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QDate\&\ date,}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_compte}{Compte}}*\ source,}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_compte}{Compte}}*\ destination);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_transfert_a5eb0ad40d5de17522773ce48c5430495}{getMontant}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ QDate\ \mbox{\hyperlink{class_transfert_ac510a9900b2b4c5a69535dc95657d733}{getDate}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{class_compte}{Compte}}*\ \mbox{\hyperlink{class_transfert_ad706c77945ae557f6ee98e2e784b4223}{getSource}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{class_compte}{Compte}}*\ \mbox{\hyperlink{class_transfert_a1f7761a8644f22e1bc7d0c78fc3e129b}{getDestination}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{double}\ montant;}
+\DoxyCodeLine{00051\ \ \ \ \ QDate\ date;}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{class_compte}{Compte}}*\ source;}
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{class_compte}{Compte}}*\ destination;}
+\DoxyCodeLine{00055\ \};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TRANSFERT\_H}}
+
+\end{DoxyCode}

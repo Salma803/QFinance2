@@ -65,3 +65,30 @@ QList<QVariantMap> TransfertRepository::chargerTransfertsParCompte(
 
     return transferts;
 }
+bool TransfertRepository::ajouterTransfertAuto(
+    const QString& sourceId,
+    const QString& destinationId,
+    double montant,
+    const QDate& date
+    ) {
+    QSqlQuery query;
+    query.prepare(
+        "INSERT INTO Transfert (source_id, destination_id, montant, date, type) "
+        "VALUES (:src, :dst, :montant, :date, 'AUTO')"
+        );
+
+    query.bindValue(":src", sourceId);
+    query.bindValue(":dst", destinationId);
+    query.bindValue(":montant", montant);
+    query.bindValue(":date", date.toString(Qt::ISODate));
+
+    if (!query.exec()) {
+        qDebug() << "❌ ajouterTransfertAuto FAILED:" << query.lastError().text();
+        return false;
+    }
+
+    qDebug() << "✅ Transfert AUTO OK:" << sourceId << "->" << destinationId << montant;
+    return true;
+}
+
+

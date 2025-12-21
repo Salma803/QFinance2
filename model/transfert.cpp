@@ -1,6 +1,13 @@
 #include "Transfert.h"
 #include "Compte.h"
 
+/**
+ * @brief Constructeur de la classe Transfert.
+ *
+ * Ajoute automatiquement le transfert :
+ * - comme transfert sortant au compte source
+ * - comme transfert entrant au compte destination
+ */
 Transfert::Transfert(double montant,
                      const QDate& date,
                      Compte* source,

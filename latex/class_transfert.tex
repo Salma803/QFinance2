@@ -1,0 +1,112 @@
+\doxysection{Transfert Class Reference}
+\hypertarget{class_transfert}{}\label{class_transfert}\index{Transfert@{Transfert}}
+
+
+Représente un transfert d\textquotesingle{}argent entre deux comptes.  
+
+
+
+
+{\ttfamily \#include $<$transfert.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_transfert_adda843104ce427b327da07ec8fc9edd5}{Transfert}} (double montant, const QDate \&date, \mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*}source, \mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*}destination)
+\begin{DoxyCompactList}\small\item\em Constructeur de la classe \doxylink{class_transfert}{Transfert}. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_transfert_a5eb0ad40d5de17522773ce48c5430495}{get\+Montant}} () const
+\item 
+QDate \mbox{\hyperlink{class_transfert_ac510a9900b2b4c5a69535dc95657d733}{get\+Date}} () const
+\item 
+\mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_transfert_ad706c77945ae557f6ee98e2e784b4223}{get\+Source}} () const
+\item 
+\mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_transfert_a1f7761a8644f22e1bc7d0c78fc3e129b}{get\+Destination}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Représente un transfert d\textquotesingle{}argent entre deux comptes. 
+
+Un transfert correspond à un mouvement financier entre \+:
+\begin{DoxyItemize}
+\item un compte source
+\item un compte destination
+\end{DoxyItemize}
+
+Les transferts sont utilisés pour \+:
+\begin{DoxyItemize}
+\item les virements manuels
+\item les transferts automatiques en cas de solde négatif
+\end{DoxyItemize}
+
+Ils impactent directement le solde des comptes concernés. 
+
+\label{doc-constructors}
+\Hypertarget{class_transfert_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_transfert_adda843104ce427b327da07ec8fc9edd5}\index{Transfert@{Transfert}!Transfert@{Transfert}}
+\index{Transfert@{Transfert}!Transfert@{Transfert}}
+\doxysubsubsection{\texorpdfstring{Transfert()}{Transfert()}}
+{\footnotesize\ttfamily \label{class_transfert_adda843104ce427b327da07ec8fc9edd5} 
+Transfert\+::\+Transfert (\begin{DoxyParamCaption}\item[{double}]{montant}{, }\item[{const QDate \&}]{date}{, }\item[{\mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*}}]{source}{, }\item[{\mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*}}]{destination}{}\end{DoxyParamCaption})}
+
+
+
+Constructeur de la classe \doxylink{class_transfert}{Transfert}. 
+
+Lors de la création du transfert \+:
+\begin{DoxyItemize}
+\item le transfert est ajouté à la liste des transferts sortants du compte source
+\item le transfert est ajouté à la liste des transferts entrants du compte destination
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em montant} & Montant du transfert \\
+\hline
+{\em date} & Date du transfert \\
+\hline
+{\em source} & \doxylink{class_compte}{Compte} source (peut être nullptr) \\
+\hline
+{\em destination} & \doxylink{class_compte}{Compte} destination (peut être nullptr)\\
+\hline
+\end{DoxyParams}
+Ajoute automatiquement le transfert \+:
+\begin{DoxyItemize}
+\item comme transfert sortant au compte source
+\item comme transfert entrant au compte destination 
+\end{DoxyItemize}
+
+\label{doc-func-members}
+\Hypertarget{class_transfert_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_transfert_ac510a9900b2b4c5a69535dc95657d733}\index{Transfert@{Transfert}!getDate@{getDate}}
+\index{getDate@{getDate}!Transfert@{Transfert}}
+\doxysubsubsection{\texorpdfstring{getDate()}{getDate()}}
+{\footnotesize\ttfamily \label{class_transfert_ac510a9900b2b4c5a69535dc95657d733} 
+QDate Transfert\+::get\+Date (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_transfert_a1f7761a8644f22e1bc7d0c78fc3e129b}\index{Transfert@{Transfert}!getDestination@{getDestination}}
+\index{getDestination@{getDestination}!Transfert@{Transfert}}
+\doxysubsubsection{\texorpdfstring{getDestination()}{getDestination()}}
+{\footnotesize\ttfamily \label{class_transfert_a1f7761a8644f22e1bc7d0c78fc3e129b} 
+\mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} Transfert\+::get\+Destination (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_transfert_a5eb0ad40d5de17522773ce48c5430495}\index{Transfert@{Transfert}!getMontant@{getMontant}}
+\index{getMontant@{getMontant}!Transfert@{Transfert}}
+\doxysubsubsection{\texorpdfstring{getMontant()}{getMontant()}}
+{\footnotesize\ttfamily \label{class_transfert_a5eb0ad40d5de17522773ce48c5430495} 
+double Transfert\+::get\+Montant (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_transfert_ad706c77945ae557f6ee98e2e784b4223}\index{Transfert@{Transfert}!getSource@{getSource}}
+\index{getSource@{getSource}!Transfert@{Transfert}}
+\doxysubsubsection{\texorpdfstring{getSource()}{getSource()}}
+{\footnotesize\ttfamily \label{class_transfert_ad706c77945ae557f6ee98e2e784b4223} 
+\mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} Transfert\+::get\+Source (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+model/\mbox{\hyperlink{transfert_8h}{transfert.\+h}}\item 
+model/\mbox{\hyperlink{transfert_8cpp}{transfert.\+cpp}}\end{DoxyCompactItemize}

@@ -1,5 +1,12 @@
 #include "Categorie.h"
 
+/**
+ * @brief Constructeur de Categorie.
+ *
+ * Si une catégorie parente est fournie,
+ * la catégorie est automatiquement ajoutée
+ * à la liste des enfants du parent.
+ */
 Categorie::Categorie(const QString& id,
                      const QString& nom,
                      Categorie* parent)
@@ -38,9 +45,11 @@ void Categorie::ajouterEnfant(Categorie* enfant)
 }
 
 /**
+ * @brief Détermine la catégorie source du budget.
+ *
  * Héritage de budget :
- * - si la catégorie a un budget → elle-même
- * - sinon → remonte jusqu’au parent
+ * - Si la catégorie a un budget défini → elle-même
+ * - Sinon → recherche récursive dans la hiérarchie parente
  */
 QString Categorie::getCategorieBudgetSource() const
 {
@@ -50,5 +59,7 @@ QString Categorie::getCategorieBudgetSource() const
     return parent->getCategorieBudgetSource();
 }
 
-void Categorie::setParent(Categorie* p) { parent = p; }
-
+void Categorie::setParent(Categorie* p)
+{
+    parent = p;
+}

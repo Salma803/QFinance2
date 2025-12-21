@@ -130,4 +130,31 @@ void CompteRepository::mettreAJourSolde(const QString& compteId)
     query.bindValue(":id", compteId);
     query.exec();
 }
+QString CompteRepository::trouverCompteCourantAvecSoldeSuffisant(
+    const QString& utilisateurId,
+    const QString& compteExcluId,
+    double montantMin
+    ) {
+    QSqlQuery query;
+    query.prepare(R"(
+        SELECT id
+        FROM Compte
+        WHERE utilisateur_id = :user
+          AND id != :exclude
+          AND type = 'COURANT'
+          AND solde >= :montant
+        ORDER BY solde DESC
+        LIMIT 1
+    )");
+
+    query.bindValue(":user", utilisateurId);
+    query.bindValue(":exclude", compteExcluId);
+    query.bindValue(":montant", montantMin);
+
+    if (query.exec() && query.next()) {
+        return query.value(0).toString();
+    }
+
+    return "";
+}
 

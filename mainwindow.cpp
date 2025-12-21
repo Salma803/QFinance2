@@ -40,6 +40,10 @@ MainWindow::MainWindow(QWidget *parent)
     dashboardManager(new DashboardManager(this))
 {
     ui->setupUi(this);
+    ui->comboTypeOperation->clear();
+    ui->comboTypeOperation->addItem("Revenu", "REVENU");
+    ui->comboTypeOperation->addItem("Dépense", "DEPENSE");
+
 
     // Connexions
     connect(ui->btnAjouterCompte, &QPushButton::clicked,
@@ -385,54 +389,62 @@ void MainWindow::supprimerCategorie()
         }
     }
 }
-
 void MainWindow::ajouterOperation()
 {
-    int typeIndex = ui->comboTypeOperation->currentIndex();
-    QString nom = ui->editNomOperation->text();
+    qDebug() << "=== ajouterOperation() APPELEE ===";
+
+    QString type = ui->comboTypeOperation->currentData().toString();
+    qDebug() << "Type DATA =" << type;
+
+    QString nom = ui->editNomOperation->text().trimmed();
     double montant = ui->spinMontantOperation->value();
     QDate date = ui->dateOperation->date();
 
     QString compteId = ui->comboCompteOperation->currentData().toString();
     QString categorieId = ui->comboSousCategorie->currentData().toString();
-
-    if (categorieId.isEmpty()) {
+    if (categorieId.isEmpty())
         categorieId = ui->comboCategoriePrincipale->currentData().toString();
+
+    if (nom.isEmpty() || montant <= 0 || compteId.isEmpty() || categorieId.isEmpty()) {
+        qDebug() << "STOP: champs invalides";
+        return;
     }
 
-    if (nom.isEmpty() || montant <= 0 || compteId.isEmpty() || categorieId.isEmpty())
-        return;
+    bool ok = false;
 
-    if (typeIndex == 0) { // Revenu
-        OperationRepository::ajouterRevenu(
+    if (type == "REVENU") {
+        qDebug() << "=> ajouterRevenu()";
+        ok = OperationRepository::ajouterRevenu(
             nom, date, montant,
             compteId, categorieId,
             "Non spécifiée"
             );
-    } else { // Dépense
-        bool recurrente = ui->checkRecurrente->isChecked();
-        QString frequence = ui->comboFrequence->currentText();
-
-        OperationRepository::ajouterDepense(
+    }
+    else if (type == "DEPENSE") {
+        qDebug() << "=> ajouterDepense()";
+        ok = OperationRepository::ajouterDepense(
             nom, date, montant,
             compteId, categorieId,
-            recurrente, frequence
+            ui->checkRecurrente->isChecked(),
+            ui->comboFrequence->currentText()
             );
     }
-
-    // Mise à jour solde
-    Compte* compte = utilisateur.getCompteById(compteId);
-    if (compte) {
-        CompteRepository::mettreAJourSolde(compteId);
-
-        // ✅ Rafraîchissements
-        rafraichirUI();
-        chargerHistoriqueCompte();
-        chargerCategoriesUI();
-        actualiserDashboard();
+    else {
+        qDebug() << "ERREUR: type inconnu";
+        return;
     }
-}
 
+    qDebug() << "Repository retour =" << ok;
+
+    if (!ok) return;
+
+    rafraichirUI();
+    chargerHistoriqueCompte();
+    chargerCategoriesUI();
+    actualiserDashboard();
+
+    qDebug() << "=== ajouterOperation() FIN ===";
+}
 void MainWindow::remplirCombosOperation()
 {
     // Comptes

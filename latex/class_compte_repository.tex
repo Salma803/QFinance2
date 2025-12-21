@@ -1,0 +1,60 @@
+\doxysection{Compte\+Repository Class Reference}
+\hypertarget{class_compte_repository}{}\label{class_compte_repository}\index{CompteRepository@{CompteRepository}}
+
+
+{\ttfamily \#include $<$compterepository.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{class_compte_repository_a31fc44dd0c8079940f3920df5f740db7}{ajouter\+Compte}} (const \mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*}compte, const QString \&utilisateur\+Id)
+\item 
+static QList$<$ \mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_compte_repository_a7f3c133030e50461c8fc8ec3f453a401}{charger\+Comptes}} (const QString \&utilisateur\+Id)
+\item 
+static void \mbox{\hyperlink{class_compte_repository_a8e3d7c4561bc7b03760109c7d6d555ed}{mettre\+AJour\+Solde}} (const QString \&compte\+Id)
+\item 
+static double \mbox{\hyperlink{class_compte_repository_abfe684f74ca74c23abf9a9db9a4052c9}{calculer\+Solde}} (const QString \&compte\+Id)
+\item 
+static QString \mbox{\hyperlink{class_compte_repository_aed7a84fb6e210fe9b85716d11fe58465}{trouver\+Compte\+Courant\+Avec\+Solde\+Suffisant}} (const QString \&utilisateur\+Id, const QString \&compte\+Exclu\+Id, double montant\+Min)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_compte_repository_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_compte_repository_a31fc44dd0c8079940f3920df5f740db7}\index{CompteRepository@{CompteRepository}!ajouterCompte@{ajouterCompte}}
+\index{ajouterCompte@{ajouterCompte}!CompteRepository@{CompteRepository}}
+\doxysubsubsection{\texorpdfstring{ajouterCompte()}{ajouterCompte()}}
+{\footnotesize\ttfamily \label{class_compte_repository_a31fc44dd0c8079940f3920df5f740db7} 
+bool Compte\+Repository\+::ajouter\+Compte (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*}}]{compte}{, }\item[{const QString \&}]{utilisateur\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_compte_repository_abfe684f74ca74c23abf9a9db9a4052c9}\index{CompteRepository@{CompteRepository}!calculerSolde@{calculerSolde}}
+\index{calculerSolde@{calculerSolde}!CompteRepository@{CompteRepository}}
+\doxysubsubsection{\texorpdfstring{calculerSolde()}{calculerSolde()}}
+{\footnotesize\ttfamily \label{class_compte_repository_abfe684f74ca74c23abf9a9db9a4052c9} 
+double Compte\+Repository\+::calculer\+Solde (\begin{DoxyParamCaption}\item[{const QString \&}]{compte\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_compte_repository_a7f3c133030e50461c8fc8ec3f453a401}\index{CompteRepository@{CompteRepository}!chargerComptes@{chargerComptes}}
+\index{chargerComptes@{chargerComptes}!CompteRepository@{CompteRepository}}
+\doxysubsubsection{\texorpdfstring{chargerComptes()}{chargerComptes()}}
+{\footnotesize\ttfamily \label{class_compte_repository_a7f3c133030e50461c8fc8ec3f453a401} 
+QList$<$ \mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} $>$ Compte\+Repository\+::charger\+Comptes (\begin{DoxyParamCaption}\item[{const QString \&}]{utilisateur\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_compte_repository_a8e3d7c4561bc7b03760109c7d6d555ed}\index{CompteRepository@{CompteRepository}!mettreAJourSolde@{mettreAJourSolde}}
+\index{mettreAJourSolde@{mettreAJourSolde}!CompteRepository@{CompteRepository}}
+\doxysubsubsection{\texorpdfstring{mettreAJourSolde()}{mettreAJourSolde()}}
+{\footnotesize\ttfamily \label{class_compte_repository_a8e3d7c4561bc7b03760109c7d6d555ed} 
+void Compte\+Repository\+::mettre\+AJour\+Solde (\begin{DoxyParamCaption}\item[{const QString \&}]{compte\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_compte_repository_aed7a84fb6e210fe9b85716d11fe58465}\index{CompteRepository@{CompteRepository}!trouverCompteCourantAvecSoldeSuffisant@{trouverCompteCourantAvecSoldeSuffisant}}
+\index{trouverCompteCourantAvecSoldeSuffisant@{trouverCompteCourantAvecSoldeSuffisant}!CompteRepository@{CompteRepository}}
+\doxysubsubsection{\texorpdfstring{trouverCompteCourantAvecSoldeSuffisant()}{trouverCompteCourantAvecSoldeSuffisant()}}
+{\footnotesize\ttfamily \label{class_compte_repository_aed7a84fb6e210fe9b85716d11fe58465} 
+QString Compte\+Repository\+::trouver\+Compte\+Courant\+Avec\+Solde\+Suffisant (\begin{DoxyParamCaption}\item[{const QString \&}]{utilisateur\+Id}{, }\item[{const QString \&}]{compte\+Exclu\+Id}{, }\item[{double}]{montant\+Min}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+repository/\mbox{\hyperlink{compterepository_8h}{compterepository.\+h}}\item 
+repository/\mbox{\hyperlink{compterepository_8cpp}{compterepository.\+cpp}}\end{DoxyCompactItemize}

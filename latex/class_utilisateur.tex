@@ -1,0 +1,189 @@
+\doxysection{Utilisateur Class Reference}
+\hypertarget{class_utilisateur}{}\label{class_utilisateur}\index{Utilisateur@{Utilisateur}}
+
+
+Représente un utilisateur de l\textquotesingle{}application.  
+
+
+
+
+{\ttfamily \#include $<$utilisateur.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_utilisateur_ae76433a6d353c5f5ad0c6a6af64022ad}{Utilisateur}} ()
+\begin{DoxyCompactList}\small\item\em Constructeur par défaut. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_utilisateur_a9b7f27ebb459a00ad7dae5e018c7bcd0}{Utilisateur}} (const QString \&id, const QString \&nom)
+\begin{DoxyCompactList}\small\item\em Constructeur avec identifiant et nom. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_utilisateur_af571d400d83a580d853cbf6f82a33516}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}identifiant de l\textquotesingle{}utilisateur. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_utilisateur_adfffec2519ba338497de55b61e7bc420}{get\+Nom}} () const
+\begin{DoxyCompactList}\small\item\em Retourne le nom de l\textquotesingle{}utilisateur. \end{DoxyCompactList}\item 
+QList$<$ \mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_utilisateur_a3b8fe35819dd2d741df40314605d6fae}{get\+Comptes}} () const
+\begin{DoxyCompactList}\small\item\em Retourne la liste des comptes de l\textquotesingle{}utilisateur. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_utilisateur_aa126660702756ed58871d1473f0595e7}{set\+Nom}} (const QString \&nom)
+\begin{DoxyCompactList}\small\item\em Modifie le nom de l\textquotesingle{}utilisateur. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_utilisateur_a9ef44b3f0403a60ebe903cc2ea92b018}{ajouter\+Compte}} (\mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*}compte)
+\begin{DoxyCompactList}\small\item\em Ajoute un compte à l\textquotesingle{}utilisateur. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_utilisateur_afcaedddca75a8adc343903d5050ed75b}{supprimer\+Compte}} (\mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*}compte)
+\begin{DoxyCompactList}\small\item\em Supprime un compte de l\textquotesingle{}utilisateur. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_utilisateur_a6368b551e61bf68fada3bf5a4ce6a7a3}{get\+Compte\+By\+Id}} (const QString \&id) const
+\begin{DoxyCompactList}\small\item\em Recherche un compte par son identifiant. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Représente un utilisateur de l\textquotesingle{}application. 
+
+Un utilisateur possède \+:
+\begin{DoxyItemize}
+\item un identifiant unique
+\item un nom
+\item une liste de comptes bancaires
+\end{DoxyItemize}
+
+Cette classe correspond au modèle "{}\+Utilisateur"{} dans l\textquotesingle{}architecture MVC. 
+
+\label{doc-constructors}
+\Hypertarget{class_utilisateur_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_utilisateur_ae76433a6d353c5f5ad0c6a6af64022ad}\index{Utilisateur@{Utilisateur}!Utilisateur@{Utilisateur}}
+\index{Utilisateur@{Utilisateur}!Utilisateur@{Utilisateur}}
+\doxysubsubsection{\texorpdfstring{Utilisateur()}{Utilisateur()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_utilisateur_ae76433a6d353c5f5ad0c6a6af64022ad} 
+Utilisateur\+::\+Utilisateur (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructeur par défaut. 
+
+\Hypertarget{class_utilisateur_a9b7f27ebb459a00ad7dae5e018c7bcd0}\index{Utilisateur@{Utilisateur}!Utilisateur@{Utilisateur}}
+\index{Utilisateur@{Utilisateur}!Utilisateur@{Utilisateur}}
+\doxysubsubsection{\texorpdfstring{Utilisateur()}{Utilisateur()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_utilisateur_a9b7f27ebb459a00ad7dae5e018c7bcd0} 
+Utilisateur\+::\+Utilisateur (\begin{DoxyParamCaption}\item[{const QString \&}]{id}{, }\item[{const QString \&}]{nom}{}\end{DoxyParamCaption})}
+
+
+
+Constructeur avec identifiant et nom. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Identifiant unique de l\textquotesingle{}utilisateur \\
+\hline
+{\em nom} & Nom de l\textquotesingle{}utilisateur \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{class_utilisateur_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_utilisateur_a9ef44b3f0403a60ebe903cc2ea92b018}\index{Utilisateur@{Utilisateur}!ajouterCompte@{ajouterCompte}}
+\index{ajouterCompte@{ajouterCompte}!Utilisateur@{Utilisateur}}
+\doxysubsubsection{\texorpdfstring{ajouterCompte()}{ajouterCompte()}}
+{\footnotesize\ttfamily \label{class_utilisateur_a9ef44b3f0403a60ebe903cc2ea92b018} 
+void Utilisateur\+::ajouter\+Compte (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*}}]{compte}{}\end{DoxyParamCaption})}
+
+
+
+Ajoute un compte à l\textquotesingle{}utilisateur. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em compte} & Pointeur vers le compte à ajouter \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_utilisateur_a6368b551e61bf68fada3bf5a4ce6a7a3}\index{Utilisateur@{Utilisateur}!getCompteById@{getCompteById}}
+\index{getCompteById@{getCompteById}!Utilisateur@{Utilisateur}}
+\doxysubsubsection{\texorpdfstring{getCompteById()}{getCompteById()}}
+{\footnotesize\ttfamily \label{class_utilisateur_a6368b551e61bf68fada3bf5a4ce6a7a3} 
+\mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} Utilisateur\+::get\+Compte\+By\+Id (\begin{DoxyParamCaption}\item[{const QString \&}]{id}{}\end{DoxyParamCaption}) const}
+
+
+
+Recherche un compte par son identifiant. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Identifiant du compte recherché \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointeur vers le compte s\textquotesingle{}il existe, nullptr sinon 
+\end{DoxyReturn}
+\Hypertarget{class_utilisateur_a3b8fe35819dd2d741df40314605d6fae}\index{Utilisateur@{Utilisateur}!getComptes@{getComptes}}
+\index{getComptes@{getComptes}!Utilisateur@{Utilisateur}}
+\doxysubsubsection{\texorpdfstring{getComptes()}{getComptes()}}
+{\footnotesize\ttfamily \label{class_utilisateur_a3b8fe35819dd2d741df40314605d6fae} 
+QList$<$ \mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*} $>$ Utilisateur\+::get\+Comptes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne la liste des comptes de l\textquotesingle{}utilisateur. 
+
+\begin{DoxyReturn}{Returns}
+Liste de pointeurs vers les comptes 
+\end{DoxyReturn}
+\Hypertarget{class_utilisateur_af571d400d83a580d853cbf6f82a33516}\index{Utilisateur@{Utilisateur}!getId@{getId}}
+\index{getId@{getId}!Utilisateur@{Utilisateur}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily \label{class_utilisateur_af571d400d83a580d853cbf6f82a33516} 
+QString Utilisateur\+::get\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne l\textquotesingle{}identifiant de l\textquotesingle{}utilisateur. 
+
+\begin{DoxyReturn}{Returns}
+Identifiant de l\textquotesingle{}utilisateur 
+\end{DoxyReturn}
+\Hypertarget{class_utilisateur_adfffec2519ba338497de55b61e7bc420}\index{Utilisateur@{Utilisateur}!getNom@{getNom}}
+\index{getNom@{getNom}!Utilisateur@{Utilisateur}}
+\doxysubsubsection{\texorpdfstring{getNom()}{getNom()}}
+{\footnotesize\ttfamily \label{class_utilisateur_adfffec2519ba338497de55b61e7bc420} 
+QString Utilisateur\+::get\+Nom (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Retourne le nom de l\textquotesingle{}utilisateur. 
+
+\begin{DoxyReturn}{Returns}
+Nom de l\textquotesingle{}utilisateur 
+\end{DoxyReturn}
+\Hypertarget{class_utilisateur_aa126660702756ed58871d1473f0595e7}\index{Utilisateur@{Utilisateur}!setNom@{setNom}}
+\index{setNom@{setNom}!Utilisateur@{Utilisateur}}
+\doxysubsubsection{\texorpdfstring{setNom()}{setNom()}}
+{\footnotesize\ttfamily \label{class_utilisateur_aa126660702756ed58871d1473f0595e7} 
+void Utilisateur\+::set\+Nom (\begin{DoxyParamCaption}\item[{const QString \&}]{nom}{}\end{DoxyParamCaption})}
+
+
+
+Modifie le nom de l\textquotesingle{}utilisateur. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nom} & Nouveau nom \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_utilisateur_afcaedddca75a8adc343903d5050ed75b}\index{Utilisateur@{Utilisateur}!supprimerCompte@{supprimerCompte}}
+\index{supprimerCompte@{supprimerCompte}!Utilisateur@{Utilisateur}}
+\doxysubsubsection{\texorpdfstring{supprimerCompte()}{supprimerCompte()}}
+{\footnotesize\ttfamily \label{class_utilisateur_afcaedddca75a8adc343903d5050ed75b} 
+void Utilisateur\+::supprimer\+Compte (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_compte}{Compte}} \texorpdfstring{$\ast$}{*}}]{compte}{}\end{DoxyParamCaption})}
+
+
+
+Supprime un compte de l\textquotesingle{}utilisateur. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em compte} & Pointeur vers le compte à supprimer \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+model/\mbox{\hyperlink{utilisateur_8h}{utilisateur.\+h}}\item 
+model/\mbox{\hyperlink{utilisateur_8cpp}{utilisateur.\+cpp}}\end{DoxyCompactItemize}
