@@ -4,6 +4,7 @@
 #include <QSqlError>
 #include <QVariant>
 #include <QDebug>
+#include <QSqlDatabase>
 
 #include "../model//CompteCourant.h"
 #include "../model/CompteEpargne.h"
@@ -158,3 +159,67 @@ QString CompteRepository::trouverCompteCourantAvecSoldeSuffisant(
     return "";
 }
 
+
+bool CompteRepository::supprimerCompteEtDependances(const QString& compteId)
+{
+    QSqlDatabase db = QSqlDatabase::database();
+    if (!db.isOpen()) {
+        qDebug() << "DB non ouverte";
+        return false;
+    }
+
+    if (!db.transaction()) {
+        qDebug() << "Transaction impossible:" << db.lastError();
+        return false;
+    }
+
+    auto execDelete = [&](const QString& sql) -> bool {
+        QSqlQuery q(db);
+        q.prepare(sql);
+        q.addBindValue(compteId);
+        if (!q.exec()) {
+            qDebug() << "Erreur SQL:" << q.lastError().text();
+            qDebug() << "SQL:" << sql;
+            return false;
+        }
+        return true;
+    };
+
+    // ✅ 1) Supprimer opérations
+    if (!execDelete("DELETE FROM Operation WHERE compte_id = ?")) {
+        db.rollback();
+        return false;
+    }
+
+    // ✅ 2) Supprimer transferts SORTANTS
+    if (!execDelete("DELETE FROM Transfert WHERE source_id = ?")) {
+        db.rollback();
+        return false;
+    }
+
+    // ✅ 3) Supprimer transferts ENTRANTS
+    if (!execDelete("DELETE FROM Transfert WHERE destination_id = ?")) {
+        db.rollback();
+        return false;
+    }
+
+    // ✅ 4) Supprimer le compte
+    {
+        QSqlQuery q(db);
+        q.prepare("DELETE FROM Compte WHERE id = ?");
+        q.addBindValue(compteId);
+        if (!q.exec()) {
+            qDebug() << "Erreur suppression compte:" << q.lastError().text();
+            db.rollback();
+            return false;
+        }
+    }
+
+    if (!db.commit()) {
+        qDebug() << "Commit impossible:" << db.lastError();
+        db.rollback();
+        return false;
+    }
+
+    return true;
+}

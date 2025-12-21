@@ -68,6 +68,13 @@
          <widget class="QListWidget" name="listComptes"/>
         </item>
         <item>
+         <widget class="QPushButton" name="btnSupprimerCompte">
+          <property name="text">
+           <string>Supprimer le compte</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QGroupBox" name="groupTransfert">
           <property name="title">
            <string>Transfert</string>

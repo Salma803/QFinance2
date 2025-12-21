@@ -55,10 +55,17 @@ void Utilisateur::ajouterCompte(Compte* compte)
     }
 }
 
-void Utilisateur::supprimerCompte(Compte* compte)
+void Utilisateur::supprimerCompte(const QString& compteId)
 {
-    comptes.removeAll(compte);
+    for (int i = 0; i < comptes.size(); ++i) {
+        if (comptes[i]->getId() == compteId) {
+            delete comptes[i];
+            comptes.removeAt(i);
+            return;
+        }
+    }
 }
+
 
 Compte* Utilisateur::getCompteById(const QString& id) const
 {

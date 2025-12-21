@@ -78,7 +78,7 @@ public:
      * @brief Supprime un compte de l'utilisateur.
      * @param compte Pointeur vers le compte à supprimer
      */
-    void supprimerCompte(Compte* compte);
+    void supprimerCompte(const QString& compteId);
 
     /**
      * @brief Recherche un compte par son identifiant.

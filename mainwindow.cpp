@@ -22,7 +22,6 @@
 #include <QDebug>
 #include <QSqlQuery>
 #include <QRegularExpressionValidator>
-#include <functional>
 
 // AJOUTER CES INCLUSIONS POUR L'EXPORT PDF
 #include <QFileDialog>
@@ -32,6 +31,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <exception>
+#include <QStatusBar>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -98,6 +98,9 @@ MainWindow::MainWindow(QWidget *parent)
             &QLineEdit::textChanged,
             this,
             &MainWindow::appliquerFiltreOperations);
+    connect(ui->btnSupprimerCompte, &QPushButton::clicked,
+            this, &MainWindow::supprimerCompte);
+
 
     QRegularExpression regex("^[a-zA-Z0-9 éèêàùçîôû_-]*$");
     QValidator* filtreValidator =
@@ -1345,4 +1348,57 @@ void MainWindow::onCategorieItemChanged(QTreeWidgetItem *item, int column)
     actualiserDashboard();
 
     isModifyingCategorie = false;
+}
+void MainWindow::supprimerCompte()
+{
+    int index = ui->listComptes->currentRow();
+    if (index < 0) {
+        QMessageBox::warning(this, "Erreur",
+                             "Veuillez sélectionner un compte.");
+        return;
+    }
+
+    Compte* compte = utilisateur.getComptes().at(index);
+    QString compteId = compte->getId();
+
+    QMessageBox::StandardButton reply =
+        QMessageBox::question(
+            this,
+            "Confirmation",
+            QString("Supprimer le compte \"%1\" ?\n\n"
+                    "⚠️ Toutes les opérations et transferts associés seront supprimés.")
+                .arg(compte->getNom()),
+            QMessageBox::Yes | QMessageBox::No
+            );
+
+    if (reply == QMessageBox::No)
+        return;
+
+    // 🔥 1) Suppression en base (compte + opérations + transferts)
+    if (!CompteRepository::supprimerCompteEtDependances(compteId)) {
+        QMessageBox::critical(this, "Erreur",
+                              "Impossible de supprimer le compte.");
+        return;
+    }
+
+    // 🧹 2) Suppression côté modèle
+    utilisateur.supprimerCompte(compteId);
+
+    // 🔄 3) Rafraîchir les comptes / UI
+    rafraichirUI();
+    remplirCombosOperation();
+    remplirHistoriqueComptes();
+    chargerHistoriqueCompte();
+
+    // 🔥 4) Recharger catégories (IMPORTANT)
+    categories = CategorieRepository::chargerCategories("1");
+    chargerCategoriesUI();
+
+    // 🔥 5) Dashboard EN DERNIER
+    dashboardManager->setCategories(categories);
+    actualiserDashboard();
+
+
+    QMessageBox::information(this, "Succès",
+                             "Compte supprimé avec succès.");
 }

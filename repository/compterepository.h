@@ -19,6 +19,8 @@ public:
         const QString& compteExcluId,
         double montantMin
         );
+    static bool supprimerCompteEtDependances(const QString& compteId);
+
 
 
 };

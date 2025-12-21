@@ -33,6 +33,8 @@ private slots:
     // === SLOTS POUR LA GESTION DES COMPTES ===
     void ajouterCompte();
     void effectuerTransfert();
+    void supprimerCompte();
+
 
     // === SLOTS POUR LA GESTION DES CATÉGORIES ===
     void ajouterCategorie();
